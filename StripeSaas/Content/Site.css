@@ -40,3 +40,33 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+
+/* Pricing home page */
+.price {
+    font-size: 4em;
+}
+
+.price-cents {
+    vertical-align: super;
+    font-size: 50%;
+}
+
+.price-month {
+    font-size: 35%;
+    font-style: italic;
+}
+.panel {
+    -webkit-transition-property : scale; 
+    -webkit-transition-duration : 0.2s; 
+    -webkit-transition-timing-function : ease-in-out; 
+    -moz-transition : all 0.2s ease-in-out;  
+}
+
+.panel:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.5);
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+}
