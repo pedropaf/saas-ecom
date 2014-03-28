@@ -82,7 +82,7 @@ namespace StripeSaas
             // Billing CSS
             var billingCss = new Bundle("~/bundles/billing/css").Include(
                 "~/Content/bootstrap/bootstrap.less",
-                "~/Content/billing.less");
+                "~/Content/billing/billing.less");
             billingCss.Builder = nullBuilder;
             billingCss.Transforms.Add(cssTransformer);
             billingCss.Transforms.Add(new CssMinify());
