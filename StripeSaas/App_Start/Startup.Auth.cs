@@ -2,6 +2,8 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using StripeSaas.App_Start;
+using StripeSaas.Models;
 
 namespace StripeSaas
 {
@@ -33,6 +35,10 @@ namespace StripeSaas
             //   appSecret: "");
 
             //app.UseGoogleAuthentication();
+
+            // Register these two callback methods to create one instance of each per Request
+            app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
         }
     }
 }

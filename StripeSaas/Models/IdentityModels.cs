@@ -13,5 +13,10 @@ namespace StripeSaas.Models
             : base("DefaultConnection")
         {
         }
+
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
     }
 }

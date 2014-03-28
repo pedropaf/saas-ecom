@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using StripeSaas.App_Start;
 using StripeSaas.Models;
 
 namespace StripeSaas.Controllers
@@ -16,11 +17,11 @@ namespace StripeSaas.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
