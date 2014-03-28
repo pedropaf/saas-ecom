@@ -20,7 +20,7 @@ namespace StripeSaas
             var jsTransformer = new JsTransformer();
             var nullOrderer = new NullOrderer();
 
-            // JavaScript
+            #region JavaScript
 
             // jQuery
             var jquery = new Bundle("~/bundles/jquery").Include(
@@ -39,8 +39,17 @@ namespace StripeSaas
             modernizr.Transforms.Add(jsTransformer);
             modernizr.Orderer = nullOrderer;
             bundles.Add(modernizr);
+            
+            // POST: Validation
+            var jqueryVal = new Bundle("~/bundles/jqueryval").Include(
+                "~/Scripts/jquery.validate.unobtrusive.min.js",
+                "~/Scripts/jquery.validate.min.js");
+            jqueryVal.Builder = nullBuilder;
+            jqueryVal.Transforms.Add(jsTransformer);
+            jqueryVal.Orderer = nullOrderer;
+            bundles.Add(jqueryVal);
 
-            // Scripts
+            // Site Scripts
             var js = new Bundle("~/bundles/js").Include(
                 "~/Scripts/bootstrap.min.js",
                 "~/Scripts/respond.js",
@@ -60,16 +69,11 @@ namespace StripeSaas
             billingJs.Orderer = nullOrderer;
             bundles.Add(billingJs);
 
-            // POST: Validation
-            var jqueryVal = new Bundle("~/bundles/jqueryval").Include(
-                "~/Scripts/jquery.validate.unobtrusive.min.js",
-                "~/Scripts/jquery.validate.min.js");
-            jqueryVal.Builder = nullBuilder;
-            jqueryVal.Transforms.Add(jsTransformer);
-            jqueryVal.Orderer = nullOrderer;
-            bundles.Add(jqueryVal);
+            #endregion
 
-            // Styles
+            #region CSS Styles
+
+            // Site CSS
             var css = new Bundle("~/bundles/css").Include(
                 "~/Content/bootstrap/bootstrap.less",
                 "~/Content/site.less");
@@ -97,6 +101,8 @@ namespace StripeSaas
             fa.Transforms.Add(new CssMinify());
             fa.Orderer = nullOrderer;
             bundles.Add(fa);
+
+            #endregion
         }
     }
 }
