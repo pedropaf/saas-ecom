@@ -1,5 +1,7 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
+using BundleTransformer.Core.Builders;
+using BundleTransformer.Core.Orderers;
+using BundleTransformer.Core.Transformers;
 
 namespace StripeSaas
 {
@@ -8,24 +10,93 @@ namespace StripeSaas
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            // TODO: Set to true for production
+            BundleTable.EnableOptimizations = false;
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            // Variables
+            bundles.UseCdn = true;
+            var nullBuilder = new NullBuilder();
+            var cssTransformer = new CssTransformer();
+            var jsTransformer = new JsTransformer();
+            var nullOrderer = new NullOrderer();
 
+            // JavaScript
+
+            // jQuery
+            var jquery = new Bundle("~/bundles/jquery").Include(
+                "~/Scripts/jquery-{version}.js");
+            jquery.Builder = nullBuilder;
+            jquery.Transforms.Add(jsTransformer);
+            jquery.Orderer = nullOrderer;
+            bundles.Add(jquery);
+
+            // Modernizr
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            var modernizr = new Bundle("~/bundles/modernizr").Include(
+                "~/Scripts/modernizr-2.6.2.js");
+            modernizr.Builder = nullBuilder;
+            modernizr.Transforms.Add(jsTransformer);
+            modernizr.Orderer = nullOrderer;
+            bundles.Add(modernizr);
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+            // Scripts
+            var js = new Bundle("~/bundles/js").Include(
+                "~/Scripts/bootstrap.min.js",
+                "~/Scripts/respond.js",
+                "~/Scripts/site.js");
+            js.Builder = nullBuilder;
+            js.Transforms.Add(jsTransformer);
+            js.Orderer = nullOrderer;
+            bundles.Add(js);
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            // Billing Scripts
+            var billingJs = new Bundle("~/bundles/js").Include(
+                "~/Scripts/bootstrap.min.js",
+                "~/Scripts/respond.js",
+                "~/Scripts/billing.js");
+            billingJs.Builder = nullBuilder;
+            billingJs.Transforms.Add(jsTransformer);
+            billingJs.Orderer = nullOrderer;
+            bundles.Add(billingJs);
+
+            // POST: Validation
+            var jqueryVal = new Bundle("~/bundles/jqueryval").Include(
+                "~/Scripts/jquery.validate.unobtrusive.min.js",
+                "~/Scripts/jquery.validate.min.js");
+            jqueryVal.Builder = nullBuilder;
+            jqueryVal.Transforms.Add(jsTransformer);
+            jqueryVal.Orderer = nullOrderer;
+            bundles.Add(jqueryVal);
+
+            // Styles
+            var css = new Bundle("~/bundles/css").Include(
+                "~/Content/bootstrap/bootstrap.less",
+                "~/Content/site.less");
+            css.Builder = nullBuilder;
+            css.Transforms.Add(cssTransformer);
+            css.Transforms.Add(new CssMinify());
+            css.Orderer = nullOrderer;
+            bundles.Add(css);
+
+            // Billing CSS
+            var billingCss = new Bundle("~/bundles/billing/css").Include(
+                "~/Content/bootstrap/bootstrap.less",
+                "~/Content/billing.less");
+            billingCss.Builder = nullBuilder;
+            billingCss.Transforms.Add(cssTransformer);
+            billingCss.Transforms.Add(new CssMinify());
+            billingCss.Orderer = nullOrderer;
+            bundles.Add(billingCss);
+
+            // Font awesome
+            var fa = new Bundle("~/bundles/fontawesome").Include(
+                "~/Content/fontawesome/font-awesome.less");
+            fa.Builder = nullBuilder;
+            fa.Transforms.Add(cssTransformer);
+            fa.Transforms.Add(new CssMinify());
+            fa.Orderer = nullOrderer;
+            bundles.Add(fa);
         }
     }
 }
