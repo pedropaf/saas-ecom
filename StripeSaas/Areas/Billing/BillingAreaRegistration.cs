@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace StripeSaas.Areas.Billing
+namespace SaasEcom.Web.Areas.Billing
 {
     public class BillingAreaRegistration : AreaRegistration 
     {

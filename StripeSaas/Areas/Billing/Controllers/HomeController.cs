@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-namespace StripeSaas.Areas.Billing.Controllers
+namespace SaasEcom.Web.Areas.Billing.Controllers
 {
     [Authorize(Roles = "admin")]
     public class HomeController : Controller

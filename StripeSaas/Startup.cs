@@ -1,8 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using SaasEcom.Web;
 
-[assembly: OwinStartupAttribute(typeof(StripeSaas.Startup))]
-namespace StripeSaas
+[assembly: OwinStartup(typeof(Startup))]
+namespace SaasEcom.Web
 {
     public partial class Startup
     {

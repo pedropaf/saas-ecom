@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StripeSaas.ViewModels
+namespace SaasEcom.Web.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

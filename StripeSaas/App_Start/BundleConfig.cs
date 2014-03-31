@@ -3,7 +3,7 @@ using BundleTransformer.Core.Builders;
 using BundleTransformer.Core.Orderers;
 using BundleTransformer.Core.Transformers;
 
-namespace StripeSaas
+namespace SaasEcom.Web
 {
     public class BundleConfig
     {

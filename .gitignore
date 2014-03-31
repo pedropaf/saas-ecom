@@ -155,3 +155,5 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 packages/
+/StripeSaas/App_Data/aspnet-StripeSaas-20140325081546.mdf
+/StripeSaas/App_Data/aspnet-StripeSaas-20140325081546_log.ldf

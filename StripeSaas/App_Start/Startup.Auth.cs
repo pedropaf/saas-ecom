@@ -3,9 +3,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using SaasEcom.Data;
-using StripeSaas.App_Start;
 
-namespace StripeSaas
+namespace SaasEcom.Web
 {
     public partial class Startup
     {
