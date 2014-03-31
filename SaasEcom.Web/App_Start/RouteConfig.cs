@@ -13,7 +13,7 @@ namespace SaasEcom.Web
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "StripeSaas.Controllers" }
+                namespaces: new[] { "SaasEcom.Web.Controllers" }
             );
         }
     }
