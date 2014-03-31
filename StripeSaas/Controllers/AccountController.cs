@@ -8,8 +8,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using SaasEcom.Data;
+using SaasEcom.Data.Models;
 using StripeSaas.App_Start;
-using StripeSaas.Models;
+using StripeSaas.ViewModels;
 
 namespace StripeSaas.Controllers
 {

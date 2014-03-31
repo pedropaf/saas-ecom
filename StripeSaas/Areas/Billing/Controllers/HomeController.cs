@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace StripeSaas.Areas.Billing.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
         // GET: /Billing/Home/
