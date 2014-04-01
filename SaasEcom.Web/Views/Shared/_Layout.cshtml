@@ -8,27 +8,25 @@
     @Styles.Render("~/bundles/fontawesome")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="container header">
-        @*Html.Partial("_LoginPartial")*@
-        <ul class="nav nav-pills pull-right">
-            <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("About", "About", "Home")</li>
-            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-        </ul>
-        <h3 class="text-muted">Saas Ecom</h3>
-    </div>
+    <body>
+        <!-- Header -->
+        <div class="container header">
+            <ul class="nav nav-pills pull-right">
+                <li class="active">@Html.ActionLink("Login", "Login", "Account")</li>
+            </ul>
+            <h1 class="text-muted">@Html.ActionLink("Saas Ecom", "Index", "Home")</h1>
+        </div>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - SAAS Ecom</p>
+            </footer>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/js")
-    @RenderSection("scripts", required: false)
-</body>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/js")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>
