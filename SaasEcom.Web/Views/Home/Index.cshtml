@@ -5,12 +5,19 @@
 <div class="jumbotron">
     <h1>SAAS ecom</h1>
     <p class="lead">This is a template that can be used as a startup point to build your SAAS website using ASP.NET MVC 5.</p>
-    <p>@Html.ActionLink("Give our product a try - It's FREE for 30 days", "Register", "Account", new { @class = "btn btn-primary btn-lg" })</p>
+    <p>
+        @Html.ActionLink(
+            linkText: "Give our product a try - It's FREE for 30 days",
+            actionName: "Register",
+            controllerName: "Account",
+            htmlAttributes: new { @class = "btn btn-primary btn-lg" },
+            routeValues: null)
+    </p>
 </div>
 
 <div class="row marketing">
     <h2 class="text-center">Features</h2>
-    <hr/>
+    <hr />
     <div class="col-lg-6 marketing-feature">
         <h4><i class="fa fa-asterisk"></i> Subheading</h4>
         <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
@@ -52,7 +59,7 @@
                 <li class="list-group-item">Up to 100 Users</li>
                 <li class="list-group-item">10 GB Bandwidth</li>
                 <li class="list-group-item">Security Suite</li>
-                <li class="list-group-item"><a class="btn btn-default">Sign Up Now!</a></li>
+                <li class="list-group-item"><a class="btn btn-default">Start trial!</a></li>
             </ul>
         </div>
     </div>
@@ -71,7 +78,7 @@
                 <li class="list-group-item">Up to 1000 Users</li>
                 <li class="list-group-item">100 GB Bandwidth</li>
                 <li class="list-group-item">Security Suite</li>
-                <li class="list-group-item"><a class="btn btn-danger ">Sign Up Now!</a></li>
+                <li class="list-group-item"><a class="btn btn-danger ">Start trial!</a></li>
             </ul>
         </div>
     </div>
@@ -89,7 +96,7 @@
                 <li class="list-group-item">Unlimited</li>
                 <li class="list-group-item">500 GB Bandwidth</li>
                 <li class="list-group-item">Security Suite</li>
-                <li class="list-group-item"><a class="btn btn-default">Sign Up Now!</a></li>
+                <li class="list-group-item"><a class="btn btn-default">Start trial!</a></li>
             </ul>
         </div>
     </div>
