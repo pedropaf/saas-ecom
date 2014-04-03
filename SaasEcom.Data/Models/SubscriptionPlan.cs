@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string FriendlyId { get; set; }
         public string Name { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
         // Currency
         public SubscriptionInterval Interval { get; set; }
         public int TrialPeriodInDays { get; set; }

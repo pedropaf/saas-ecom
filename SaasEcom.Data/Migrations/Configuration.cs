@@ -36,6 +36,39 @@ namespace SaasEcom.Data.Migrations
                 userManager.Create(user, "password");
                 userManager.AddToRole(user.Id, "admin");
             }
+
+            // Create Subscriptions Plans
+            // TODO: Create plans in Stripe too
+            context.SubscriptionPlans.AddOrUpdate(
+                p => p.FriendlyId,
+                new SubscriptionPlan
+                {
+                    FriendlyId = "Starter",
+                    Interval = SubscriptionPlan.SubscriptionInterval.Monthly,
+                    Name = "Starter",
+                    Price = 14.99,
+                    TrialPeriodInDays = 30,
+                    StatementDescription = "SAAS billing starter"
+                }, 
+                new SubscriptionPlan
+                {
+                    FriendlyId = "Premium",
+                    Interval = SubscriptionPlan.SubscriptionInterval.Monthly,
+                    Name = "Premium",
+                    Price = 29.99,
+                    TrialPeriodInDays = 30,
+                    StatementDescription = "SAAS billing premium"             
+                },
+                new SubscriptionPlan
+                {
+                    FriendlyId = "Ultimate",
+                    Interval = SubscriptionPlan.SubscriptionInterval.Monthly,
+                    Name = "Ultimate",
+                    Price = 74.99,
+                    TrialPeriodInDays = 30,
+                    StatementDescription = "SAAS billing ultimate"
+                });
+            context.SaveChanges();
         }
     }
 }
