@@ -183,6 +183,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
     <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -193,6 +194,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\Shared\_DashboardLayout.cshtml" />
     <None Include="Content\billing\billing.less" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -204,6 +207,7 @@
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="Content\dashboard\dashboard.less" />
     <None Include="Content\site.less" />
     <Content Include="Scripts\billing.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -276,6 +280,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -318,6 +323,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Billing\Models\" />
+    <Folder Include="Areas\Dashboard\Controllers\" />
+    <Folder Include="Areas\Dashboard\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

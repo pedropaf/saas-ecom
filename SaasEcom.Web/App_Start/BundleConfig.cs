@@ -60,7 +60,7 @@ namespace SaasEcom.Web
             bundles.Add(js);
 
             // Billing Scripts
-            var billingJs = new Bundle("~/bundles/js").Include(
+            var billingJs = new Bundle("~/bundles/billing/js").Include(
                 "~/Scripts/bootstrap.min.js",
                 "~/Scripts/respond.js",
                 "~/Scripts/billing.js");
@@ -68,6 +68,16 @@ namespace SaasEcom.Web
             billingJs.Transforms.Add(jsTransformer);
             billingJs.Orderer = nullOrderer;
             bundles.Add(billingJs);
+
+            // Dashboard Scripts
+            var dashboardJs = new Bundle("~/bundles/dashboard/js").Include(
+                "~/Scripts/bootstrap.min.js",
+                "~/Scripts/respond.js",
+                "~/Scripts/dashboard.js");
+            dashboardJs.Builder = nullBuilder;
+            dashboardJs.Transforms.Add(jsTransformer);
+            dashboardJs.Orderer = nullOrderer;
+            bundles.Add(dashboardJs);
 
             #endregion
 
@@ -92,6 +102,16 @@ namespace SaasEcom.Web
             billingCss.Transforms.Add(new CssMinify());
             billingCss.Orderer = nullOrderer;
             bundles.Add(billingCss);
+
+            // Dashboard CSS
+            var dashboardCss = new Bundle("~/bundles/billing/css").Include(
+                "~/Content/bootstrap/bootstrap.less",
+                "~/Content/dashboard/dashboard.less");
+            dashboardCss.Builder = nullBuilder;
+            dashboardCss.Transforms.Add(cssTransformer);
+            dashboardCss.Transforms.Add(new CssMinify());
+            dashboardCss.Orderer = nullOrderer;
+            bundles.Add(dashboardCss);
 
             // Font awesome
             var fa = new Bundle("~/bundles/fontawesome").Include(

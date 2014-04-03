@@ -17,7 +17,8 @@ namespace SaasEcom.Web.Areas.Billing
             context.MapRoute(
                 "Billing_default",
                 "Billing/{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                new[] { "SaasEcom.Web.Areas.Billing.Controllers" }
             );
         }
     }
