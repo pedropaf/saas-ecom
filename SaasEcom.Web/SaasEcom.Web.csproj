@@ -182,8 +182,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
+    <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -205,6 +207,7 @@
     <Content Include="Content\billing\billing.css.map">
       <DependentUpon>billing.css</DependentUpon>
     </Content>
+    <Content Include="Areas\Billing\Views\Customers\Index.cshtml" />
     <None Include="Content\billing\billing.less" />
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>

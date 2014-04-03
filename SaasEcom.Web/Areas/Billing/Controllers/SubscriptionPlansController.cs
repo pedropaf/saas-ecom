@@ -9,17 +9,16 @@ using System.Web;
 using System.Web.Mvc;
 using SaasEcom.Data.Models;
 using SaasEcom.Data;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
     public class SubscriptionPlansController : Controller
     {
-        private readonly ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: /Billing/SubscriptionPlans/
         public async Task<ActionResult> Index()
         {
-            return View(await db.SubscriptionPlans.ToListAsync());
+            return View(await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.ToListAsync());
         }
 
         // GET: /Billing/SubscriptionPlans/Details/5
@@ -29,7 +28,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SubscriptionPlan subscriptionplan = await db.SubscriptionPlans.FindAsync(id);
+            SubscriptionPlan subscriptionplan = await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.FindAsync(id);
             if (subscriptionplan == null)
             {
                 return HttpNotFound();
@@ -52,6 +51,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (ModelState.IsValid)
             {
+                var db = Request.GetOwinContext().Get<ApplicationDbContext>();
                 db.SubscriptionPlans.Add(subscriptionplan);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -67,7 +67,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SubscriptionPlan subscriptionplan = await db.SubscriptionPlans.FindAsync(id);
+            SubscriptionPlan subscriptionplan = await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.FindAsync(id);
             if (subscriptionplan == null)
             {
                 return HttpNotFound();
@@ -84,6 +84,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (ModelState.IsValid)
             {
+                var db = Request.GetOwinContext().Get<ApplicationDbContext>();
                 db.Entry(subscriptionplan).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -98,7 +99,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SubscriptionPlan subscriptionplan = await db.SubscriptionPlans.FindAsync(id);
+            SubscriptionPlan subscriptionplan = await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.FindAsync(id);
             if (subscriptionplan == null)
             {
                 return HttpNotFound();
@@ -111,6 +112,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var db = Request.GetOwinContext().Get<ApplicationDbContext>();
             SubscriptionPlan subscriptionplan = await db.SubscriptionPlans.FindAsync(id);
             db.SubscriptionPlans.Remove(subscriptionplan);
             await db.SaveChangesAsync();
@@ -121,7 +123,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                Request.GetOwinContext().Get<ApplicationDbContext>().Dispose();
             }
             base.Dispose(disposing);
         }
