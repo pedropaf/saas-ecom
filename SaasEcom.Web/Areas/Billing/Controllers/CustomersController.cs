@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
@@ -16,10 +17,15 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             var db = Request.GetOwinContext().Get<ApplicationDbContext>();
 
+            var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var users = db.Users.ToList(); // TODO: Filter by subscriber only
 
+            var model = new CustomersViewModel
+            {
+                Customers = users
+            };
 
-
-            return View();
+            return View(model);
         }
 	}
 }

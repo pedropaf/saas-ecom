@@ -63,8 +63,13 @@
     <Compile Include="Migrations\201404031409209_SubscriptionPlanAdded.Designer.cs">
       <DependentUpon>201404031409209_SubscriptionPlanAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404031659292_SubscriptionAdded.cs" />
+    <Compile Include="Migrations\201404031659292_SubscriptionAdded.Designer.cs">
+      <DependentUpon>201404031659292_SubscriptionAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404031409209_SubscriptionPlanAdded.resx">
       <DependentUpon>201404031409209_SubscriptionPlanAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404031659292_SubscriptionAdded.resx">
+      <DependentUpon>201404031659292_SubscriptionAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

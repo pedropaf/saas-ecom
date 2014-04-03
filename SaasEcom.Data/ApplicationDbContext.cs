@@ -21,6 +21,7 @@ namespace SaasEcom.Data
             return new ApplicationDbContext();
         }
 
+        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
     }
 }
