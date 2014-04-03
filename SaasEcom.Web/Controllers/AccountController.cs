@@ -69,6 +69,13 @@ namespace SaasEcom.Web.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+
+                    if (string.IsNullOrEmpty(returnUrl))
+                    {
+                        // TODO: Redirect taking into account the user role!
+
+                    }
+
                     return RedirectToLocal(returnUrl);
                 }
                 else

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,5 +20,7 @@ namespace SaasEcom.Data
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
     }
 }

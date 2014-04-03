@@ -59,8 +59,13 @@
     <Compile Include="Migrations\201403311508374_IdentityProvider.Designer.cs">
       <DependentUpon>201403311508374_IdentityProvider.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404031409209_SubscriptionPlanAdded.cs" />
+    <Compile Include="Migrations\201404031409209_SubscriptionPlanAdded.Designer.cs">
+      <DependentUpon>201404031409209_SubscriptionPlanAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +75,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201403311508374_IdentityProvider.resx">
       <DependentUpon>201403311508374_IdentityProvider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404031409209_SubscriptionPlanAdded.resx">
+      <DependentUpon>201404031409209_SubscriptionPlanAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

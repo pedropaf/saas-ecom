@@ -183,6 +183,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
     <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -196,7 +197,18 @@
   <ItemGroup>
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Shared\_DashboardLayout.cshtml" />
+    <Content Include="Areas\Billing\Views\SubscriptionPlans\Create.cshtml" />
+    <Content Include="Areas\Billing\Views\SubscriptionPlans\Delete.cshtml" />
+    <Content Include="Areas\Billing\Views\SubscriptionPlans\Details.cshtml" />
+    <Content Include="Areas\Billing\Views\SubscriptionPlans\Edit.cshtml" />
+    <Content Include="Areas\Billing\Views\SubscriptionPlans\Index.cshtml" />
+    <Content Include="Content\billing\billing.css.map">
+      <DependentUpon>billing.css</DependentUpon>
+    </Content>
     <None Include="Content\billing\billing.less" />
+    <Content Include="Content\billing\billing.css">
+      <DependentUpon>billing.less</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\site.css">

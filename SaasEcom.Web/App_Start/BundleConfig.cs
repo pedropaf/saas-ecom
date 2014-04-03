@@ -104,7 +104,7 @@ namespace SaasEcom.Web
             bundles.Add(billingCss);
 
             // Dashboard CSS
-            var dashboardCss = new Bundle("~/bundles/billing/css").Include(
+            var dashboardCss = new Bundle("~/bundles/dashboard/css").Include(
                 "~/Content/bootstrap/bootstrap.less",
                 "~/Content/dashboard/dashboard.less");
             dashboardCss.Builder = nullBuilder;

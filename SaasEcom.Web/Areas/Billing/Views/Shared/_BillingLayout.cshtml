@@ -23,6 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Customers", "Index", "Customers", new { area = "billing" })</li>
+                    <li>@Html.ActionLink("Subscription Plans", "Index", "SubscriptionPlans", null, new { area = "billing" })</li>
                     <li>@Html.ActionLink("Settings", "Settings", "Home", new { area = "billing" })</li>
                     <li>@Html.ActionLink("Help", "Help", "Home", new { area = "billing" })</li>
                 </ul>
@@ -35,13 +36,15 @@
                         <li>
                             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
                         </li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">
+                                <span class="glyphicon glyphicon-off"></span> Log out
+                            </a></li>
                     </ul>
                 }
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content content">
         @RenderBody()
         <hr />
         <footer>

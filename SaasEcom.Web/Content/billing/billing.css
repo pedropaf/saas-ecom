@@ -1,0 +1,9 @@
+﻿body .content {
+  display: block;
+  margin-top: 50px;
+}
+body .content .title {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+/*# sourceMappingURL=billing.css.map */
