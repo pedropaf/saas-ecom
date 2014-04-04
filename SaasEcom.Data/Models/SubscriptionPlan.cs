@@ -1,4 +1,7 @@
-﻿namespace SaasEcom.Data.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace SaasEcom.Data.Models
 {
     public class SubscriptionPlan
     {
@@ -16,7 +19,11 @@
             Monthly,
             Yearly,
             Weekly,
+
+            [Display(Name="Every 6 months")]
             EverySixMonths,
+
+            [Display(Name="Every 3 months")]
             EveryThreeMonths
         }
     }
