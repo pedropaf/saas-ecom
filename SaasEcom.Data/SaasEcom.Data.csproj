@@ -44,14 +44,16 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Stripe.net">
       <HintPath>..\packages\Stripe.net.1.7.7\lib\net40\Stripe.net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -77,15 +79,22 @@
     <Compile Include="Migrations\201404032206355_SubscriptionPlanPriceToDouble.Designer.cs">
       <DependentUpon>201404032206355_SubscriptionPlanPriceToDouble.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404071115132_StripeCustomerIdAddedToUser.cs" />
+    <Compile Include="Migrations\201404071115132_StripeCustomerIdAddedToUser.Designer.cs">
+      <DependentUpon>201404071115132_StripeCustomerIdAddedToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="PaymentProcessor\Stripe\StripePaymentProcessorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404032206355_SubscriptionPlanPriceToDouble.resx">
       <DependentUpon>201404032206355_SubscriptionPlanPriceToDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404071115132_StripeCustomerIdAddedToUser.resx">
+      <DependentUpon>201404071115132_StripeCustomerIdAddedToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
