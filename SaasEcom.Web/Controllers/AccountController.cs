@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Configuration;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -7,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
 using SaasEcom.Data.Models;
+using SaasEcom.Data.PaymentProcessor.Stripe;
 using SaasEcom.Web.ViewModels;
 
 namespace SaasEcom.Web.Controllers
@@ -103,14 +105,22 @@ namespace SaasEcom.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userManager = this.UserManager;
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    // TODO: Create a new customer in Stripe
-
+                    // Create a new customer in Stripe
+                    var stripeService =
+                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_key"]);
+                    var stripeUser = await stripeService.CreateCustomerAsync(user, model.SubscriptionPlan);
+                    var u = await userManager.FindByEmailAsync(model.Email);
+                    u.StripeCustomerId = stripeUser.Id;
+                    await userManager.UpdateAsync(u);
 
                     await SignInAsync(user, isPersistent: false);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else

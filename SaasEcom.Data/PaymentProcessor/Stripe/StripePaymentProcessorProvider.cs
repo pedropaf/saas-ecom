@@ -9,7 +9,6 @@ using Stripe;
 
 namespace SaasEcom.Data.PaymentProcessor.Stripe
 {
-    // TODO: Make methods Async
     // TODO: Abstract Interface and make more generic
     public class StripePaymentProcessorProvider
     {
@@ -92,7 +91,7 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
 
         #region Customers
 
-        public StripeCustomer CreateCustomer(ApplicationUser user, string planId = null)
+        public async Task<StripeCustomer> CreateCustomerAsync(ApplicationUser user, string planId = null)
         {
             var customer = new StripeCustomerCreateOptions
             {
@@ -106,7 +105,7 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
                 customer.PlanId = planId;
             }
 
-            return CustomerService.Create(customer);
+            return await Task.Run(() => CustomerService.Create(customer));
         }
 
         public StripeCustomer UpdateCustomer(ApplicationUser user, CreditCard card)
