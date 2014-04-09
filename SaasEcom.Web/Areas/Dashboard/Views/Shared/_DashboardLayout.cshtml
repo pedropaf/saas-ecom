@@ -21,9 +21,9 @@
                 @Html.ActionLink("Dashboard", "Index", "Home", new { area = "dashboard" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <!--<ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
-                </ul>
+                </ul>-->
 
                 <!-- Log out -->
                 @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

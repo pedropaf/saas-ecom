@@ -1,18 +1,21 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
+using SaasEcom.Data.DataServices;
 using SaasEcom.Data.Models;
 using SaasEcom.Data.PaymentProcessor.Stripe;
 using SaasEcom.Web.ViewModels;
 
 namespace SaasEcom.Web.Controllers
 {
+    // TODO: Cleanup this controller
     [Authorize]
     public class AccountController : Controller
     {
@@ -35,19 +38,6 @@ namespace SaasEcom.Web.Controllers
             private set
             {
                 _userManager = value;
-            }
-        }
-
-        private ApplicationRoleManager _roleManager;
-        public ApplicationRoleManager RoleManager
-        {
-            get
-            {
-                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-            }
-            private set
-            {
-                _roleManager = value;
             }
         }
 
@@ -107,17 +97,27 @@ namespace SaasEcom.Web.Controllers
             {
                 var userManager = this.UserManager;
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password);
+                // Create user and a trial subscription
+                var result = await userManager.CreateAsync(
+                    new ApplicationUser { UserName = model.Email, Email = model.Email }, model.Password);
+
                 if (result.Succeeded)
                 {
-                    // Create a new customer in Stripe
+                    var user = await userManager.FindByEmailAsync(model.Email);
+                    
+                    // Subscribe the user to the plan
+                    var subscriptionService = new SubscriptionsDataService
+                        (Request.GetOwinContext().Get<ApplicationDbContext>());
+                    subscriptionService.SubscribeUser(user, model.SubscriptionPlan);
+                    
+                    // Create a new customer in Stripe and subscribe him to the plan
                     var stripeService =
                         new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_key"]);
                     var stripeUser = await stripeService.CreateCustomerAsync(user, model.SubscriptionPlan);
-                    var u = await userManager.FindByEmailAsync(model.Email);
-                    u.StripeCustomerId = stripeUser.Id;
-                    await userManager.UpdateAsync(u);
+                    
+                    // Add subscription Id to the user
+                    user.StripeCustomerId = stripeUser.Id;
+                    await userManager.UpdateAsync(user);
 
                     await SignInAsync(user, isPersistent: false);
 
