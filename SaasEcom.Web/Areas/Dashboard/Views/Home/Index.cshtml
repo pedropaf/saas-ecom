@@ -1,8 +1,36 @@
-﻿@model SaasEcom.Web.Areas.Dashboard.ViewModels.DashboardViewModel
+﻿@using System.IdentityModel.Configuration
+@model SaasEcom.Web.Areas.Dashboard.ViewModels.DashboardViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@User.Identity.Name</h2>
+
+<h3>Subscriptions</h3>
+
+<div class="panel-group" id="subscriptions">
+    @foreach (var subscription in Model.Subscriptions)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#subscriptions" href="#@subscription.Id">
+                        <span class="glyphicon glyphicon-chevron-down"></span> @subscription.SubscriptionPlan.Name (£@subscription.SubscriptionPlan.Price / @subscription.SubscriptionPlan.Interval)
+                    </a>
+                </h4>
+            </div>
+            <div id="@subscription.Id" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul>
+                        <li><strong>Started:</strong> @subscription.Start</li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SaasEcom.Data.Models;
 
@@ -29,6 +30,11 @@ namespace SaasEcom.Data.DataServices
 
             _dbContext.Subscriptions.Add(s);
             _dbContext.SaveChanges();
+        }
+
+        public List<Subscription> UserSubscriptions(string name)
+        {
+            return _dbContext.Subscriptions.Where(s => s.User.UserName == name).Select(s => s).ToList();
         }
     }
 }

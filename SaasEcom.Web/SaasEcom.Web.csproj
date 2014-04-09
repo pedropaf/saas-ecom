@@ -222,6 +222,9 @@
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
     </Content>
+    <Content Include="Content\dashboard\dashboard.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\site.css">
@@ -233,6 +236,9 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Content\dashboard\dashboard.less" />
+    <Content Include="Content\dashboard\dashboard.css.map">
+      <DependentUpon>dashboard.css</DependentUpon>
+    </Content>
     <None Include="Content\site.less" />
     <Content Include="Scripts\billing.js" />
     <Content Include="Scripts\bootstrap.js" />
