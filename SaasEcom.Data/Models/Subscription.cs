@@ -10,17 +10,9 @@ namespace SaasEcom.Data.Models
     public class Subscription
     {
         public int Id { get; set; }
-
-        [DisplayFormat(DataFormatString = "{MMMM 0:dd, yyyy}")]
         public DateTime? Start { get; set; }
-
-        [DisplayFormat(DataFormatString = "{MMMM 0:dd, yyyy}")]
         public DateTime? End { get; set; }
-
-        [DisplayFormat(DataFormatString = "{MMMM 0:dd, yyyy}")]
         public DateTime? TrialStart { get; set; }
-
-        [DisplayFormat(DataFormatString = "{MMMM 0:dd, yyyy}")]
         public DateTime? TrialEnd { get; set; }
 
         public virtual SubscriptionPlan SubscriptionPlan { get; set; }
