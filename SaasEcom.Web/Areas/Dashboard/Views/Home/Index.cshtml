@@ -12,25 +12,25 @@
 <div class="panel-group" id="subscriptions">
     @foreach (var subscription in Model.Subscriptions)
     {
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="panel panel-default subscription-panel">
+            <div class="panel-heading" data-toggle="collapse" data-target="#@subscription.Id">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#subscriptions" href="#@subscription.Id">
-                        <span class="glyphicon glyphicon-chevron-down"></span> @subscription.SubscriptionPlan.Name (£@subscription.SubscriptionPlan.Price / @subscription.SubscriptionPlan.Interval)
-                    </a>
+                    <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
+                    <span class="plan-name">&nbsp;@subscription.SubscriptionPlan.Name &nbsp;</span>
+                    <span class="plan-price">£@subscription.SubscriptionPlan.Price / @subscription.SubscriptionPlan.Interval</span>
+                    <span class="plan-status">@subscription.Status()</span>
                 </h4>
             </div>
             <div id="@subscription.Id" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <ul>
-                        <li><strong>Started:</strong> @subscription.Start</li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                    <dl class="dl-horizontal">
+                        <dt>Started</dt>
+                        <dd>@subscription.Start</dd>
+                    </dl>
                 </div>
             </div>
         </div>
     }
 </div>
+
 

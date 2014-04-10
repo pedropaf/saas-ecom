@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaasEcom.Data.Models
 {
@@ -17,5 +12,17 @@ namespace SaasEcom.Data.Models
 
         public virtual SubscriptionPlan SubscriptionPlan { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        public string Status()
+        {
+            return IsTrialing() ? 
+                string.Format("Trial until {0}", ((DateTime)TrialEnd).ToShortDateString()) :
+                string.Format("Next invoice {0}", DateTime.UtcNow.ToShortDateString());
+        }
+
+        public bool IsTrialing()
+        {
+            return TrialStart != null && TrialEnd != null && TrialEnd > DateTime.UtcNow;
+        }
     }
 }

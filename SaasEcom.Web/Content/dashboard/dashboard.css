@@ -6,4 +6,23 @@ body .content .title {
   margin-top: 25px;
   margin-bottom: 25px;
 }
+body .subscription-panel .panel-heading:hover {
+  cursor: pointer;
+}
+body .subscription-panel .panel-title:hover {
+  text-decoration: none;
+}
+body .subscription-panel .plan-icon {
+  font-size: x-small;
+}
+body .subscription-panel .plan-price {
+  font-size: small;
+  color: gray;
+}
+body .subscription-panel .plan-status {
+  color: gray;
+  float: right;
+  font-weight: bold;
+  font-size: small;
+}
 /*# sourceMappingURL=dashboard.css.map */
