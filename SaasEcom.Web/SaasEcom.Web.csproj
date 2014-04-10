@@ -96,6 +96,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Portable.Licensing">
+      <HintPath>..\packages\Portable.Licensing.1.1.0\lib\portable-net40+sl4+wp7+win8\Portable.Licensing.dll</HintPath>
+    </Reference>
     <Reference Include="Stripe.net, Version=1.7.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Stripe.net.1.7.7\lib\net40\Stripe.net.dll</HintPath>
@@ -154,6 +157,9 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
+    <Reference Include="T4MVCExtensions">
+      <HintPath>..\packages\T4MVCExtensions.3.6.5\lib\net40\T4MVCExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -193,6 +199,7 @@
     <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
@@ -218,6 +225,7 @@
     </Content>
     <Content Include="Areas\Billing\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\Manage.cshtml" />
     <None Include="Content\billing\billing.less" />
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
