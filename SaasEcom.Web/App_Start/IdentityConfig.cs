@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.Models;
+using SaasEcom.Web.Infrastructure;
 
 namespace SaasEcom.Web
 {
@@ -16,16 +18,27 @@ namespace SaasEcom.Web
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-
-            manager.PasswordValidator = new PasswordValidator
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()))
             {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = false,
-                RequireUppercase = false,
+                PasswordValidator = new PasswordValidator
+                {
+                    RequiredLength = 6,
+                    RequireNonLetterOrDigit = false,
+                    RequireDigit = true,
+                    RequireLowercase = false,
+                    RequireUppercase = false,
+                },
+                UserLockoutEnabledByDefault = true,
+                DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5),
+                MaxFailedAccessAttemptsBeforeLockout = 15,
+                EmailService = new EmailIdentityService()
             };
+
+            var dataProtectionProvider = options.DataProtectionProvider;
+            if (dataProtectionProvider != null)
+            {
+                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+            }
 
             return manager;
         }
