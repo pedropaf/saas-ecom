@@ -13,6 +13,7 @@ using SaasEcom.Web.Controllers;
 
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {
+    [Authorize]
     public class ManageController : Controller
     {
         public ManageController()
@@ -54,6 +55,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId()),
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
+                User = await UserManager.FindByIdAsync(User.Identity.GetUserId())
             };
             return View(model);
         }

@@ -83,6 +83,10 @@
     <Compile Include="Migrations\201404071115132_StripeCustomerIdAddedToUser.Designer.cs">
       <DependentUpon>201404071115132_StripeCustomerIdAddedToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404111633422_UserDetails.cs" />
+    <Compile Include="Migrations\201404111633422_UserDetails.Designer.cs">
+      <DependentUpon>201404111633422_UserDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -113,6 +117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404071115132_StripeCustomerIdAddedToUser.resx">
       <DependentUpon>201404071115132_StripeCustomerIdAddedToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404111633422_UserDetails.resx">
+      <DependentUpon>201404111633422_UserDetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

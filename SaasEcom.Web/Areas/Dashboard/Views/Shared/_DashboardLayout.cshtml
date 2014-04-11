@@ -24,15 +24,24 @@
                 <!--<ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
                 </ul>-->
-
                 <!-- Log out -->
                 @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                 {
                     @Html.AntiForgeryToken()
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                        <!-- Username drop-down -->
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">@User.Identity.GetUserName() <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "Manage")">My details</a></li>
+                                <li>
+                                    <a href="#">Payment method</a>
+                                </li>
+                            </ul>
                         </li>
+
+                        <!-- Logout -->
                         <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
                     </ul>
                 }

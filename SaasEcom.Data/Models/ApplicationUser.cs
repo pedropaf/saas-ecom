@@ -8,6 +8,11 @@ namespace SaasEcom.Data.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+
         public string StripeCustomerId { get; set; }
 
         public virtual IList<Subscription> Subscriptions { get; set; }
@@ -18,6 +23,22 @@ namespace SaasEcom.Data.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+        }
+
+        public bool HasUserDetails()
+        {
+            if (string.IsNullOrEmpty(FirstName) ||
+                string.IsNullOrEmpty(LastName))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool HasPaymentDetails()
+        {
+            return false;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using SaasEcom.Data.Models;
 
 namespace SaasEcom.Web.Areas.Dashboard.ViewModels
 {
@@ -10,6 +11,9 @@ namespace SaasEcom.Web.Areas.Dashboard.ViewModels
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
+
+        // TODO: Use User View Model
+        public ApplicationUser User { get; set; }
     }
 
     public class ManageLoginsViewModel

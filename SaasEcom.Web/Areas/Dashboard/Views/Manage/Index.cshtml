@@ -1,21 +1,64 @@
 @model SaasEcom.Web.Areas.Dashboard.ViewModels.IndexViewModel
 @{
-    ViewBag.Title = "Manage your account";
+    ViewBag.Title = "My account";
     Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
     <div class="col-md-8">
-        <p>
-            @if (Model.HasPassword) {
-                @Html.ActionLink("Change your password", "ChangePassword")
+
+        <h3>Personal Details</h3>
+        <hr />
+
+        <div class="clearfix">
+            @if (Model.User.HasUserDetails())
+            {
+                <dl class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd>@Model.User.FirstName</dd>
+                    <dt>Last name</dt>
+                    <dd>@Model.User.LastName</dd>
+                    <dt>Address</dt>
+                    <dd>@Model.User.Address</dd>
+                    <dt>City</dt>
+                    <dd>@Model.User.City</dd>
+                    <dt>Password</dt>
+                    <dd>
+                        @if (Model.HasPassword)
+                        {
+                            @Html.ActionLink("Change your password", "ChangePassword")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Pick a password", "SetPassword")
+                        }
+                    </dd>
+                </dl>
             }
-            else {
-                @Html.ActionLink("Pick a password", "SetPassword")
+            else
+            {
+                <a class="btn btn-primary" href="#">Fill in your Personal Details</a>
+
+                @(Model.HasPassword ?
+                        Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-default" }) :
+                        Html.ActionLink("Pick a password", "SetPassword", null, new { @class = "btn btn-default" }))
             }
-        </p>
-      
+
+        </div>
+
+        <h3>Payment Details</h3>
+        <hr />
+
+        <div class="clearfix">
+            @if (Model.User.HasPaymentDetails())
+            {
+                <p>Payment details</p>
+            }
+            else
+            {
+                <a class="btn btn-primary" href="#">Add your Payment Details</a>
+            }
+        </div>
     </div>
 </div>
