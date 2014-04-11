@@ -15,7 +15,6 @@ using SaasEcom.Web.ViewModels;
 
 namespace SaasEcom.Web.Controllers
 {
-    // TODO: Cleanup this controller
     [Authorize]
     public class AccountController : Controller
     {
@@ -288,7 +287,7 @@ namespace SaasEcom.Web.Controllers
             }
         }
 
-        private class ChallengeResult : HttpUnauthorizedResult
+        internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
             {

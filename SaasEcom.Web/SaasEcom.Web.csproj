@@ -199,10 +199,11 @@
     <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
-    <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\ManageController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\ManageViewModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -226,7 +227,10 @@
     </Content>
     <Content Include="Areas\Billing\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Account\Manage.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Manage\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Manage\SetPassword.cshtml" />
     <None Include="Content\billing\billing.less" />
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
@@ -349,20 +353,16 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

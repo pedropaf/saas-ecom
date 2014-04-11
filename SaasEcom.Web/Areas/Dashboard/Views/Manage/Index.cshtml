@@ -1,0 +1,21 @@
+@model SaasEcom.Web.Areas.Dashboard.ViewModels.IndexViewModel
+@{
+    ViewBag.Title = "Manage your account";
+    Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword) {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else {
+                @Html.ActionLink("Pick a password", "SetPassword")
+            }
+        </p>
+      
+    </div>
+</div>
