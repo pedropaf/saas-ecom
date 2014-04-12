@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
@@ -40,6 +42,19 @@ namespace SaasEcom.Web.Controllers
             }
         }
 
+        private ApplicationRoleManager _roleManager;
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            }
+            private set
+            {
+                _roleManager = value;
+            }
+        }
+
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -61,13 +76,19 @@ namespace SaasEcom.Web.Controllers
                 {
                     await SignInAsync(user, model.RememberMe);
 
-                    if (string.IsNullOrEmpty(returnUrl))
+                    // If return Url is set, go there:
+                    if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        // TODO: Redirect taking into account the user role!
-
+                        return RedirectToLocal(returnUrl);
                     }
 
-                    return RedirectToLocal(returnUrl);
+                    // Redirect to the user dashboard (Depending on the role)
+                    if (await UserIsAdmin(user))
+                    {
+                        return RedirectToAction("Index", "Home", new {area = "billing"});
+                    }
+
+                    return RedirectToAction("Index", "Home", new { area = "dashboard" });
                 }
                 else
                 {
@@ -78,7 +99,7 @@ namespace SaasEcom.Web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -285,6 +306,12 @@ namespace SaasEcom.Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+        private async Task<bool> UserIsAdmin(ApplicationUser user)
+        {
+            var adminRole = await RoleManager.FindByNameAsync("admin");
+
+            return user.Roles.Any(r => r.RoleId == adminRole.Id);
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

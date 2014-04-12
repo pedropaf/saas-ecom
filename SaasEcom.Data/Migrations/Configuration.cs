@@ -1,4 +1,6 @@
+using System;
 using System.Configuration;
+using System.Diagnostics;
 using SaasEcom.Data.PaymentProcessor.Stripe;
 
 namespace SaasEcom.Data.Migrations
@@ -33,9 +35,9 @@ namespace SaasEcom.Data.Migrations
             // Setup users for Identity Provider
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             
-            if (userManager.Users.FirstOrDefault(u => u.UserName == "admin") == null)
+            if (userManager.Users.FirstOrDefault(u => u.UserName == "admin@admin.com") == null)
             {
-                var user = new ApplicationUser { UserName = "admin" };
+                var user = new ApplicationUser { UserName = "admin@admin.com" };
                 userManager.Create(user, "password");
                 userManager.AddToRole(user.Id, "admin");
             }
@@ -73,24 +75,31 @@ namespace SaasEcom.Data.Migrations
             context.SaveChanges();
 
             // Create plans in Stripe
-            var stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings.Get("stripe_key"));
-
-            var plan = stripeService.GetSubscriptionPlan(starterPlan.FriendlyId);
-            if (plan == null)
+            try
             {
-                stripeService.CreateSubscriptionPlan(starterPlan);
+                var stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings.Get("stripe_key"));
+
+                var plan = stripeService.GetSubscriptionPlan(starterPlan.FriendlyId);
+                if (plan == null)
+                {
+                    stripeService.CreateSubscriptionPlan(starterPlan);
+                }
+
+                plan = stripeService.GetSubscriptionPlan(premiumPlan.FriendlyId);
+                if (plan == null)
+                {
+                    stripeService.CreateSubscriptionPlan(premiumPlan);
+                }
+
+                plan = stripeService.GetSubscriptionPlan(ultimatePlan.FriendlyId);
+                if (plan == null)
+                {
+                    stripeService.CreateSubscriptionPlan(ultimatePlan);
+                }
             }
-
-            plan = stripeService.GetSubscriptionPlan(premiumPlan.FriendlyId);
-            if (plan == null)
+            catch (Exception)
             {
-                stripeService.CreateSubscriptionPlan(premiumPlan);
-            }
-
-            plan = stripeService.GetSubscriptionPlan(ultimatePlan.FriendlyId);
-            if (plan == null)
-            {
-                stripeService.CreateSubscriptionPlan(ultimatePlan);
+                Debug.WriteLine("Add the stripe-key in Web.config.");
             }
         }
     }
