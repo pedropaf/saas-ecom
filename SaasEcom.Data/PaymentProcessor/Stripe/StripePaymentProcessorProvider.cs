@@ -116,16 +116,16 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
                 Email = user.Email,
                 
                 // Card Details
-                CardAddressCity = card.CardAddressCity,
-                CardAddressCountry = card.CardAddressCountry,
-                CardAddressLine1 = card.CardAddressLine1,
-                CardAddressLine2 = card.CardAddressLine2,
-                CardAddressState = card.CardAddressState,
-                CardAddressZip = card.CardAddressZip,
-                CardCvc = card.CardCvc,
-                CardExpirationMonth = card.CardExpirationMonth,
-                CardExpirationYear = card.CardExpirationYear,
-                CardName = card.CardName,
+                CardAddressCity = card.AddressCity,
+                CardAddressCountry = card.AddressCountry,
+                CardAddressLine1 = card.AddressLine1,
+                CardAddressLine2 = card.AddressLine2,
+                CardAddressState = card.AddressState,
+                CardAddressZip = card.AddressZip,
+                CardCvc = card.Cvc,
+                CardExpirationMonth = card.ExpirationMonth,
+                CardExpirationYear = card.ExpirationYear,
+                CardName = card.Name,
                 CardNumber = card.CardNumber
             };
 
@@ -156,15 +156,16 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
             var myUpdatedSubscription = new StripeCustomerUpdateSubscriptionOptions
             {
                 CardNumber = creditCard.CardNumber,
-                CardExpirationYear = creditCard.CardExpirationYear,
-                CardExpirationMonth = creditCard.CardExpirationMonth,
-                CardAddressCountry = creditCard.CardAddressCountry,
-                CardAddressLine1 = creditCard.CardAddressLine1,
-                CardAddressLine2 = creditCard.CardAddressLine2,
-                CardAddressState = creditCard.CardAddressState,
-                CardAddressZip = creditCard.CardAddressZip,
-                CardName = creditCard.CardName,
-                CardCvc = creditCard.CardCvc,
+                CardExpirationYear = creditCard.ExpirationYear,
+                CardExpirationMonth = creditCard.ExpirationMonth,
+                CardAddressCountry = creditCard.AddressCountry,
+                CardAddressLine1 = creditCard.AddressLine1,
+                CardAddressLine2 = creditCard.AddressLine2,
+                CardAddressState = creditCard.AddressState,
+                CardAddressZip = creditCard.AddressZip,
+                CardName = creditCard.Name,
+                CardCvc = creditCard.Cvc,
+                CardAddressCity = creditCard.AddressCity,
                 PlanId = planId
             };
 

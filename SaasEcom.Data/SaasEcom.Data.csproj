@@ -87,9 +87,14 @@
     <Compile Include="Migrations\201404111633422_UserDetails.Designer.cs">
       <DependentUpon>201404111633422_UserDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404130036474_InvoicesAdded.cs" />
+    <Compile Include="Migrations\201404130036474_InvoicesAdded.Designer.cs">
+      <DependentUpon>201404130036474_InvoicesAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
+    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="PaymentProcessor\Stripe\StripePaymentProcessorProvider.cs" />
@@ -120,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404111633422_UserDetails.resx">
       <DependentUpon>201404111633422_UserDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404130036474_InvoicesAdded.resx">
+      <DependentUpon>201404130036474_InvoicesAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

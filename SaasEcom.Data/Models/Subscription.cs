@@ -10,7 +10,10 @@ namespace SaasEcom.Data.Models
         public DateTime? TrialStart { get; set; }
         public DateTime? TrialEnd { get; set; }
 
+        public int SubscriptionPlanId { get; set; }
         public virtual SubscriptionPlan SubscriptionPlan { get; set; }
+
+        public int ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
         public string Status()

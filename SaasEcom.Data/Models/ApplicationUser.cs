@@ -17,6 +17,10 @@ namespace SaasEcom.Data.Models
 
         public virtual IList<Subscription> Subscriptions { get; set; }
 
+        public virtual IList<Invoice> Invoices { get; set; }
+
+        public virtual IList<CreditCard> CreditCards { get; set; } // The actual credit card number is not stored! 
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
