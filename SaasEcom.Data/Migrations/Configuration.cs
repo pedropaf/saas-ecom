@@ -11,11 +11,11 @@ namespace SaasEcom.Data.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<SaasEcom.Data.ApplicationDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<SaasEcom.Data.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)
