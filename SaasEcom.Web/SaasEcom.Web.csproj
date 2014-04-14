@@ -206,6 +206,7 @@
     <Compile Include="Areas\Dashboard\ViewModels\ManageViewModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StripeWebhooksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -367,6 +368,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Billing\Models\" />
+    <Folder Include="Views\StripeWebhooks\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
