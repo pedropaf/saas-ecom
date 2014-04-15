@@ -232,7 +232,7 @@
     <Content Include="Areas\Dashboard\Views\Manage\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Manage\ManageLogins.cshtml" />
     <Content Include="Areas\Dashboard\Views\Manage\SetPassword.cshtml" />
-    <None Include="Content\billing\billing.less" />
+    <Content Include="Content\billing\billing.less" />
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
     </Content>
@@ -296,7 +296,7 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <None Include="Content\site.less" />
+    <Content Include="Content\site.less" />
     <Content Include="Scripts\billing.js" />
     <Content Include="Areas\Billing\Views\web.config" />
     <Content Include="Areas\Billing\Views\Shared\_BillingLayout.cshtml" />
@@ -374,7 +374,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SaasEcom.Data\SaasEcom.Data.csproj">
