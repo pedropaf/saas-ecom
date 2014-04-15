@@ -21,7 +21,7 @@
     // Account for jankitude on images
     > img,
     > a > img {
-      &:extend(.img-responsive);
+      .img-responsive();
       line-height: 1;
     }
   }
@@ -206,8 +206,8 @@
 
   // Scale up the controls a smidge
   .carousel-control {
-    .glyphicon-chevron-left,
-    .glyphicon-chevron-right,
+    .glyphicons-chevron-left,
+    .glyphicons-chevron-right,
     .icon-prev,
     .icon-next {
       width: 30px;
