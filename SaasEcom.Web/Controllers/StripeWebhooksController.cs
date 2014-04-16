@@ -1,12 +1,26 @@
 ﻿using System.IO;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Data;
+using SaasEcom.Data.DataServices;
 using Stripe;
 
 namespace SaasEcom.Web.Controllers
 {
     public class StripeWebhooksController : Controller
     {
+        private InvoicesDataServices _invoicesDataServices;
+        private InvoicesDataServices InvoicesDataServices
+        {
+            get
+            {
+                return _invoicesDataServices ??
+                       new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>());
+            }
+        }
+
         // GET: /StripeWebhooks/
         public ActionResult Index()
         {
@@ -39,7 +53,8 @@ namespace SaasEcom.Web.Controllers
                     break;
 
                 case "invoice.created": // Occurs whenever a new invoice is created. If you are using webhooks, Stripe will wait one hour after they have all succeeded to attempt to pay the invoice; the only exception here is on the first invoice, which gets created and paid immediately when you subscribe a customer to a plan. If your webhooks do not all respond successfully, Stripe will continue retrying the webhooks every hour and will not attempt to pay the invoice. After 3 days, Stripe will attempt to pay the invoice regardless of whether or not your webhooks have succeeded. See how to respond to a webhook.
-                    // TODO
+                    var stripeInvoice = Stripe.Mapper<StripeInvoice>.MapFromJson(stripeEvent.Data.Object.ToString());
+                    InvoicesDataServices.Create(MapToInvoice(stripeInvoice));
                     break;
 
                 case "invoice.payment_succeeded": // Occurs whenever an invoice attempts to be paid, and the payment succeeds.

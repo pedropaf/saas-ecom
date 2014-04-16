@@ -9,6 +9,7 @@ namespace SaasEcom.Data.Models
     public class Invoice
     {
         public int Id { get; set; }
+        public string StripeId { get; set; }
 
         public int ApplicationUserId { get; set; }
         public virtual ApplicationUser Customer { get; set; }
