@@ -1,5 +1,4 @@
-﻿@using System.IdentityModel.Configuration
-@model SaasEcom.Web.Areas.Dashboard.ViewModels.DashboardViewModel
+﻿@model SaasEcom.Web.Areas.Dashboard.ViewModels.DashboardViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
@@ -11,28 +10,71 @@
 
 <h2>@User.Identity.Name</h2>
 
-<h3>Subscriptions</h3>
+<!-- Subscriptions -->
+@if (Model.Invoices != null && Model.Invoices.Count > 0)
+{
+    <h3>Subscriptions</h3>
 
-<div class="panel-group" id="subscriptions">
-    @foreach (var subscription in Model.Subscriptions)
-    {
-        <div class="panel panel-default subscription-panel">
-            <div class="panel-heading" data-toggle="collapse" data-target="#@subscription.Id">
-                <h4 class="panel-title">
-                    <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
-                    <span class="plan-name">&nbsp;@subscription.SubscriptionPlan.Name &nbsp;</span>
-                    <span class="plan-price">£@subscription.SubscriptionPlan.Price / @subscription.SubscriptionPlan.Interval</span>
-                    <span class="plan-status">@subscription.Status()</span>
-                </h4>
-            </div>
-            <div id="@subscription.Id" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <dl class="dl-horizontal">
-                        <dt>Started</dt>
-                        <dd>@subscription.Start</dd>
-                    </dl>
+    <div class="panel-group" id="subscriptions">
+        @foreach (var subscription in Model.Subscriptions)
+        {
+            <div class="panel panel-default subscription-panel">
+                <div class="panel-heading" data-toggle="collapse" data-target="#@subscription.Id">
+                    <h4 class="panel-title">
+                        <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
+                        <span class="plan-name">&nbsp;@subscription.SubscriptionPlan.Name &nbsp;</span>
+                        <span class="plan-price">£@subscription.SubscriptionPlan.Price / @subscription.SubscriptionPlan.Interval</span>
+                        <span class="plan-status">@subscription.Status()</span>
+                    </h4>
+                </div>
+                <div id="@subscription.Id" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Started</dt>
+                            <dd>@subscription.Start</dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
+else
+{
+    <p>You haven't signed up for any of our services.</p>
+}
+
+
+<!-- Invoices -->
+@if (Model.Invoices != null && Model.Invoices.Count > 0)
+{
+    <h3>Invoices</h3>
+
+    <div class="panel-group" id="invoices">
+        @foreach (var invoice in Model.Invoices)
+        {
+            <div class="panel panel-default invoice-panel">
+                <div class="panel-heading" data-toggle="collapse" data-target="#@invoice.Id">
+                    <h4 class="panel-title">
+                        <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
+                        <span class="plan-name">&nbsp;@invoice.InvoiceConcept&nbsp;</span>
+                        <span class="plan-price">£@invoice.TotalAmount</span>
+                        <span class="plan-status">@invoice.InvoiceStatus</span>
+                    </h4>
+                </div>
+                <div id="@invoice.Id" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>Date</dt>
+                            <dd>@invoice.Date</dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>Due date</dt>
+                            <dd>@invoice.DueDate</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

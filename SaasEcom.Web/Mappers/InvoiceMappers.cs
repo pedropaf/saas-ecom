@@ -13,8 +13,9 @@ namespace SaasEcom.Web.Mappers
             return new Invoice
             {
                 StripeId = stripeInvoice.id,
+                StripeCustomerId = stripeInvoice.customer,
                 TotalAmount = stripeInvoice.total,
-                InvoiceConcept = stripeInvoice.description
+                InvoiceConcept = stripeInvoice.description,
                 
                 // TODO: Add the rest
 
