@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using SaasEcom.Data.Models;
 
 namespace SaasEcom.Data.DataServices
@@ -14,9 +16,9 @@ namespace SaasEcom.Data.DataServices
             this._dbContext = context;
         }
 
-        public void SubscribeUser(ApplicationUser user, string planId)
+        public async Task<int> SubscribeUserAsync(ApplicationUser user, string planId)
         {
-            var plan = _dbContext.SubscriptionPlans.First(x => x.FriendlyId == planId);
+            var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.FriendlyId == planId);
 
             var s = new Subscription
             {
@@ -29,12 +31,12 @@ namespace SaasEcom.Data.DataServices
             };
 
             _dbContext.Subscriptions.Add(s);
-            _dbContext.SaveChanges();
+            return await _dbContext.SaveChangesAsync();
         }
 
-        public List<Subscription> UserSubscriptions(string name)
+        public async Task<List<Subscription>> UserSubscriptionsAsync(string name)
         {
-            return _dbContext.Subscriptions.Where(s => s.User.UserName == name).Select(s => s).ToList();
+            return await _dbContext.Subscriptions.Where(s => s.User.UserName == name).Select(s => s).ToListAsync();
         }
     }
 }

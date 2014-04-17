@@ -128,7 +128,7 @@ namespace SaasEcom.Web.Controllers
                     // Subscribe the user to the plan
                     var subscriptionService = new SubscriptionsDataService
                         (Request.GetOwinContext().Get<ApplicationDbContext>());
-                    subscriptionService.SubscribeUser(user, model.SubscriptionPlan);
+                    await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
                     
                     // Create a new customer in Stripe and subscribe him to the plan
                     var stripeService =
