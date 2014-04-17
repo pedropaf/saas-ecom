@@ -15,11 +15,14 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
     {
         public ActionResult Index()
         {
-            var service = new SubscriptionsDataService(Request.GetOwinContext().Get<ApplicationDbContext>());
+            var context = Request.GetOwinContext().Get<ApplicationDbContext>();
+            var subService = new SubscriptionsDataService(context);
+            var invService = new InvoicesDataServices(context);
 
             var viewModel = new DashboardViewModel
             {
-                Subscriptions = service.UserSubscriptions(User.Identity.Name)
+                Subscriptions = subService.UserSubscriptions(User.Identity.Name),
+                Invoices = invService.UserInvoices(User.Identity.Name)
             };
 
             return View(viewModel);

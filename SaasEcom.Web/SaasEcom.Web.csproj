@@ -211,6 +211,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\EmailIdentityService.cs" />
+    <Compile Include="Mappers\InvoiceMappers.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

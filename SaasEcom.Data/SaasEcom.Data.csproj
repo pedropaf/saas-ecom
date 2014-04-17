@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="DataServices\InvoicesDataServices.cs" />
     <Compile Include="Infrastructure\Invoicing\InvoicingProvider.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.Designer.cs">
@@ -91,6 +92,10 @@
     <Compile Include="Migrations\201404130036474_InvoicesAdded.cs" />
     <Compile Include="Migrations\201404130036474_InvoicesAdded.Designer.cs">
       <DependentUpon>201404130036474_InvoicesAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404161622515_InvoiceStripeId.cs" />
+    <Compile Include="Migrations\201404161622515_InvoiceStripeId.Designer.cs">
+      <DependentUpon>201404161622515_InvoiceStripeId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -129,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404130036474_InvoicesAdded.resx">
       <DependentUpon>201404130036474_InvoicesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404161622515_InvoiceStripeId.resx">
+      <DependentUpon>201404161622515_InvoiceStripeId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
