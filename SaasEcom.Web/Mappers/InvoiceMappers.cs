@@ -12,10 +12,12 @@ namespace SaasEcom.Web.Mappers
         {
             return new Invoice
             {
-                StripeId = stripeInvoice.id,
-                StripeCustomerId = stripeInvoice.customer,
-                TotalAmount = stripeInvoice.total,
-                InvoiceConcept = stripeInvoice.description,
+                StripeId = stripeInvoice.Id,
+                StripeCustomerId = stripeInvoice.CustomerId,
+                TotalAmount = stripeInvoice.Total,
+                Date = stripeInvoice.Date,
+                
+                // InvoiceConcept = Build,
                 
                 // TODO: Add the rest
 

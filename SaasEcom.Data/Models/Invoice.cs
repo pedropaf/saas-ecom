@@ -17,7 +17,6 @@ namespace SaasEcom.Data.Models
 
         public string InvoiceNumber { get; set; }
         public DateTime Date { get; set; }
-        public DateTime DueDate { get; set; }
 
         public string BillingName { get; set; }
         public string BillingAddressLine1 { get; set; }

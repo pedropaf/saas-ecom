@@ -256,14 +256,8 @@
     </Content>
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\site.css">
-      <DependentUpon>site.less</DependentUpon>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\site.css.map">
-      <DependentUpon>site.css</DependentUpon>
-    </Content>
     <Content Include="Content\dashboard\dashboard.less" />
     <Content Include="Content\dashboard\dashboard.css.map">
       <DependentUpon>dashboard.css</DependentUpon>
@@ -337,6 +331,7 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\saas-ecom %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
