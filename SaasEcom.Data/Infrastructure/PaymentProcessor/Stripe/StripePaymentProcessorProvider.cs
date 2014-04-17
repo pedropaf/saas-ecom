@@ -46,7 +46,7 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
             {
                 Id = plan.FriendlyId,
                 Name = plan.Name,
-                AmountInCents = (int) Math.Round(plan.Price * 100),
+                Amount = (int) Math.Round(plan.Price * 100),
                 Currency = "GBP",
                 Interval = GetInterval(plan.Interval),
                 TrialPeriodDays = plan.TrialPeriodInDays,
@@ -78,9 +78,9 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
             }
         }
 
-        public IEnumerable<StripePlan> GetAllPlans(int count = 100, int offset = 0)
+        public IEnumerable<StripePlan> GetAllPlans(int limit = 10)
         {
-            return PlanService.List(count, offset);
+            return PlanService.List(limit);
         }
 
         public void DeleteSubscriptionPlan(string planId)
@@ -142,9 +142,9 @@ namespace SaasEcom.Data.PaymentProcessor.Stripe
             CustomerService.Delete(customerId);
         }
 
-        public IEnumerable<StripeCustomer> GetAllCustomers(int count = 100, int offset = 0)
+        public IEnumerable<StripeCustomer> GetAllCustomers(int limit = 100)
         {
-            return CustomerService.List(count, offset);
+            return CustomerService.List(limit);
         }
 
         #endregion
