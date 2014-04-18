@@ -19,7 +19,7 @@
         @foreach (var subscription in Model.Subscriptions)
         {
             <div class="panel panel-default subscription-panel">
-                <div class="panel-heading" data-toggle="collapse" data-target="#@subscription.Id">
+                <div class="panel-heading" data-toggle="collapse" data-target="#sub-@subscription.Id">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
                         <span class="plan-name">&nbsp;@subscription.SubscriptionPlan.Name &nbsp;</span>
@@ -27,7 +27,7 @@
                         <span class="plan-status">@subscription.Status()</span>
                     </h4>
                 </div>
-                <div id="@subscription.Id" class="panel-collapse collapse">
+                <div id="sub-@subscription.Id" class="panel-collapse collapse">
                     <div class="panel-body">
                         <dl class="dl-horizontal">
                             <dt>Started</dt>
@@ -54,15 +54,13 @@ else
         @foreach (var invoice in Model.Invoices)
         {
             <div class="panel panel-default invoice-panel">
-                <div class="panel-heading" data-toggle="collapse" data-target="#@invoice.Id">
+                <div class="panel-heading" data-toggle="collapse" data-target="#invoice-@invoice.Id">
                     <h4 class="panel-title">
                         <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
-                        <span class="plan-name">&nbsp;@invoice.InvoiceConcept&nbsp;</span>
-                        <span class="plan-price">£@invoice.TotalAmount</span>
-                        <span class="plan-status">@invoice.InvoiceStatus</span>
+                        <span class="plan-price">£@invoice.Total</span>
                     </h4>
                 </div>
-                <div id="@invoice.Id" class="panel-collapse collapse">
+                <div id="invoice-@invoice.Id" class="panel-collapse collapse">
                     <div class="panel-body">
                         <dl class="dl-horizontal">
                             <dt>Date</dt>

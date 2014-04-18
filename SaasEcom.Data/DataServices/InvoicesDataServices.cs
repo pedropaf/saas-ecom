@@ -22,19 +22,22 @@ namespace SaasEcom.Data.DataServices
 
         public async Task<int> CreateAsync(Invoice invoice)
         {
-            // TODO: Validate that StripeId doesn't exist
-            // Set user Id
-            var user = await _dbContext.Users.Where(u => u.StripeCustomerId == invoice.StripeCustomerId).FirstOrDefaultAsync();
+            var res = -1;
 
-            if (user == null)
+            if (_dbContext.Invoices.All(i => i.StripeId != invoice.StripeId))
             {
-                // TODO: Log error
-                return -1;
+                // Set user Id
+                var user = await _dbContext.Users.Where(u => u.StripeCustomerId == invoice.StripeCustomerId).FirstOrDefaultAsync();
+
+                if (user != null)
+                {
+                    invoice.Customer = user;
+                    _dbContext.Invoices.Add(invoice);
+                    res = await _dbContext.SaveChangesAsync();
+                }
             }
 
-            invoice.Customer = user;
-            _dbContext.Invoices.Add(invoice);
-            return await _dbContext.SaveChangesAsync();
+            return res;
         }
     }
 }
