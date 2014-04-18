@@ -109,21 +109,9 @@
     <Compile Include="Migrations\201404111633422_UserDetails.Designer.cs">
       <DependentUpon>201404111633422_UserDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201404130036474_InvoicesAdded.cs" />
-    <Compile Include="Migrations\201404130036474_InvoicesAdded.Designer.cs">
-      <DependentUpon>201404130036474_InvoicesAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404161622515_InvoiceStripeId.cs" />
-    <Compile Include="Migrations\201404161622515_InvoiceStripeId.Designer.cs">
-      <DependentUpon>201404161622515_InvoiceStripeId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404172027139_InvoiceStripeCustomerId.cs" />
-    <Compile Include="Migrations\201404172027139_InvoiceStripeCustomerId.Designer.cs">
-      <DependentUpon>201404172027139_InvoiceStripeCustomerId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201404172114273_InvoiceDueDateRemoved.cs" />
-    <Compile Include="Migrations\201404172114273_InvoiceDueDateRemoved.Designer.cs">
-      <DependentUpon>201404172114273_InvoiceDueDateRemoved.cs</DependentUpon>
+    <Compile Include="Migrations\201404181242158_InvoicesAdded.cs" />
+    <Compile Include="Migrations\201404181242158_InvoicesAdded.Designer.cs">
+      <DependentUpon>201404181242158_InvoicesAdded.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -160,17 +148,8 @@
     <EmbeddedResource Include="Migrations\201404111633422_UserDetails.resx">
       <DependentUpon>201404111633422_UserDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404130036474_InvoicesAdded.resx">
-      <DependentUpon>201404130036474_InvoicesAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404161622515_InvoiceStripeId.resx">
-      <DependentUpon>201404161622515_InvoiceStripeId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404172027139_InvoiceStripeCustomerId.resx">
-      <DependentUpon>201404172027139_InvoiceStripeCustomerId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201404172114273_InvoiceDueDateRemoved.resx">
-      <DependentUpon>201404172114273_InvoiceDueDateRemoved.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201404181242158_InvoicesAdded.resx">
+      <DependentUpon>201404181242158_InvoicesAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

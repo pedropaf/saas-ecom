@@ -13,7 +13,7 @@ namespace SaasEcom.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201404130036474_InvoicesAdded"; }
+            get { return "201404181242158_InvoicesAdded"; }
         }
         
         string IMigrationMetadata.Source

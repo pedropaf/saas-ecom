@@ -22,6 +22,7 @@ namespace SaasEcom.Data.DataServices
 
         public async Task<int> CreateAsync(Invoice invoice)
         {
+            // TODO: Validate that StripeId doesn't exist
             // Set user Id
             var user = await _dbContext.Users.Where(u => u.StripeCustomerId == invoice.StripeCustomerId).FirstOrDefaultAsync();
 

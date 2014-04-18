@@ -14,10 +14,8 @@ namespace SaasEcom.Web.Mappers
             {
                 StripeId = stripeInvoice.Id,
                 StripeCustomerId = stripeInvoice.CustomerId,
-                TotalAmount = stripeInvoice.Total,
+                Total = stripeInvoice.Total,
                 Date = stripeInvoice.Date,
-                
-                // InvoiceConcept = Build,
                 
                 // TODO: Add the rest
 

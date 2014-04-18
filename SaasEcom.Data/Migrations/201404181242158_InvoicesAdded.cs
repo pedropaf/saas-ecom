@@ -40,21 +40,61 @@ namespace SaasEcom.Data.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ApplicationUserId = c.Int(nullable: false),
-                        InvoiceNumber = c.String(),
+                        StripeId = c.String(maxLength: 50),
+                        StripeCustomerId = c.String(maxLength: 50),
                         Date = c.DateTime(nullable: false),
-                        DueDate = c.DateTime(nullable: false),
-                        BillingName = c.String(),
-                        BillingAddressLine1 = c.String(),
-                        BillingAddressLine2 = c.String(),
-                        InvoiceConcept = c.String(),
-                        TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        InvoiceStatus = c.Int(nullable: false),
+                        PeriodStart = c.DateTime(nullable: false),
+                        PeriodEnd = c.DateTime(nullable: false),
+                        Subtotal = c.Int(nullable: false),
+                        Total = c.Int(nullable: false),
+                        Attempted = c.Boolean(nullable: false),
+                        Closed = c.Boolean(nullable: false),
+                        Paid = c.Boolean(nullable: false),
+                        AttemptCount = c.Int(nullable: false),
+                        AmountDue = c.Int(nullable: false),
+                        Currency = c.String(),
+                        StartingBalance = c.Int(nullable: false),
+                        EndingBalance = c.Int(),
+                        NextPaymentAttempt = c.DateTime(),
+                        Charge = c.Int(),
+                        Discount = c.Int(),
+                        ApplicationFee = c.Int(),
                         Customer_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.Customer_Id)
+                .Index(t => t.StripeId, unique: true)
+                .Index(t => t.StripeCustomerId)
+                .Index(t => t.Paid)
                 .Index(t => t.Customer_Id);
+            
+            CreateTable(
+                "dbo.LineItems",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        StripeLineItemId = c.String(),
+                        Type = c.String(),
+                        Amount = c.Int(nullable: false),
+                        Currency = c.String(),
+                        Proration = c.Boolean(nullable: false),
+                        Period_Start = c.DateTime(nullable: false),
+                        Period_End = c.DateTime(nullable: false),
+                        Quantity = c.Int(nullable: false),
+                        Plan_StripePlanId = c.String(),
+                        Plan_Interval = c.String(),
+                        Plan_Name = c.String(),
+                        Plan_Created = c.DateTime(nullable: false),
+                        Plan_AmountInCents = c.Int(nullable: false),
+                        Plan_Currency = c.String(),
+                        Plan_IntervalCount = c.Int(nullable: false),
+                        Plan_TrialPeriodDays = c.Int(nullable: false),
+                        Plan_StatementDescription = c.String(),
+                        Invoice_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Invoices", t => t.Invoice_Id)
+                .Index(t => t.Invoice_Id);
             
             AddColumn("dbo.Subscriptions", "ApplicationUserId", c => c.Int(nullable: false));
             AlterColumn("dbo.Subscriptions", "SubscriptionPlanId", c => c.Int(nullable: false));
@@ -65,13 +105,19 @@ namespace SaasEcom.Data.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Subscriptions", "SubscriptionPlanId", "dbo.SubscriptionPlans");
+            DropForeignKey("dbo.LineItems", "Invoice_Id", "dbo.Invoices");
             DropForeignKey("dbo.Invoices", "Customer_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.CreditCards", "User_Id", "dbo.AspNetUsers");
             DropIndex("dbo.Subscriptions", new[] { "SubscriptionPlanId" });
+            DropIndex("dbo.LineItems", new[] { "Invoice_Id" });
             DropIndex("dbo.Invoices", new[] { "Customer_Id" });
+            DropIndex("dbo.Invoices", new[] { "Paid" });
+            DropIndex("dbo.Invoices", new[] { "StripeCustomerId" });
+            DropIndex("dbo.Invoices", new[] { "StripeId" });
             DropIndex("dbo.CreditCards", new[] { "User_Id" });
             AlterColumn("dbo.Subscriptions", "SubscriptionPlanId", c => c.Int());
             DropColumn("dbo.Subscriptions", "ApplicationUserId");
+            DropTable("dbo.LineItems");
             DropTable("dbo.Invoices");
             DropTable("dbo.CreditCards");
             RenameColumn(table: "dbo.Subscriptions", name: "SubscriptionPlanId", newName: "SubscriptionPlan_Id");
