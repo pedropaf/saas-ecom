@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
-using SaasEcom.Data.PaymentProcessor.Stripe;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 
 namespace SaasEcom.Data.Migrations
 {

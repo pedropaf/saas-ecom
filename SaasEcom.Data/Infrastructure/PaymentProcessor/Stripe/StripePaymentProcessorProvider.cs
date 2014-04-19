@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using System.Threading.Tasks;
 using SaasEcom.Data.Models;
 using Stripe;
 
-namespace SaasEcom.Data.PaymentProcessor.Stripe
+namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
     // TODO: Abstract Interface and make more generic
     public class StripePaymentProcessorProvider

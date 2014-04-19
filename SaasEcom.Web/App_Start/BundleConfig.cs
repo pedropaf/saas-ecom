@@ -1,7 +1,4 @@
 ﻿using System.Web.Optimization;
-using BundleTransformer.Core.Builders;
-using BundleTransformer.Core.Orderers;
-using BundleTransformer.Core.Transformers;
 
 namespace SaasEcom.Web
 {

@@ -11,8 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
-using SaasEcom.Data.PaymentProcessor.Stripe;
 using SaasEcom.Web.ViewModels;
 
 namespace SaasEcom.Web.Controllers
