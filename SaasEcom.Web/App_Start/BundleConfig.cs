@@ -8,7 +8,7 @@ namespace SaasEcom.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             // TODO: Set to true for production
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
             bundles.UseCdn = true;
 
             // jQuery
@@ -21,8 +21,8 @@ namespace SaasEcom.Web
             
             // POST: Validation
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                "~/Scripts/jquery.validate.unobtrusive.min.js",
-                "~/Scripts/jquery.validate.min.js"));
+                "~/Scripts/jquery.validate.min.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js"));
 
             // Site Scripts
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
