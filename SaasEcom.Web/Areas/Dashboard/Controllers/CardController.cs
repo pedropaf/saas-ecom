@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Configuration;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
 using SaasEcom.Web.Areas.Dashboard.ViewModels;
 
@@ -49,6 +51,13 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         private CardDataService CardDataService
         {
             get { return _cardService ?? new CardDataService(DbContext); }
+        }
+
+
+        private object StripeService
+        {
+            get { return _stripeService ?? 
+                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_key"]);}
         }
 
         // GET: /Dashboard/Card/Details/5

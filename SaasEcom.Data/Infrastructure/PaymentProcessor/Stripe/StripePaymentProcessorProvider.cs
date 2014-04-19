@@ -29,6 +29,12 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             get { return _invoiceService ?? (_invoiceService = new StripeInvoiceService(_apiKey)); }
         }
 
+        private StripeCardService _cardService;
+        private StripeCardService CardService
+        {
+            get { return _cardService ?? (_cardService = new StripeCardService(_apiKey)); }
+        }
+
         public StripePaymentProcessorProvider(string apiKey)
         {
             _apiKey = apiKey;
@@ -177,11 +183,65 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
         #endregion
 
         #region Charges
+            
+            // TODO
 
         #endregion
 
         #region Cards
 
+        public StripeCard Create(string customerId, CreditCard card)
+        {
+            var options = new StripeCardCreateOptions
+            {
+                CardAddressCity = card.AddressCity,
+                CardAddressCountry = card.AddressCountry,
+                CardAddressLine1 = card.AddressLine1,
+                CardAddressLine2 = card.AddressLine2,
+                CardAddressState = card.AddressState,
+                CardAddressZip = card.AddressZip,
+                CardCvc = card.Cvc,
+                CardExpirationMonth = card.ExpirationMonth,
+                CardExpirationYear = card.ExpirationYear,
+                CardName = card.Name,
+                CardNumber = card.CardNumber
+            };
+
+            return CardService.Create(customerId, options);
+        }
+
+        public void Delete(string customerId, string cardId)
+        {
+            CardService.Delete(customerId, cardId);
+        }
+
+        public StripeCard Get(string customerId, string cardId)
+        {
+            return CardService.Get(customerId, cardId);
+        }
+
+        public IEnumerable<StripeCard> List(string customerId, int limit = 10)
+        {
+            return CardService.List(customerId, limit);
+        }
+
+        public void Update(string customerId, string cardId, CreditCard card)
+        {
+            var options = new StripeCardUpdateOptions
+            {
+                Name = card.Name,
+                AddressCity = card.AddressCity,
+                AddressCountry = card.AddressCountry,
+                AddressLine1 = card.AddressLine1,
+                AddressLine2 = card.AddressLine2,
+                AddressState = card.AddressState,
+                AddressZip = card.AddressZip,
+                ExpirationMonth = card.ExpirationMonth,
+                ExpirationYear = card.ExpirationYear
+            };
+
+            return CardService.Update(customerId, cardId, options);
+        }
         #endregion
 
         #region Tokens
