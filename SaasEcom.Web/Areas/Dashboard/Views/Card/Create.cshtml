@@ -6,7 +6,7 @@
 }
 
 <h3>Add credit card</h3>
-<hr/>
+<hr />
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -15,17 +15,15 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-            <br/>
+            <br />
             <fieldset>
                 <legend>Personal details</legend>
 
                 <div class="form-horizontal">
-
-
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name on card" })
                             @Html.ValidationMessageFor(model => model.Name)
                         </div>
                     </div>
@@ -33,7 +31,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.AddressLine1, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control", placeholder = "Address" })
                             @Html.ValidationMessageFor(model => model.AddressLine1)
                         </div>
                     </div>
@@ -41,7 +39,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.AddressLine2, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control", placeholder = "Address - line 2" })
                             @Html.ValidationMessageFor(model => model.AddressLine2)
                         </div>
                     </div>
@@ -49,7 +47,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.AddressCity, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.AddressCity, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.AddressCity, new { @class = "form-control", placeholder = "City" })
                             @Html.ValidationMessageFor(model => model.AddressCity)
                         </div>
                     </div>
@@ -57,74 +55,69 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.AddressCountry, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.AddressCountry, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.AddressCountry, new { @class = "form-control", placeholder = "Country" })
                             @Html.ValidationMessageFor(model => model.AddressCountry)
                         </div>
                     </div>
 
                     <div class="form-group">
+                        @Html.LabelFor(model => model.AddressZip, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.AddressZip, new { @class = "form-control col-md-4", placeholder = "Post code" })
+                            @Html.ValidationMessageFor(model => model.AddressZip)
+                        </div>
+
                         @Html.LabelFor(model => model.AddressState, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.AddressState, new { @class = "form-control" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.AddressState, new { @class = "form-control col-md-4", placeholder = "State / Province" })
                             @Html.ValidationMessageFor(model => model.AddressState)
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.AddressZip, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.AddressZip, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.AddressZip)
-                        </div>
-                    </div>
                 </div>
             </fieldset>
-            <br/>
-            <br/>
-            <fieldset>
-                <legend>Credit card details</legend>
+            <br />
+            <br />
+    <fieldset>
+        <legend>Credit card details</legend>
 
-                <div class="form-horizontal">
+        <div class="form-horizontal">
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CardNumber, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.CardNumber, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CardNumber)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Cvc, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Cvc, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Cvc)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ExpirationMonth, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.ExpirationMonth, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ExpirationMonth)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ExpirationYear, new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.ExpirationYear, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.ExpirationYear)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
-                        </div>
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CardNumber, new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(model => model.CardNumber, new { @class = "form-control", placeholder = "Card Number" })
+                    @Html.ValidationMessageFor(model => model.CardNumber)
                 </div>
-            </fieldset>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ExpirationMonth">Expiration Date</label>
+
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.ExpirationMonth, new { @class = "form-control", placeholder = "MM" })
+                    @Html.ValidationMessageFor(model => model.ExpirationMonth)
+                </div>
+
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.ExpirationYear, new { @class = "form-control", placeholder = "YYYY" })
+                    @Html.ValidationMessageFor(model => model.ExpirationYear)
+                </div>
+                
+                @Html.LabelFor(model => model.Cvc, new { @class = "control-label col-md-1" })
+                <div class="col-md-2">
+                    @Html.TextBoxFor(model => model.Cvc, new { @class = "form-control", placeholder = "ex. 123" })
+                    @Html.ValidationMessageFor(model => model.Cvc)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
         }
     </div>
 </div>

@@ -258,6 +258,9 @@
     </Content>
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\site.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\dashboard\dashboard.less" />
@@ -338,6 +341,9 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\site.css.map">
+      <DependentUpon>site.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\saas-ecom %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -393,7 +399,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Billing\Models\" />
-    <Folder Include="Views\StripeWebhooks\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -7,37 +7,35 @@ namespace SaasEcom.Data.Models
     public sealed class CreditCard
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+
         public string Last4 { get; set; }
         public string Type { get; set; }
         public string Fingerprint { get; set; }
-        
+
+        [Required]
         [DisplayName("City")]
         public string AddressCity { get; set; }
+
+        [Required]
         [DisplayName("Country")]
         public string AddressCountry { get; set; }
+
+        [Required]
         [DisplayName("Address")]
         public string AddressLine1 { get; set; }
-        [DisplayName("Address (line 2)")]
+        
+        [DisplayName("Address")]
         public string AddressLine2 { get; set; }
+        
         [DisplayName("State")]
         public string AddressState { get; set; }
+
+        [Required]
         [DisplayName("Post code")]
         public string AddressZip { get; set; }
-        
-        [Required]
-        [MaxLength(4)]
-        public string Cvc { get; set; }
 
-        [Required]
-        [Range(1, 12)]
-        [DisplayName("Exp. Month")]
-        public string ExpirationMonth { get; set; }
-
-        [Required]
-        [Range(2014, 2030)]
-        [DisplayName("Exp. Year")]
-        public string ExpirationYear { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -45,7 +43,19 @@ namespace SaasEcom.Data.Models
         [DisplayName("Card Number")]
         public string CardNumber { get; set; }
 
+        [Required(ErrorMessage = "Required")]
+        [MaxLength(4, ErrorMessage = "Too long")]
+        [DisplayName("CVC")]
+        public string Cvc { get; set; }
+
+        [Required(ErrorMessage = "Required")]
+        [Range(1, 12, ErrorMessage = "Invalid")]
+        public string ExpirationMonth { get; set; }
+
+        [Required(ErrorMessage = "Required")]
+        [Range(2014, 2030, ErrorMessage = "Invalid")]
+        public string ExpirationYear { get; set; }
+
         public string ApplicationUserId { get; set; }
-        public ApplicationUser User { get; set; }
     }
 }

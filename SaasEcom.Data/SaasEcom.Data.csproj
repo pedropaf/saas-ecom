@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201404191045530_CreditCardUpdated.Designer.cs">
       <DependentUpon>201404191045530_CreditCardUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404192054294_CreditCardValidation.cs" />
+    <Compile Include="Migrations\201404192054294_CreditCardValidation.Designer.cs">
+      <DependentUpon>201404192054294_CreditCardValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -158,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404191045530_CreditCardUpdated.resx">
       <DependentUpon>201404191045530_CreditCardUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404192054294_CreditCardValidation.resx">
+      <DependentUpon>201404192054294_CreditCardValidation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

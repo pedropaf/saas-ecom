@@ -42,16 +42,16 @@ input[type="checkbox"].input-validation-error {
 }
 
 /* Tweaks */
-.container{
+.container {
     max-width: 780px;
 }
 
-.marketing{
+.marketing {
     margin-top: 25px;
     margin-bottom: 30px;
 }
 
-.marketing-feature p{
+.marketing-feature p {
     margin-left: 25px;
 }
 
@@ -71,16 +71,51 @@ input[type="checkbox"].input-validation-error {
 }
 
 .panel {
-    -webkit-transition-property : scale; 
-    -webkit-transition-duration : 0.2s; 
-    -webkit-transition-timing-function : ease-in-out; 
-    -moz-transition : all 0.2s ease-in-out;  
+    -webkit-transition-property: scale;
+    -webkit-transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
 }
 
-.panel:hover {
-    box-shadow: 0 0 10px rgba(0,0,0,.5);
-    -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.5);
-    -webkit-transform: scale(1.05);
-    -moz-transform: scale(1.05);
+    .panel:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.5);
+        -webkit-transform: scale(1.05);
+        -moz-transform: scale(1.05);
+    }
+
+// Validation
+.field-validation-error {
+    color: #b94a48;
+    display: inline-block;
+    *display: inline;
+    padding-left: 5px;
+    vertical-align: middle;
+    *zoom: 1;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #fff9f9;
+    color: #b94a48;
+    border-color: #b94a48;
+
+    &:focus {
+        border-color: #953b39;
+        box-shadow: 0 0 6px #d59392;
+    }
+}
+
+.validation-summary-errors {
+    /*font-weight: bold;*/
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
 }

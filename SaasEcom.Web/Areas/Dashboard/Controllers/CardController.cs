@@ -12,7 +12,7 @@ using SaasEcom.Web.Areas.Dashboard.ViewModels;
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {
     // TODO: Integrate with Stripe
-
+    [Authorize]
     public class CardController : Controller
     {
         public CardController()

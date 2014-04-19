@@ -1,0 +1,99 @@
+﻿body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+  max-width: 280px;
+}
+/* styles for validation helpers */
+.field-validation-error {
+  color: #b94a48;
+}
+.field-validation-valid {
+  display: none;
+}
+input.input-validation-error {
+  border: 1px solid #b94a48;
+}
+input[type="checkbox"].input-validation-error {
+  border: 0 none;
+}
+.validation-summary-errors {
+  color: #b94a48;
+}
+.validation-summary-valid {
+  display: none;
+}
+/* Tweaks */
+.container {
+  max-width: 780px;
+}
+.marketing {
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+.marketing-feature p {
+  margin-left: 25px;
+}
+/* Pricing page */
+.price {
+  font-size: 4em;
+}
+.price-cents {
+  vertical-align: super;
+  font-size: 50%;
+}
+.price-month {
+  font-size: 35%;
+  font-style: italic;
+}
+.panel {
+  -webkit-transition-property: scale;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+}
+.panel:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+}
+.field-validation-error {
+  color: #b94a48;
+  display: inline-block;
+  *display: inline;
+  padding-left: 5px;
+  vertical-align: middle;
+  *zoom: 1;
+}
+.field-validation-valid {
+  display: none;
+}
+.input-validation-error {
+  border: 1px solid #ff0000;
+  background-color: #fff9f9;
+  color: #b94a48;
+  border-color: #b94a48;
+}
+.input-validation-error:focus {
+  border-color: #953b39;
+  box-shadow: 0 0 6px #d59392;
+}
+.validation-summary-errors {
+  /*font-weight: bold;*/
+  color: #b94a48;
+}
+.validation-summary-valid {
+  display: none;
+}
+/*# sourceMappingURL=site.css.map */
