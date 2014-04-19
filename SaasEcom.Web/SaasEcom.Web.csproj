@@ -212,6 +212,7 @@
     <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\CardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ManageController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
@@ -328,6 +329,11 @@
     <Content Include="Content\fontawesome\extras.less" />
     <Content Include="Content\fontawesome\core.less" />
     <Content Include="Content\fontawesome\bordered-pulled.less" />
+    <Content Include="Areas\Dashboard\Views\Card\Create.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Card\Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Card\Details.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Card\Edit.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Card\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

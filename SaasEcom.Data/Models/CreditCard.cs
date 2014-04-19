@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaasEcom.Data.Models
 {
-    public class CreditCard
+    public sealed class CreditCard
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,14 +16,21 @@ namespace SaasEcom.Data.Models
         public string AddressLine2 { get; set; }
         public string AddressState { get; set; }
         public string AddressZip { get; set; }
+        
+        [MaxLength(4)]
         public string Cvc { get; set; }
+        
+        [Range(1, 12)]
         public string ExpirationMonth { get; set; }
+
+        [Range(2014, 2030)]
         public string ExpirationYear { get; set; }
         
+        [MaxLength(20)]
         [NotMapped]
         public string CardNumber { get; set; }
 
-        public int ApplicationUserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

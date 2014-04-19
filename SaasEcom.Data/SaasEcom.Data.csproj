@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="DataServices\CardDataService.cs" />
     <Compile Include="DataServices\InvoicesDataServices.cs" />
     <Compile Include="Infrastructure\Invoicing\InvoicingProvider.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.cs" />
@@ -112,6 +113,10 @@
     <Compile Include="Migrations\201404181242158_InvoicesAdded.cs" />
     <Compile Include="Migrations\201404181242158_InvoicesAdded.Designer.cs">
       <DependentUpon>201404181242158_InvoicesAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201404191045530_CreditCardUpdated.cs" />
+    <Compile Include="Migrations\201404191045530_CreditCardUpdated.Designer.cs">
+      <DependentUpon>201404191045530_CreditCardUpdated.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -150,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404181242158_InvoicesAdded.resx">
       <DependentUpon>201404181242158_InvoicesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404191045530_CreditCardUpdated.resx">
+      <DependentUpon>201404191045530_CreditCardUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

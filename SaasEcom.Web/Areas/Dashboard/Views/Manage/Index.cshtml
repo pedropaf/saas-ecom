@@ -44,7 +44,6 @@
                         Html.ActionLink("Change your password", "ChangePassword", null, new { @class = "btn btn-default" }) :
                         Html.ActionLink("Pick a password", "SetPassword", null, new { @class = "btn btn-default" }))
             }
-
         </div>
 
         <h3>Payment Details</h3>
@@ -53,11 +52,13 @@
         <div class="clearfix">
             @if (Model.User.HasPaymentDetails())
             {
-                <p>Payment details</p>
+                <h3>Payment details</h3>
+
+
             }
             else
             {
-                <a class="btn btn-primary" href="#">Add your Payment Details</a>
+                <a class="btn btn-primary" href="@Url.Action("AddCard")">Add your Payment Details</a>
             }
         </div>
     </div>
