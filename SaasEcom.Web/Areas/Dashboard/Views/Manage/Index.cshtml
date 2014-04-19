@@ -52,13 +52,16 @@
         <div class="clearfix">
             @if (Model.User.HasPaymentDetails())
             {
-                <h3>Payment details</h3>
-
-
+                <ul>
+                    @foreach (var card in Model.User.CreditCards)
+                    {
+                        <li>**** @card.Last4 (@card.ExpirationMonth / @card.ExpirationYear)</li>
+                    }
+                </ul>
             }
             else
             {
-                <a class="btn btn-primary" href="@Url.Action("AddCard")">Add your Payment Details</a>
+                <a class="btn btn-primary" href="@Url.Action("Create", "Card")">Add your Payment Details</a>
             }
         </div>
     </div>

@@ -217,6 +217,7 @@
     <Compile Include="Areas\Dashboard\Controllers\ManageController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\FlashViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\ManageViewModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -333,7 +334,7 @@
     <Content Include="Areas\Dashboard\Views\Card\Delete.cshtml" />
     <Content Include="Areas\Dashboard\Views\Card\Details.cshtml" />
     <Content Include="Areas\Dashboard\Views\Card\Edit.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Card\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\Alert.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

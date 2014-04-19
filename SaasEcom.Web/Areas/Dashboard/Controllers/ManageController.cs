@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -37,7 +35,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 _userManager = value;
             }
         }
-
+        
         // GET: /Account/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -57,6 +55,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
                 User = await UserManager.FindByIdAsync(User.Identity.GetUserId())
             };
+
             return View(model);
         }
 

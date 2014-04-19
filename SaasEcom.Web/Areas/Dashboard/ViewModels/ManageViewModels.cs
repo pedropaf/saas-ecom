@@ -11,8 +11,8 @@ namespace SaasEcom.Web.Areas.Dashboard.ViewModels
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
-
-        // TODO: Use User View Model
+        
+        // TODO: Replace this with UserViewModel
         public ApplicationUser User { get; set; }
     }
 

@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices;
 using SaasEcom.Data.Models;
+using SaasEcom.Web.Areas.Dashboard.ViewModels;
 
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {
@@ -51,12 +52,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             get { return _cardService ?? new CardDataService(DbContext); }
         }
 
-        // GET: /Dashboard/Card/
-        public async Task<ViewResult> Index()
-        {
-            return View(await CardDataService.GetAllAsync(User.Identity.GetUserId()));
-        }
-
         // GET: /Dashboard/Card/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -89,7 +84,10 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 creditcard.ApplicationUserId = User.Identity.GetUserId();
 
                 await CardDataService.AddAsync(creditcard);
-                return RedirectToAction("Index");
+
+                TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
+
+                return RedirectToAction("Index", "Manage");
             }
 
             return View(creditcard);

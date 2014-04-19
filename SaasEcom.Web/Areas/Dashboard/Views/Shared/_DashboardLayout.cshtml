@@ -22,8 +22,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <!--<ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
-                </ul>-->
+                        <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
+                    </ul>-->
+
                 <!-- Log out -->
                 @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                 {
@@ -49,6 +50,11 @@
         </div>
     </div>
     <div class="container body-content content">
+        @if (TempData.ContainsKey("flash"))
+        {
+            @Html.Partial("Alert", TempData["flash"]);
+        }
+
         @RenderBody()
         <hr />
         <footer>
