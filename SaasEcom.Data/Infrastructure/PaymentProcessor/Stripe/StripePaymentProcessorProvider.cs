@@ -190,7 +190,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 
         #region Cards
 
-        public StripeCard Create(string customerId, CreditCard card)
+        public StripeCard AddCard(string customerId, CreditCard card)
         {
             var options = new StripeCardCreateOptions
             {
@@ -204,7 +204,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
                 CardExpirationMonth = card.ExpirationMonth,
                 CardExpirationYear = card.ExpirationYear,
                 CardName = card.Name,
-                CardNumber = card.CardNumber
+                CardNumber = card.StripeToken
             };
 
             return CardService.Create(customerId, options);
@@ -225,7 +225,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return CardService.List(customerId, limit);
         }
 
-        public void Update(string customerId, string cardId, CreditCard card)
+        public StripeCard Update(string customerId, string cardId, CreditCard card)
         {
             var options = new StripeCardUpdateOptions
             {

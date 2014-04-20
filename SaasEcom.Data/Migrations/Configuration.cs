@@ -77,7 +77,7 @@ namespace SaasEcom.Data.Migrations
             // Create plans in Stripe
             try
             {
-                var stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings.Get("stripe_key"));
+                var stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings.Get("stripe_secret_key"));
 
                 var plan = stripeService.GetSubscriptionPlan(starterPlan.FriendlyId);
                 if (plan == null)

@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
@@ -13,7 +14,6 @@ using SaasEcom.Web.Areas.Dashboard.ViewModels;
 
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {
-    // TODO: Integrate with Stripe
     [Authorize]
     public class CardController : Controller
     {
@@ -53,11 +53,11 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             get { return _cardService ?? new CardDataService(DbContext); }
         }
 
-
-        private object StripeService
+        private StripePaymentProcessorProvider _stripeService;
+        private StripePaymentProcessorProvider StripeService
         {
             get { return _stripeService ?? 
-                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_key"]);}
+                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);}
         }
 
         // GET: /Dashboard/Card/Details/5
@@ -89,8 +89,14 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                creditcard.ApplicationUserId = User.Identity.GetUserId();
+                var userId = User.Identity.GetUserId();
+                creditcard.ApplicationUserId = userId;
 
+                // Add card to Stripe
+                var stripeCustomerId = DbContext.Users.First(u => u.Id == userId).StripeCustomerId;
+                this.StripeService.AddCard(stripeCustomerId, creditcard);
+                
+                // Add card to DB
                 await CardDataService.AddAsync(creditcard);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));

@@ -132,7 +132,7 @@ namespace SaasEcom.Web.Controllers
                     
                     // Create a new customer in Stripe and subscribe him to the plan
                     var stripeService =
-                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_key"]);
+                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);
                     var stripeUser = await stripeService.CreateCustomerAsync(user, model.SubscriptionPlan);
                     
                     // Add subscription Id to the user

@@ -7,6 +7,10 @@ namespace SaasEcom.Data.Models
     public sealed class CreditCard
     {
         public int Id { get; set; }
+
+        public string StripeId { get; set; }
+        public string StripeToken { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -36,9 +40,8 @@ namespace SaasEcom.Data.Models
         [DisplayName("Post code")]
         public string AddressZip { get; set; }
 
-
         [Required]
-        [MaxLength(20)]
+        [MaxLength(16)]
         [NotMapped]
         [DisplayName("Card Number")]
         public string CardNumber { get; set; }

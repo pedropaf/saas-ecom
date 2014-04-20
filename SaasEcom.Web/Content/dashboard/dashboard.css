@@ -53,4 +53,7 @@ body .validation-summary-errors {
 body .validation-summary-valid {
   display: none;
 }
+body .payment-errors {
+  margin-bottom: 20px;
+}
 /*# sourceMappingURL=dashboard.css.map */
