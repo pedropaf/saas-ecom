@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    min-width: 320px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -120,6 +121,36 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-.github-ribbon {
+// Hide github ribbon in narrow screens
+@media(max-width:991px)
+{
+    .github-ribbon {
+        display: none;
+    }
+}
 
+@media(min-width:992px)
+{
+    .github-ribbon {
+        display: block;
+    }
+}
+
+// Display narrow subscribe button in mobiles
+@media (max-width: 480px) {
+     .register-btn{
+         display: block;
+     }
+     .register-btn-wide{
+         display: none;
+     }
+}
+
+@media (min-width: 481px) {
+    .register-btn{
+         display: none;
+     }
+     .register-btn-wide{
+         display: block;
+     }
 }

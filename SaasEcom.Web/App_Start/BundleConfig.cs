@@ -9,15 +9,18 @@ namespace SaasEcom.Web
         {
             // TODO: Set to true for production
             BundleTable.EnableOptimizations = false;
+            
             bundles.UseCdn = true;
 
             // jQuery
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js")
+                .Include("~/Scripts/jquery-{version}.js"));
 
             // Modernizr
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include("~/Scripts/modernizr-2.6.2.js"));
+            bundles.Add(new ScriptBundle("~/bundles/modernizr", "http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.6.2.js")
+                .Include("~/Scripts/modernizr-2.6.2.js"));
             
             // POST: Validation
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -41,7 +44,6 @@ namespace SaasEcom.Web
                 "~/Scripts/bootstrap.min.js",
                 "~/Scripts/respond.js",
                 "~/Scripts/dashboard.js"));
-
 
             // Site CSS
             bundles.Add(new LessBundle("~/bundles/css").Include(

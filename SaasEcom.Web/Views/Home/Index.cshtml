@@ -10,7 +10,14 @@
             linkText: "Give our product a try - It's FREE for 30 days",
             actionName: "Register",
             controllerName: "Account",
-            htmlAttributes: new { @class = "btn btn-primary btn-lg" },
+            htmlAttributes: new { @class = "btn btn-primary btn-lg register-btn-wide" },
+            routeValues: null)
+        
+        @Html.ActionLink(
+            linkText: "Try our product FREE for 30 days",
+            actionName: "Register",
+            controllerName: "Account",
+            htmlAttributes: new { @class = "btn btn-primary register-btn" },
             routeValues: null)
     </p>
 </div>
@@ -24,9 +31,6 @@
 
         <h4><i class="fa fa-asterisk"></i> Subheading</h4>
         <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-        <h4><i class="fa fa-asterisk"></i> Subheading</h4>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
     </div>
 
     <div class="col-lg-6">
@@ -35,9 +39,6 @@
 
         <h4><i class="fa fa-asterisk"></i> Subheading</h4>
         <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-        <h4><i class="fa fa-asterisk"></i> Subheading</h4>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
     </div>
 </div>
 

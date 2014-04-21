@@ -204,7 +204,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
                 CardExpirationMonth = card.ExpirationMonth,
                 CardExpirationYear = card.ExpirationYear,
                 CardName = card.Name,
-                CardNumber = card.StripeToken
+                TokenId = card.StripeToken
             };
 
             return CardService.Create(customerId, options);

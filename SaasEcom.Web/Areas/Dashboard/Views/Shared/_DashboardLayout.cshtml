@@ -4,62 +4,67 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Billing Application</title>
+    <title>@ViewBag.Title - Dashboard</title>
     @Styles.Render("~/bundles/dashboard/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Styles.Render("~/bundles/fontawesome")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Dashboard", "Index", "Home", new { area = "dashboard" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <!--<ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
-                    </ul>-->
+    <div id="wrap">
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <i class="fa fa-dashboard navbar-brand"></i> @Html.ActionLink("Dashboard", "Index", "Home", new { area = "dashboard" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <!--<ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
+                        </ul>-->
+                    <!-- Log out -->
+                    @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <ul class="nav navbar-nav navbar-right">
 
-                <!-- Log out -->
-                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <ul class="nav navbar-nav navbar-right">
+                            <!-- Username drop-down -->
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-user"></i> @User.Identity.GetUserName() <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("Index", "Manage")"><i class="fa fa-list-ul"></i>  My details</a></li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-money"></i>  Payments</a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <!-- Username drop-down -->
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">@User.Identity.GetUserName() <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("Index", "Manage")">My details</a></li>
-                                <li>
-                                    <a href="#">Payment method</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- Logout -->
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
-                    </ul>
-                }
+                            <!-- Logout -->
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
+                        </ul>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content content">
-        @if (TempData.ContainsKey("flash"))
-        {
-            @Html.Partial("Alert", TempData["flash"]);
-        }
 
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Dashboard</p>
-        </footer>
+        <!-- Body -->
+        <div class="container content">
+            @if (TempData.ContainsKey("flash"))
+            {
+                @Html.Partial("Alert", TempData["flash"]);
+            }
+
+            @RenderBody()
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div id="footer">
+        <p class="footer container text-muted">&copy; @DateTime.Now.Year - Dashboard</p>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

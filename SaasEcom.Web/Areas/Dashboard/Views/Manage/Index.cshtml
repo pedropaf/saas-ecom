@@ -6,9 +6,9 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 col-md-offset-2">
 
-        <h3>Personal Details</h3>
+        <h4>Personal Details</h4>
         <hr />
 
         <div class="clearfix">
@@ -45,8 +45,10 @@
                         Html.ActionLink("Pick a password", "SetPassword", null, new { @class = "btn btn-default" }))
             }
         </div>
+        <br />
+        <br/>
 
-        <h3>Payment Details</h3>
+        <h4>Payment Details</h4>
         <hr />
 
         <div class="clearfix">
@@ -55,7 +57,19 @@
                 <ul>
                     @foreach (var card in Model.User.CreditCards)
                     {
-                        <li>**** @card.Last4 (@card.ExpirationMonth / @card.ExpirationYear)</li>
+                        <li>
+                            <i class="fa fa-credit-card"></i> 
+                            <span class="card-type">@card.Type</span>
+                            <span class="card-last4">**** @card.Last4</span>
+                            <span class="card-expiration">(@card.ExpirationMonth / @card.ExpirationYear)</span>
+                            <span class="card-default label label-primary">Default</span>
+                            <span class="card-edit">Edit</span>
+
+                            @if (Model.User.CreditCards.Count > 1)
+                            {
+                                <span class="card-delete">Delete</span>
+                            }
+                        </li>
                     }
                 </ul>
             }

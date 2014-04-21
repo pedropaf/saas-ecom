@@ -1,6 +1,7 @@
 ﻿body {
   padding-top: 50px;
   padding-bottom: 20px;
+  min-width: 320px;
 }
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -95,5 +96,31 @@ input[type="checkbox"].input-validation-error {
 }
 .validation-summary-valid {
   display: none;
+}
+@media (max-width: 991px) {
+  .github-ribbon {
+    display: none;
+  }
+}
+@media (min-width: 992px) {
+  .github-ribbon {
+    display: block;
+  }
+}
+@media (max-width: 480px) {
+  .register-btn {
+    display: block;
+  }
+  .register-btn-wide {
+    display: none;
+  }
+}
+@media (min-width: 481px) {
+  .register-btn {
+    display: none;
+  }
+  .register-btn-wide {
+    display: block;
+  }
 }
 /*# sourceMappingURL=site.css.map */
