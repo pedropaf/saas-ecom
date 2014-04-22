@@ -219,6 +219,7 @@
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\FlashViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\SubscriptionViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StripeWebhooksController.cs" />

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SaasEcom.Data.Models
 {
@@ -9,7 +8,7 @@ namespace SaasEcom.Data.Models
         public string FriendlyId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        // Currency
+        public string Currency { get; set; }
         public SubscriptionInterval Interval { get; set; }
         public int TrialPeriodInDays { get; set; }
         public string StatementDescription { get; set; }
@@ -28,3 +27,4 @@ namespace SaasEcom.Data.Models
         }
     }
 }
+

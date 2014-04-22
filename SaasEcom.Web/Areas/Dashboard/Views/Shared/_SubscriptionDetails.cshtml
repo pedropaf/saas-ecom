@@ -1,35 +1,48 @@
-﻿@Model SaasEcom.Data.Models.Subscription
-
+﻿@model SaasEcom.Web.Areas.Dashboard.ViewModels.SubscriptionViewModel
 <!-- Subscription plan -->
 <div class="col-sm-6 col-md-6">
     <div class="well">
-        <h4>You are currently on the <span class="text-primary">Starter</span> plan</h4>
-        <p>Your  monthly charge for the <strong>$9.00</strong> is paid on the 11th of each month.</p>
-        <br>
-        <h5>Card Details</h5>
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Card Type</th>
-                    <td>Visa</td>
-                </tr>
-                <tr>
-                    <th>Card Number</th>
-                    <td>************9349 &nbsp;<small>(<a href="javascript:;">change card</a>)</small></td>
-                </tr>
-                <tr>
-                    <th>Valid Until</th>
-                    <td>07/16</td>
-                </tr>
-            </tbody>
-        </table>
+        <h4>You are currently on the <span class="text-primary">@Model.Subscription.SubscriptionPlan.Name</span> plan</h4>
+        <p>Plan price: <strong>£@Model.Subscription.SubscriptionPlan.Price / @Model.Subscription.SubscriptionPlan.Interval</strong>.</p>
+        <p><strong>@Model.Subscription.Status()</strong></p>
+        <br/>
+
+        <!-- Payment details -->
+        @if (Model.CreditCard != null)
+        {
+            <h4 class="content-title">Payment Details</h4>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Card Type</th>
+                        <td>@Model.CreditCard.Type</td>
+                    </tr>
+                    <tr>
+                        <th>Card Number</th>
+                        <td>************@Model.CreditCard.Last4 &nbsp;<small>(<a href="javascript:;">change card</a>)</small></td>
+                    </tr>
+                    <tr>
+                        <th>Valid Until</th>
+                        <td>@Model.CreditCard.ExpirationMonth/@Model.CreditCard.ExpirationYear</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <br />
+            <hr />
+            <h5><i class="fa fa-arrow-circle-right"></i> Please <strong>register a credit card</strong> to pay for your subscription.</h5>
+            <a href="@Url.Action("Create", "Card")" class="btn btn-primary">Add Credit Card</a>
+        }
     </div> <!-- /.well -->
 </div> <!-- /.col -->
+
 <!-- Account usage -->
 <div class="col-sm-6 col-md-6">
     <div class="portlet portlet-boxed">
         <div class="portlet-body">
-            <h4 class="content-title"><u>Account Usage</u></h4>
+            <h4 class="content-title">Account Usage</h4>
             <div class="progress-stat">
                 <div class="progress-stat-label">
                     HDD Space
@@ -74,4 +87,4 @@
             </div> <!-- /.progress-stat -->
         </div> <!-- /.portlet-body -->
     </div> <!-- /.portlet -->
-</div> <!-- /.col -->
+</div>
