@@ -338,6 +338,9 @@
     <Content Include="Areas\Dashboard\Views\Card\Details.cshtml" />
     <Content Include="Areas\Dashboard\Views\Card\Edit.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\Alert.cshtml" />
+    <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\_SubscriptionDetails.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Home\_AvailablePlans.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
