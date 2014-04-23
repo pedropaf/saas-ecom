@@ -210,7 +210,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return CardService.Create(customerId, options);
         }
 
-        public void Delete(string customerId, string cardId)
+        public void DeleteCard(string customerId, string cardId)
         {
             CardService.Delete(customerId, cardId);
         }

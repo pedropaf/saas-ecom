@@ -143,14 +143,23 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
             if (ModelState.IsValid && await CardBelongToUser(creditcard.Id, userId))
             {
-                creditcard.ApplicationUserId = userId;
+                // Remove current card from stripe
+                var currentCard = await CardDataService.FindAsync(userId, creditcard.Id);
+                var stripeCustomerId = DbContext.Users.First(u => u.Id == userId).StripeCustomerId;
+                StripeService.DeleteCard(stripeCustomerId, currentCard.StripeId);
 
+                // Add card to Stripe
+                StripeService.AddCard(stripeCustomerId, creditcard);
+
+                // Update card in the DB
+                creditcard.ApplicationUserId = userId;
                 await CardDataService.UpdateAsync(User.Identity.GetUserId(), creditcard);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
 
                 return RedirectToAction("Index", "Home");
             }
+
             return View(creditcard);
         }
 
