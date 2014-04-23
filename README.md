@@ -6,7 +6,7 @@ Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe
 See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's connected to Stripe test gateway, so you can add one of their test credit cards.
 
 * **Test Card Number:** 4242 4242 4242 4242 
-* **Expiry date:** Any valid
+* **Expiry date:** Any future date.
 * **CVC:** 3 digits
 
 ## Features
@@ -31,9 +31,10 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 
 For future releases these is a list of features that it would be nice to support:
 
-* Paypal subscriptions
+* Paypal subscriptions.
 * Add unit tests.
 * Support multiple subscriptions per user.
 * Cancel subscriptions individually.
 * Upgrade / downgrade subscription.
 * Social Logins: Register using your facebook / twitter / google account?
+* Move copy to Resx files and add translations.

@@ -34,11 +34,5 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
             return View(viewModel);
         }
-
-        [ChildActionOnly]
-        public PartialViewResult AvailablePlans()
-        {
-            return PartialView("_AvailablePlans");
-        }
 	}
 }
