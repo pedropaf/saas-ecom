@@ -218,7 +218,7 @@
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\FlashViewModels.cs" />
-    <Compile Include="Areas\Dashboard\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\SubscriptionViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -247,9 +247,6 @@
     <Content Include="Areas\Billing\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Home\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Manage\Index.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Manage\SetPassword.cshtml" />
     <Content Include="Content\billing\billing.less" />
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
@@ -339,7 +336,6 @@
     <Content Include="Areas\Dashboard\Views\Shared\Alert.cshtml" />
     <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\_SubscriptionDetails.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Home\_AvailablePlans.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -384,8 +380,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -393,7 +387,6 @@
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

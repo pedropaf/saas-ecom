@@ -11,6 +11,7 @@
 </head>
 <body>
     <div id="wrap">
+
         <!-- Fixed navbar -->
         <div class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -23,9 +24,6 @@
                     <i class="fa fa-dashboard navbar-brand"></i> @Html.ActionLink("Dashboard", "Index", "Home", new { area = "dashboard" }, new { @class = "navbar-brand" })
                 </div>
                 <div class="navbar-collapse collapse">
-                    <!--<ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Help", "Help", "Home", new { area = "dashboard" })</li>
-                        </ul>-->
                     <!-- Log out -->
                     @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                     {
@@ -36,10 +34,11 @@
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="fa fa-user"></i> @User.Identity.GetUserName() <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="@Url.Action("Index", "Manage")"><i class="fa fa-list-ul"></i>  My details</a></li>
                                     <li>
-                                        <a href="#"><i class="fa fa-money"></i>  Payments</a>
+                                        <a href="@Url.Action("Password", "Manage")"><i class="fa fa-asterisk small"></i> Change your password</a>
                                     </li>
+                                    <li role="presentation" class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-question-circle"></i> Support</a></li>
                                 </ul>
                             </li>
 
