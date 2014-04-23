@@ -6,6 +6,7 @@ using SaasEcom.Data.Models;
 
 namespace SaasEcom.Web.Areas.Dashboard.ViewModels
 {
+    // TODO: Remvoe VM and View.
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }

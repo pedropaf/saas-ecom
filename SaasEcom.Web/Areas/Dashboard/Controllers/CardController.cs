@@ -101,7 +101,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
 
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(creditcard);
@@ -115,10 +115,22 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CreditCard creditcard = await CardDataService.FindAsync(User.Identity.GetUserId(), id);
-            if (creditcard == null)
+
+            // If the card doesn't exist or doesn't belong the logged in user
+            if (creditcard == null || creditcard.ApplicationUserId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }
+
+            creditcard.ExpirationMonth = null;
+            creditcard.ExpirationYear = null;
+            creditcard.Last4 = null;
+            creditcard.Fingerprint = null;
+            creditcard.StripeId = null;
+            creditcard.StripeToken = null;
+            creditcard.Cvc = null;
+            creditcard.Type = null;
+
             return View(creditcard);
         }
 
@@ -127,36 +139,24 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(CreditCard creditcard)
         {
-            if (ModelState.IsValid)
+            var userId = User.Identity.GetUserId();
+
+            if (ModelState.IsValid && await CardBelongToUser(creditcard.Id, userId))
             {
+                creditcard.ApplicationUserId = userId;
+
                 await CardDataService.UpdateAsync(User.Identity.GetUserId(), creditcard);
-                return RedirectToAction("Index");
+
+                TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
+
+                return RedirectToAction("Index", "Home");
             }
             return View(creditcard);
         }
 
-        // GET: /Dashboard/Card/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        private async Task<bool> CardBelongToUser(int cardId, string userId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CreditCard creditcard = await CardDataService.FindAsync(User.Identity.GetUserId(), id);
-            if (creditcard == null)
-            {
-                return HttpNotFound();
-            }
-            return View(creditcard);
-        }
-
-        // POST: /Dashboard/Card/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<RedirectToRouteResult> DeleteConfirmed(int id)
-        {
-            await CardDataService.DeleteAsync(User.Identity.GetUserId(), id);
-            return RedirectToAction("Index");
+            return await this.CardDataService.AnyAsync(cardId, userId);
         }
     }
 }

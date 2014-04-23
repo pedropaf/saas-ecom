@@ -1,147 +1,188 @@
 ﻿@model SaasEcom.Data.Models.CreditCard
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Add credit card";
     Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Edit</h2>
+<h3>Change credit card</h3>
+<hr />
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        @using (Html.BeginForm("Edit", "Card", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "add-card-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.Id)
+
+            <br />
+            <fieldset>
+                <legend>Personal details</legend>
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name on card" })
+                            @Html.ValidationMessageFor(model => model.Name)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressLine1, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control", placeholder = "Address" })
+                            @Html.ValidationMessageFor(model => model.AddressLine1)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressLine2, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control", placeholder = "Address - line 2" })
+                            @Html.ValidationMessageFor(model => model.AddressLine2)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressCity, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.AddressCity, new { @class = "form-control", placeholder = "City" })
+                            @Html.ValidationMessageFor(model => model.AddressCity)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressCountry, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.AddressCountry, new { @class = "form-control", placeholder = "Country" })
+                            @Html.ValidationMessageFor(model => model.AddressCountry)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressZip, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.AddressZip, new { @class = "form-control col-md-4", placeholder = "Post code" })
+                            @Html.ValidationMessageFor(model => model.AddressZip)
+                        </div>
+
+                        @Html.LabelFor(model => model.AddressState, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.AddressState, new { @class = "form-control col-md-4", placeholder = "State / Province" })
+                            @Html.ValidationMessageFor(model => model.AddressState)
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <br />
+            <br />
+            <fieldset>
+                <legend>Credit card details</legend>
+
+                <div class="form-horizontal">
+
+                    <span class='payment-errors field-validation-error'></span>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CardNumber, new { @class = "control-label col-md-2" })
+                        <div class="col-md-7">
+                            @Html.TextBoxFor(model => model.CardNumber, new { @class = "form-control", placeholder = "Card Number", data_stripe = "number" })
+                            @Html.ValidationMessageFor(model => model.CardNumber)
+                        </div>
+                    </div>
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>CreditCard</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="ExpirationMonth">Expiration Date</label>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
-            </div>
-        </div>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(model => model.ExpirationMonth, new { @class = "form-control", placeholder = "MM", data_stripe = "exp-month" })
+                            @Html.ValidationMessageFor(model => model.ExpirationMonth)
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Last4, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Last4)
-                @Html.ValidationMessageFor(model => model.Last4)
-            </div>
-        </div>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(model => model.ExpirationYear, new { @class = "form-control", placeholder = "YYYY", data_stripe = "exp-year" })
+                            @Html.ValidationMessageFor(model => model.ExpirationYear)
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type)
-                @Html.ValidationMessageFor(model => model.Type)
-            </div>
-        </div>
+                        @Html.LabelFor(model => model.Cvc, new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(model => model.Cvc, new { @class = "form-control", placeholder = "ex. 123", data_stripe = "cvc" })
+                            @Html.ValidationMessageFor(model => model.Cvc)
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Fingerprint, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Fingerprint)
-                @Html.ValidationMessageFor(model => model.Fingerprint)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressCity, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressCity)
-                @Html.ValidationMessageFor(model => model.AddressCity)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressCountry, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressCountry)
-                @Html.ValidationMessageFor(model => model.AddressCountry)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressLine1, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressLine1)
-                @Html.ValidationMessageFor(model => model.AddressLine1)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressLine2, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressLine2)
-                @Html.ValidationMessageFor(model => model.AddressLine2)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressState, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressState)
-                @Html.ValidationMessageFor(model => model.AddressState)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressZip, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressZip)
-                @Html.ValidationMessageFor(model => model.AddressZip)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Cvc, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Cvc)
-                @Html.ValidationMessageFor(model => model.Cvc)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExpirationMonth, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ExpirationMonth)
-                @Html.ValidationMessageFor(model => model.ExpirationMonth)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExpirationYear, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ExpirationYear)
-                @Html.ValidationMessageFor(model => model.ExpirationYear)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ApplicationUserId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ApplicationUserId)
-                @Html.ValidationMessageFor(model => model.ApplicationUserId)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-default">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        Stripe.setPublishableKey('@System.Configuration.ConfigurationManager.AppSettings["stripe_publishable_key"]');
+
+        var stripeResponseHandler = function (status, response) {
+            var $form = $('#add-card-form');
+
+            if (response.error) {
+                // Show the errors on the form
+                $form.find('.payment-errors').text(response.error.message);
+                $form.find('button').prop('disabled', false);
+
+                $form.find('#CardNumber').addClass('input-validation-error');
+                $form.find('#ExpirationMonth').addClass('input-validation-error');
+                $form.find('#ExpirationYear').addClass('input-validation-error');
+                $form.find('#Cvc').addClass('input-validation-error');
+
+            } else {
+                // token contains id, last4, and card type
+                var token = response.id;
+
+                // Insert the token into the form so it gets submitted to the server
+                $form.append($('<input type="hidden" name="StripeToken" />').val(token));
+
+                if (typeof response.card !== 'undefined') {
+                    $form.append($('<input type="hidden" name="Type" />').val(response.card.type));
+                    $form.append($('<input type="hidden" name="Last4" />').val(response.card.last4));
+                    $form.append($('<input type="hidden" name="StripeId" />').val(response.card.id));
+                    $form.append($('<input type="hidden" name="Fingerprint" />').val(response.card.fingerprint));
+                    $form.append($('<input type="hidden" name="CardNumber" />').val(response.card.fingerprint));
+                }
+
+                // Remove CardNumber field from form
+                var $card = $form.find('#CardNumber');
+                $card.removeAttr('name');
+                $card.removeAttr('id');
+
+                // and re-submit
+                $form.get(0).submit();
+            }
+        };
+
+        jQuery(function ($) {
+            $('#add-card-form').submit(function (e) {
+                var $form = $(this);
+
+                // Disable the submit button to prevent repeated clicks
+                $form.find('button').prop('disabled', true);
+
+                Stripe.card.createToken($form, stripeResponseHandler);
+
+                // Prevent the form from submitting with the default action
+                return false;
+            });
+        });
+    </script>
 }

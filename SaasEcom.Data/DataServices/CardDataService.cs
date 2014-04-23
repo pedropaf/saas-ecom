@@ -36,6 +36,12 @@ namespace SaasEcom.Data.DataServices
                 .FirstOrDefaultAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
         }
 
+        public async Task<bool> AnyAsync(int? cardId, string customerId)
+        {
+            return await this._dbContext.CreditCards
+                .AnyAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
+        }
+
         public async Task AddAsync(CreditCard creditcard)
         {
             _dbContext.CreditCards.Add(creditcard);

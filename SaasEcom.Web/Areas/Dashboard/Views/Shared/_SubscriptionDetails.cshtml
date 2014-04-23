@@ -19,7 +19,7 @@
                     </tr>
                     <tr>
                         <th>Card Number</th>
-                        <td>************@Model.CreditCard.Last4 &nbsp;<small>(<a href="javascript:;">change card</a>)</small></td>
+                        <td>************@Model.CreditCard.Last4 &nbsp;<small>(<a href="@Url.Action("Edit", "Card", new { Id = Model.CreditCard.Id })">change card</a>)</small></td>
                     </tr>
                     <tr>
                         <th>Valid Until</th>
