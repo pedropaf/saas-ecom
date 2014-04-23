@@ -335,8 +335,6 @@
     <Content Include="Content\fontawesome\core.less" />
     <Content Include="Content\fontawesome\bordered-pulled.less" />
     <Content Include="Areas\Dashboard\Views\Card\Create.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Card\Delete.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Card\Details.cshtml" />
     <Content Include="Areas\Dashboard\Views\Card\Edit.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\Alert.cshtml" />
     <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />

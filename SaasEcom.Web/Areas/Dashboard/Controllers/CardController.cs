@@ -60,22 +60,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                         new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);}
         }
 
-        // GET: /Dashboard/Card/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            CreditCard creditcard = await CardDataService.FindAsync(User.Identity.GetUserId(), id);
-            if (creditcard == null)
-            {
-                return HttpNotFound();
-            }
-            return View(creditcard);
-        }
-
         // GET: /Dashboard/Card/Create
         public ActionResult Create()
         {
