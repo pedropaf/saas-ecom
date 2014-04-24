@@ -23,44 +23,31 @@
 <!-- Invoices -->
 @if (Model.Invoices != null && Model.Invoices.Count > 0)
 {
-    <h3>Invoices</h3>
+    <h3><i class="fa fa-file-o"></i> Invoices</h3>
 
-    <div class="panel-group" id="invoices">
-        @foreach (var invoice in Model.Invoices)
-        {
-            <div class="panel panel-default invoice-panel">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-chevron-down plan-icon"></span>
-                        <span class="plan-price">£@invoice.Total</span>
-                    </h4>
-                </div>
-                <div id="invoice-@invoice.Id">
-                    <div class="panel-body">
-                        <dl class="dl-horizontal">
-                            <dt>Date</dt>
-                            <dd>@invoice.Date</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td><strong>Invoice #</strong></td>
+                <td><strong>Period</strong></td>
+                <td><strong>Date</strong></td>
+                <td><strong>Subtotal</strong></td>
+                <td><strong>Total</strong></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in Model.Invoices)
+{
+    <tr>
+        <td>@invoice.Id</td>
+        <td>@invoice.PeriodStart.Value.ToString("d MMM yyyy") - @invoice.PeriodEnd.Value.ToString("d MMM yyyy")</td>
+        <td>@invoice.Date.Value.ToString("d MMM yyyy")</td>
+        <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
+        <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
+        <td><a href="#"><i class="fa fa-file-text-o"></i> Details</a></td>
+    </tr>
 }
-
-@section scripts{
-    <script language="javascript">
-    $(function() {
-
-        // Bind / unbind cancel button to ajax call to cancel sub
-        $('#cancelModal').on('shown.bs.modal', function (e) {
-            $('.btn-cancel-subscription').bind("click", function() {
-                window.alert("Delete subscription using AJAX");
-            });
-        });
-        $('#cancelModal').on('hide.bs.modal', function (e) {
-            $('.btn-cancel-subscription').unbind("click");
-        });
-    });
-    </script>
+        </tbody>
+    </table>
 }

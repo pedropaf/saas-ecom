@@ -12,6 +12,10 @@ body #wrap {
   margin: 0 auto -80px;
   padding: 0 0 80px;
 }
+html .container,
+body .container {
+  max-width: 970px;
+}
 html .content,
 body .content {
   padding: 70px 15px 0;

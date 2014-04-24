@@ -40,6 +40,23 @@ namespace SaasEcom.Data.Models
         public int? Discount { get; set; }
         public int? ApplicationFee { get; set; }
 
+        [NotMapped]
+        public string CurrencySymbol {
+            get
+            {
+                switch (this.Currency)
+                {
+                    case ("gbp"):
+                        return "£";
+                    case ("usd"):
+                        return "$";
+                    case ("eur"):
+                        return "€";
+                }
+                return null;
+            }
+        }  
+
         public class LineItem
         {
             public int Id { get; set; }

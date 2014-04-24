@@ -66,6 +66,15 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> CancelSubscription(int Id)
+        {
+            // TODO: if subscription belongs to logged in user => cancel
+
+            TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
+
+            return RedirectToAction("Index", "Home");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
