@@ -5,7 +5,7 @@
         <h4>You are currently on the <span class="text-primary">@Model.Subscription.SubscriptionPlan.Name</span> plan</h4>
         <p>Plan price: <strong>£@Model.Subscription.SubscriptionPlan.Price / @Model.Subscription.SubscriptionPlan.Interval</strong>.</p>
         <p><strong>@Model.Subscription.Status()</strong></p>
-        <br/>
+        <br />
 
         <!-- Payment details -->
         @if (Model.CreditCard != null)
@@ -27,6 +27,7 @@
                     </tr>
                 </tbody>
             </table>
+            <button class="btn btn-default" data-toggle="modal" data-target="#cancelModal"><i class="fa fa-times-circle"></i> Cancel subscription</button>
         }
         else
         {
@@ -34,10 +35,29 @@
             <hr />
             <h5><i class="fa fa-arrow-circle-right"></i> Please <strong>register a credit card</strong> to pay for your subscription.</h5>
             <a href="@Url.Action("Create", "Card")" class="btn btn-primary">Add Credit Card</a>
+            <button class="btn btn-default" data-toggle="modal" data-target="#cancelModal"><i class="fa fa-times-circle"></i> Cancel subscription</button>
         }
     </div> <!-- /.well -->
 </div> <!-- /.col -->
 
+<!-- Cancel Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Cancel subscription?</h4>
+            </div>
+            <div class="modal-body">
+                <p>This action can not be undone and <strong>you will lose all your data</strong>. Do you want to continue?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                <button type="button" class="btn btn-danger">Cancel subscription</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- Account usage -->
 <div class="col-sm-6 col-md-6">
     <div class="portlet portlet-boxed">

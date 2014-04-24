@@ -14,20 +14,29 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 @Html.ValidationSummary(true)
+                
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                        <div class="input-group margin-bottom-sm">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                        </div>
                         @Html.ValidationMessageFor(m => m.Email)
                     </div>
                 </div>
+                
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                        </div>
                         @Html.ValidationMessageFor(m => m.Password)
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="checkbox">
