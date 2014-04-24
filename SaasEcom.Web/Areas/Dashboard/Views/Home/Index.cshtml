@@ -47,3 +47,20 @@
         }
     </div>
 }
+
+@section scripts{
+    <script language="javascript">
+    $(function() {
+
+        // Bind / unbind cancel button to ajax call to cancel sub
+        $('#cancelModal').on('shown.bs.modal', function (e) {
+            $('.btn-cancel-subscription').bind("click", function() {
+                window.alert("Delete subscription using AJAX");
+            });
+        });
+        $('#cancelModal').on('hide.bs.modal', function (e) {
+            $('.btn-cancel-subscription').unbind("click");
+        });
+    });
+    </script>
+}
