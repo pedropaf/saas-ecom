@@ -120,9 +120,6 @@
     <Reference Include="MsieJavaScriptEngine">
       <HintPath>..\packages\MsieJavaScriptEngine.1.4.2\lib\net40\MsieJavaScriptEngine.dll</HintPath>
     </Reference>
-    <Reference Include="Mvc.Mailer">
-      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -230,8 +227,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\EmailIdentityService.cs" />
-    <Compile Include="Mailers\IUserMailer.cs" />
-    <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Mappers\InvoiceMappers.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
