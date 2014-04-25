@@ -54,6 +54,7 @@ namespace SaasEcom.Web.Controllers
 
         // GET: /Account/Login
         [AllowAnonymous]
+        [OutputCache(Duration = 604800)]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -99,6 +100,7 @@ namespace SaasEcom.Web.Controllers
         
         // GET: /Account/Register
         [AllowAnonymous]
+        [OutputCache(Duration = 604800)]
         public ActionResult Register()
         {
             return View();
@@ -161,6 +163,7 @@ namespace SaasEcom.Web.Controllers
 
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
+        [OutputCache(Duration = 604800)]
         public ActionResult ForgotPassword()
         {
             return View();
