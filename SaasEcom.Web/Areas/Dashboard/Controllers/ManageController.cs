@@ -1,9 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Configuration;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SaasEcom.Data;
+using SaasEcom.Data.DataServices;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
 using SaasEcom.Web.Areas.Dashboard.ViewModels;
 
@@ -31,6 +38,16 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        private StripePaymentProcessorProvider _stripeService;
+        private StripePaymentProcessorProvider StripeService
+        {
+            get
+            {
+                return _stripeService ??
+                      new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);
             }
         }
 
@@ -66,9 +83,18 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> CancelSubscription(int Id)
+        public async Task<ActionResult> CancelSubscription(int id)
         {
-            // TODO: if subscription belongs to logged in user => cancel
+            var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            var subscriptionsService = new SubscriptionsDataService(db);
+
+            if (subscriptionsService.SubscriptionBelongsToUser(User.Identity.GetUserId(), id))
+            {
+                await subscriptionsService.EndSubscriptionAsync(id);
+
+                var user = db.Users.Find(User.Identity.GetUserId());
+                this.StripeService.CancelCustomerSubscription(user.StripeCustomerId); // TODO: Cancel individual subscription
+            }
 
             TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
 

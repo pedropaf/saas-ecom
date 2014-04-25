@@ -18,9 +18,27 @@ namespace SaasEcom.Data.Models
 
         public string Status()
         {
-            return IsTrialing() ? 
-                string.Format("Trial until {0}", ((DateTime)TrialEnd).ToShortDateString()) :
-                string.Format("Next invoice {0}", DateTime.UtcNow.ToShortDateString());
+            string result = null;
+
+            if (IsTrialing())
+            {
+                result = string.Format("Trial until {0}", TrialEnd.Value.ToShortDateString());
+
+            }
+            else if (IsTerminated())
+            {
+                result = string.Format("Terminated since {0}", End.Value.ToShortDateString());
+            }
+            else
+            {
+                result = "Subscription Active";
+            }
+            return result;
+        }
+
+        private bool IsTerminated()
+        {
+            return this.End != null && this.End < DateTime.UtcNow;
         }
 
         public bool IsTrialing()

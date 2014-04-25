@@ -38,5 +38,18 @@ namespace SaasEcom.Data.DataServices
         {
             return await _dbContext.Subscriptions.Where(s => s.User.UserName == name).Select(s => s).ToListAsync();
         }
+
+        public async Task EndSubscriptionAsync(int subscriptionId)
+        {
+            var dbSub = await _dbContext.Subscriptions.FindAsync(subscriptionId);
+            dbSub.End = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public bool SubscriptionBelongsToUser(string userId, int subscriptionId)
+        {
+            var user = _dbContext.Users.Find(userId);
+            return user.Subscriptions.Any(s => s.Id == subscriptionId);
+        }
     }
 }
