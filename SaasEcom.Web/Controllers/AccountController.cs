@@ -54,7 +54,6 @@ namespace SaasEcom.Web.Controllers
 
         // GET: /Account/Login
         [AllowAnonymous]
-        [OutputCache(Duration = 604800)]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -100,7 +99,6 @@ namespace SaasEcom.Web.Controllers
         
         // GET: /Account/Register
         [AllowAnonymous]
-        [OutputCache(Duration = 604800)]
         public ActionResult Register()
         {
             return View();
@@ -163,7 +161,6 @@ namespace SaasEcom.Web.Controllers
 
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
-        [OutputCache(Duration = 604800)]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -186,11 +183,16 @@ namespace SaasEcom.Web.Controllers
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                
-                // TODO: Check your inbox message!
-                ViewBag.Link = callbackUrl;
+               
+                var email = new ResetPasswordEmail
+                {
+                    To = user.Email,
+                    From = "no-reply@saas-ecom.com",
+                    Subject = "SAAS Ecom - Reset password request",
+                    ResetPasswordLink = callbackUrl
+                };
+                email.Send();
+
                 return View("ForgotPasswordConfirmation");
             }
 
@@ -213,7 +215,7 @@ namespace SaasEcom.Web.Controllers
         }
 
         // POST: /Account/ResetPassword
-        [HttpPost]
+        [HttpPost] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
