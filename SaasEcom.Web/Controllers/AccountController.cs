@@ -136,6 +136,15 @@ namespace SaasEcom.Web.Controllers
                     user.StripeCustomerId = stripeUser.Id;
                     await userManager.UpdateAsync(user);
 
+                    // Send Welcome Email
+                    var email = new WelcomeEmail
+                    {
+                        To = user.Email,
+                        From = "no-reply@saas-ecom.com",
+                        Subject = "SAAS Ecom: Welcome"
+                    };
+                    email.Send();
+
                     await SignInAsync(user, isPersistent: false);
 
                     return RedirectToAction("Index", "Home");

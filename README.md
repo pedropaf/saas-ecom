@@ -39,3 +39,21 @@ For future releases these is a list of features that it would be nice to support
 * Social Logins: Register using your facebook / twitter / google account?
 * MailChimp Integration
 * Move copy to Resx files and add translations.
+
+## Libraries used
+
+* Entity Framework
+* Json.NET
+* jQuery
+* jQuery Validation
+* jQuery Unobtrusive Validation
+* ASP.NET MVC 5.1
+* ASP.NET Razor
+* ASP.NET Identity Owin
+* ASP.NET Identity Entity Framework
+* Owin
+* Twitter Bootstrap Less
+* Font Awesome
+* Postal
+* Stripe.net
+

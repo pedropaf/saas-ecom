@@ -396,6 +396,12 @@
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="Views\Emails\_EmailLayout.cshtml" />
     <Content Include="Views\Emails\ResetPassword.html.cshtml" />
+    <Content Include="Views\Emails\Welcome.cshtml" />
+    <Content Include="Views\Emails\Welcome.html.cshtml" />
+    <Content Include="Views\Emails\Invoice.cshtml" />
+    <Content Include="Views\Emails\Invoice.html.cshtml" />
+    <Content Include="Views\Emails\Generic.cshtml" />
+    <Content Include="Views\Emails\Generic.html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
