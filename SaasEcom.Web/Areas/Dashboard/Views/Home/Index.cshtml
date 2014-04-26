@@ -11,7 +11,7 @@
     {
         foreach (var subscription in Model.Subscriptions)
         {
-            {Html.RenderPartial("_SubscriptionDetails", subscription); }
+            { Html.RenderPartial("_SubscriptionDetails", subscription); }
         }
     }
     else
@@ -38,16 +38,20 @@
         </thead>
         <tbody>
             @foreach (var invoice in Model.Invoices)
-{
-    <tr>
-        <td>@invoice.Id</td>
-        <td>@invoice.PeriodStart.Value.ToString("d MMM yyyy") - @invoice.PeriodEnd.Value.ToString("d MMM yyyy")</td>
-        <td>@invoice.Date.Value.ToString("d MMM yyyy")</td>
-        <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
-        <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
-        <td><a href="#"><i class="fa fa-file-text-o"></i> Details</a></td>
-    </tr>
-}
+            {
+                <tr>
+                    <td>@invoice.Id</td>
+                    <td>@invoice.PeriodStart.Value.ToString("d MMM yyyy") - @invoice.PeriodEnd.Value.ToString("d MMM yyyy")</td>
+                    <td>@invoice.Date.Value.ToString("d MMM yyyy")</td>
+                    <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
+                    <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
+                    <td>
+                        <a href="@Url.Action("Detail", "Invoice", new { id = @invoice.Id })">
+                            <i class="fa fa-file-text-o"></i> Details
+                        </a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }

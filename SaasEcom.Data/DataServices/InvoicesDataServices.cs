@@ -15,9 +15,14 @@ namespace SaasEcom.Data.DataServices
             this._dbContext = context;
         }
 
-        public Task<List<Invoice>> UserInvoicesAsync(string name)
+        public Task<List<Invoice>> UserInvoicesAsync(string id)
         {
-            return _dbContext.Invoices.Where(i => i.Customer.UserName == name).Select(s => s).ToListAsync();
+            return _dbContext.Invoices.Where(i => i.Customer.Id == id).Select(s => s).ToListAsync();
+        }
+
+        public Task<Invoice> UserInvoiceAsync(string userId, int invoiceId)
+        {
+            return _dbContext.Invoices.Where(i => i.Customer.Id == userId && i.Id == invoiceId).Select(s => s).FirstOrDefaultAsync();
         }
 
         public async Task<int> CreateAsync(Invoice invoice)

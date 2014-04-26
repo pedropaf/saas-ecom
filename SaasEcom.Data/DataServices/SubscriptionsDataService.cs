@@ -34,9 +34,9 @@ namespace SaasEcom.Data.DataServices
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Subscription>> UserSubscriptionsAsync(string name)
+        public async Task<List<Subscription>> UserSubscriptionsAsync(string userId)
         {
-            return await _dbContext.Subscriptions.Where(s => s.User.UserName == name).Select(s => s).ToListAsync();
+            return await _dbContext.Subscriptions.Where(s => s.User.Id == userId).Select(s => s).ToListAsync();
         }
 
         public async Task EndSubscriptionAsync(int subscriptionId)

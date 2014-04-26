@@ -23,7 +23,7 @@ namespace SaasEcom.Data.Models
         public DateTime? PeriodStart { get; set; }
         public DateTime? PeriodEnd { get; set; }
         
-        public virtual IEnumerable<LineItem> LineItems { get; set; }
+        public virtual ICollection<LineItem> LineItems { get; set; }
         public int? Subtotal { get; set; }
         public int? Total { get; set; }
         public bool? Attempted { get; set; }

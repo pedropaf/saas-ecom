@@ -32,7 +32,7 @@ namespace SaasEcom.Web.Mappers
             };
         }
 
-        private static IEnumerable<Invoice.LineItem> MapLineItems(StripeInvoiceLines items)
+        private static ICollection<Invoice.LineItem> MapLineItems(StripeInvoiceLines items)
         {
             return items.StripeInvoiceItems.Select(item => new Invoice.LineItem
             {
@@ -56,7 +56,7 @@ namespace SaasEcom.Web.Mappers
                 Proration = item.Proration,
                 Quantity = item.Quantity,
                 StripeLineItemId = item.Id
-            });
+            }).ToList();
         }
     }
 }

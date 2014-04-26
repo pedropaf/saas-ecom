@@ -3,6 +3,7 @@ body {
   height: 100%;
   /* Wrapper for page content to push down footer */
   /* Set the fixed height of the footer here */
+  /* Invoice */
 }
 html #wrap,
 body #wrap {
@@ -97,5 +98,11 @@ html #footer .footer,
 body #footer .footer {
   padding-left: 20px;
   padding-top: 20px;
+}
+html .invoice-container,
+body .invoice-container {
+  background: white;
+  max-width: 720px;
+  margin: auto;
 }
 /*# sourceMappingURL=dashboard.css.map */

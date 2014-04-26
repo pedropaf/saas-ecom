@@ -217,6 +217,7 @@
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
     <Compile Include="Areas\Dashboard\Controllers\CardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\ManageController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
@@ -340,6 +341,7 @@
     <Content Include="Areas\Dashboard\Views\Shared\Alert.cshtml" />
     <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\_SubscriptionDetails.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Invoice\Detail.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

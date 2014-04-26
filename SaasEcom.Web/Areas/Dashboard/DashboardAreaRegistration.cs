@@ -17,7 +17,7 @@ namespace SaasEcom.Web.Areas.Dashboard
             context.MapRoute(
                 "Dashboard_default",
                 "Dashboard/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional },
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 new[] { "SaasEcom.Web.Areas.Dashboard.Controllers" }
             );
         }

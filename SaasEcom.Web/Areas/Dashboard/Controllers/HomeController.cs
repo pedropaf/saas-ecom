@@ -23,8 +23,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
             var viewModel = new DashboardViewModel
             {
-                Invoices = await invService.UserInvoicesAsync(User.Identity.Name),
-                Subscriptions = (await subService.UserSubscriptionsAsync(User.Identity.Name)).Select(
+                Invoices = await invService.UserInvoicesAsync(User.Identity.GetUserId()),
+                Subscriptions = (await subService.UserSubscriptionsAsync(User.Identity.GetUserId())).Select(
                     s => new SubscriptionViewModel
                     {
                         Subscription = s,
