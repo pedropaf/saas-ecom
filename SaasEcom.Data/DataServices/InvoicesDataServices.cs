@@ -25,11 +25,13 @@ namespace SaasEcom.Data.DataServices
             return _dbContext.Invoices.Where(i => i.Customer.Id == userId && i.Id == invoiceId).Select(s => s).FirstOrDefaultAsync();
         }
 
-        public async Task<int> CreateAsync(Invoice invoice)
+        public async Task<int> CreateOrUpdateAsync(Invoice invoice)
         {
             var res = -1;
 
-            if (_dbContext.Invoices.All(i => i.StripeId != invoice.StripeId))
+            var dbInvoice = _dbContext.Invoices.Find(invoice.Id);
+
+            if (dbInvoice == null)
             {
                 // Set user Id
                 var user = await _dbContext.Users.Where(u => u.StripeCustomerId == invoice.StripeCustomerId).FirstOrDefaultAsync();
@@ -40,6 +42,15 @@ namespace SaasEcom.Data.DataServices
                     _dbContext.Invoices.Add(invoice);
                     res = await _dbContext.SaveChangesAsync();
                 }
+            }
+            else
+            {
+                dbInvoice.Paid = invoice.Paid;
+                dbInvoice.Attempted = invoice.Attempted;
+                dbInvoice.AttemptCount = invoice.AttemptCount;
+                dbInvoice.NextPaymentAttempt = invoice.NextPaymentAttempt;
+                dbInvoice.Closed = invoice.Closed;
+                res = await _dbContext.SaveChangesAsync();
             }
 
             return res;
