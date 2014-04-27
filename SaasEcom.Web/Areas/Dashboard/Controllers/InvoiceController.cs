@@ -16,8 +16,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         {
             get
             {
-                return _invoicesDataServices ??
-                       new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>());
+                return _invoicesDataServices ?? 
+                    (_invoicesDataServices = new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>()));
             }
         }
 

@@ -50,14 +50,17 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         private CardDataService _cardService;
         private CardDataService CardDataService
         {
-            get { return _cardService ?? new CardDataService(DbContext); }
+            get { return _cardService ?? (_cardService = new CardDataService(DbContext)); }
         }
 
         private StripePaymentProcessorProvider _stripeService;
         private StripePaymentProcessorProvider StripeService
         {
-            get { return _stripeService ?? 
-                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);}
+            get 
+            { 
+                return _stripeService ?? 
+                        (_stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]));
+            }
         }
 
         // GET: /Dashboard/Card/Create

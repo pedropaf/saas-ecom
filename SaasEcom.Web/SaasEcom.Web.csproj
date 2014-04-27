@@ -314,6 +314,7 @@
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\site.less" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\billing.js" />
     <Content Include="Areas\Billing\Views\web.config" />
     <Content Include="Areas\Billing\Views\Shared\_BillingLayout.cshtml" />

@@ -44,7 +44,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             get
             {
                 return _stripeService ??
-                      new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);
+                      (_stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]));
             }
         }
 

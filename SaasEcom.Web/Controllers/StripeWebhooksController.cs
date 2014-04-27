@@ -19,7 +19,7 @@ namespace SaasEcom.Web.Controllers
             get
             {
                 return _invoicesDataServices ??
-                       new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>());
+                       (_invoicesDataServices = new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>()));
             }
         }
 
