@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SaasEcom.Data.Models
 {
@@ -55,7 +56,26 @@ namespace SaasEcom.Data.Models
                 }
                 return null;
             }
-        }  
+        }
+
+        [NotMapped]
+        public string InvoicePeriod
+        {
+            get
+            {
+                var start = this.PeriodStart;
+                var end = this.PeriodEnd;
+
+                if (LineItems != null && LineItems.Any())
+                {
+                    var p = LineItems.First();
+                    start = p.Period.Start;
+                    end = p.Period.End;
+                }
+
+                return string.Format("{0} - {1}", start.Value.ToString("d MMM yyyy"), end.Value.ToString("d MMM yyyy"));
+            }
+        }
 
         public class LineItem
         {
@@ -81,7 +101,7 @@ namespace SaasEcom.Data.Models
             public string StripePlanId { get; set; }
             public string Interval { get; set; }
             public string Name { get; set; }
-            public DateTime Created { get; set; }
+            public DateTime? Created { get; set; }
             public int? AmountInCents { get; set; }
             public string Currency { get; set; }
             public int IntervalCount { get; set; }

@@ -41,7 +41,7 @@
             {
                 <tr>
                     <td>@invoice.Id</td>
-                    <td>@invoice.PeriodStart.Value.ToString("d MMM yyyy") - @invoice.PeriodEnd.Value.ToString("d MMM yyyy")</td>
+                    <td>@invoice.InvoicePeriod</td>
                     <td>@invoice.Date.Value.ToString("d MMM yyyy")</td>
                     <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
                     <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>

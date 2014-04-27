@@ -50,7 +50,8 @@ namespace SaasEcom.Web.Mappers
                     IntervalCount = item.Plan.IntervalCount,
                     Name = item.Plan.Name,
                     StripePlanId = item.Plan.Id,
-                    TrialPeriodDays = item.Plan.TrialPeriodDays
+                    TrialPeriodDays = item.Plan.TrialPeriodDays,
+                    Created = null
                 },
                 Currency = item.Currency,
                 Proration = item.Proration,
