@@ -18,7 +18,6 @@ namespace SaasEcom.Data.Migrations
         public override void Down()
         {
             DropIndex("dbo.CreditCards", new[] { "ApplicationUserId" });
-            AlterColumn("dbo.CreditCards", "ApplicationUserId", c => c.Int(nullable: false));
             AlterColumn("dbo.CreditCards", "Cvc", c => c.String());
             RenameColumn(table: "dbo.CreditCards", name: "ApplicationUserId", newName: "User_Id");
             AddColumn("dbo.CreditCards", "ApplicationUserId", c => c.Int(nullable: false));
