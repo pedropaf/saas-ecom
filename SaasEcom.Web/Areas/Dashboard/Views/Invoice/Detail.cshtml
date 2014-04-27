@@ -29,8 +29,7 @@
     <thead>
         <tr>
             <th><h4>Service</h4></th>
-            <th><h4>Quantity</h4></th>
-            <th><h4>Price</h4></th>
+            <th><h4>Period</h4></th>
             <th><h4>Sub Total</h4></th>
         </tr>
     </thead>
@@ -38,10 +37,9 @@
         @foreach (var item in Model.LineItems)
         {
             <tr>
-                <td>@item.Plan.Name</td>
-                <td class="text-right">@item.Quantity</td>
-                <td class="text-right">@Model.CurrencySymbol@string.Format("{0:F2}", item.Plan.AmountInCents/100)</td>
-                <td class="text-right">@Model.CurrencySymbol@string.Format("{0:F2}", item.Plan.AmountInCents * item.Quantity / 100)</td>
+                <td>@item.Plan.Name subscription <small>@Model.CurrencySymbol@string.Format("{0:F2}", item.Plan.AmountInCents / 100) / monthly</small></td>
+                <td>@item.Period.Start.Value.ToString("d MMM yyyy") - @item.Period.End.Value.ToString("d MMM yyyy")</td>                
+                <td class="text-right">@Model.CurrencySymbol@string.Format("{0:F2}", item.Amount / 100)</td>
             </tr>
         }
     </tbody>
