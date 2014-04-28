@@ -13,13 +13,13 @@ namespace SaasEcom.Web.Controllers
 {
     public class StripeWebhooksController : Controller
     {
-        private InvoicesDataServices _invoicesDataServices;
-        private InvoicesDataServices InvoicesDataService
+        private InvoiceDataService _invoiceDataService;
+        private InvoiceDataService InvoiceDataService
         {
             get
             {
-                return _invoicesDataServices ??
-                       (_invoicesDataServices = new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>()));
+                return _invoiceDataService ??
+                       (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
             }
         }
 
@@ -58,7 +58,7 @@ namespace SaasEcom.Web.Controllers
                 case "invoice.payment_succeeded": // Occurs whenever an invoice attempts to be paid, and the payment succeeds.
                 case "invoice.payment_failed": // Occurs whenever an invoice attempts to be paid, and the payment fails. This can occur either due to a declined payment, or because the customer has no active card. A particular case of note is that if a customer with no active card reaches the end of its free trial, an invoice.payment_failed notification will occur.
                     var stripeInvoice = Stripe.Mapper<StripeInvoice>.MapFromJson(stripeEvent.Data.Object.ToString());
-                    await InvoicesDataService.CreateOrUpdateAsync(InvoiceMappers.MapToInvoice(stripeInvoice));
+                    await InvoiceDataService.CreateOrUpdateAsync(InvoiceMappers.MapToInvoice(stripeInvoice));
                     
                     // TODO: Send invoice by email
                     break;

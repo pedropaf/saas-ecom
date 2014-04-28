@@ -83,7 +83,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         public async Task<ActionResult> CancelSubscription(int id)
         {
             var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            var subscriptionsService = new SubscriptionsDataService(db);
+            var subscriptionsService = new SubscriptionDataService(db);
 
             if (subscriptionsService.SubscriptionBelongsToUser(User.Identity.GetUserId(), id))
             {

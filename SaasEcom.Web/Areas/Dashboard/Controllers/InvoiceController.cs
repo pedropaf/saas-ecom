@@ -11,20 +11,20 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
     [Authorize]
     public class InvoiceController : Controller
     {
-        private InvoicesDataServices _invoicesDataServices;
-        private InvoicesDataServices InvoicesDataService
+        private InvoiceDataService _invoiceDataService;
+        private InvoiceDataService InvoiceDataService
         {
             get
             {
-                return _invoicesDataServices ?? 
-                    (_invoicesDataServices = new InvoicesDataServices(Request.GetOwinContext().Get<ApplicationDbContext>()));
+                return _invoiceDataService ??
+                    (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
             }
         }
 
         // GET: /Dashboard/Invoice/Detail?id=1
         public async Task<ViewResult> Detail(int id)
         {
-            var invoice = await InvoicesDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);
+            var invoice = await InvoiceDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);
             return View(invoice);
         }
 	}

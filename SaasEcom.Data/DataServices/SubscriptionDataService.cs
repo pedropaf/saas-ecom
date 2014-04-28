@@ -4,14 +4,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Data.Models;
+using SaasEcom.Data.DataServices.Interfaces;
 
 namespace SaasEcom.Data.DataServices
 {
-    public class SubscriptionsDataService
+    public class SubscriptionDataService : ISubscriptionDataService
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public SubscriptionsDataService(ApplicationDbContext context)
+        public SubscriptionDataService(ApplicationDbContext context)
         {
             this._dbContext = context;
         }

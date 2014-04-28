@@ -16,8 +16,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         public async Task<ViewResult> Index()
         {
             var context = Request.GetOwinContext().Get<ApplicationDbContext>();
-            var subService = new SubscriptionsDataService(context);
-            var invService = new InvoicesDataServices(context);
+            var subService = new SubscriptionDataService(context);
+            var invService = new InvoiceDataService(context);
             var cardService = new CardDataService(context);
             var defaultCard = (await cardService.GetAllAsync(User.Identity.GetUserId())).FirstOrDefault();
 

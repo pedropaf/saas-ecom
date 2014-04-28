@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SaasEcom.Data.Models;
+using SaasEcom.Data.DataServices.Interfaces;
 
 namespace SaasEcom.Data.DataServices
 {
-    public class CardDataService
+    public class CardDataService : ICardDataService
     {
         private readonly ApplicationDbContext _dbContext;
 

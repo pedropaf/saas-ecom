@@ -123,7 +123,7 @@ namespace SaasEcom.Web.Controllers
                     var user = await userManager.FindByEmailAsync(model.Email);
                     
                     // Subscribe the user to the plan
-                    var subscriptionService = new SubscriptionsDataService
+                    var subscriptionService = new SubscriptionDataService
                         (Request.GetOwinContext().Get<ApplicationDbContext>());
                     await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
                     

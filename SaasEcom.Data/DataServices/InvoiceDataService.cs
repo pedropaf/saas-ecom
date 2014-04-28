@@ -3,26 +3,27 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Data.Models;
+using SaasEcom.Data.DataServices.Interfaces;
 
 namespace SaasEcom.Data.DataServices
 {
-    public class InvoicesDataServices
+    public class InvoiceDataService : IInvoiceDataService
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public InvoicesDataServices(ApplicationDbContext context)
+        public InvoiceDataService(ApplicationDbContext context)
         {
             this._dbContext = context;
         }
 
-        public Task<List<Invoice>> UserInvoicesAsync(string id)
+        public async Task<List<Invoice>> UserInvoicesAsync(string id)
         {
-            return _dbContext.Invoices.Where(i => i.Customer.Id == id).Select(s => s).ToListAsync();
+            return await _dbContext.Invoices.Where(i => i.Customer.Id == id).Select(s => s).ToListAsync();
         }
 
-        public Task<Invoice> UserInvoiceAsync(string userId, int invoiceId)
+        public async Task<Invoice> UserInvoiceAsync(string userId, int invoiceId)
         {
-            return _dbContext.Invoices.Where(i => i.Customer.Id == userId && i.Id == invoiceId).Select(s => s).FirstOrDefaultAsync();
+            return await _dbContext.Invoices.Where(i => i.Customer.Id == userId && i.Id == invoiceId).Select(s => s).FirstOrDefaultAsync();
         }
 
         public async Task<int> CreateOrUpdateAsync(Invoice invoice)
