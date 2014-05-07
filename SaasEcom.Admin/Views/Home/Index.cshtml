@@ -3,7 +3,7 @@
     Response.Headers["X-UA-Compatible"] = "IE=10";
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="admin">
 <head>
     <meta charset="utf-8" />
     <title>My ASP.NET Application</title>
@@ -13,8 +13,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div data-bind="visible: loading">Loading...</div>
-    <div style="display: none" data-bind="visible: true" class="container body-content">
+    <div class="container body-content">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -23,32 +22,26 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <p class="navbar-brand" data-bind="if: !loggedIn()">Application Name</p>
-                    <a href="#" class="navbar-brand" data-bind="if: loggedIn, click: navigateToHome">Application Name</a>
+                    <a href="#" class="navbar-brand">Application Name</a>
                 </div>
-                <div data-bind="if: loggedIn" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
+                        <li><a href="#">Home</a></li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" data-bind="with: user">
+                    <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <span class="navbar-text nofloat">Hello, <a href="#" class="navbar-link" data-bind="text: name, click: manage"></a>!</span>
+                            <span class="navbar-text nofloat">Hello, <a href="#" class="navbar-link"></a>!</span>
                         </li>
-                        <li><a href="#" data-bind="click: logOff">Log off</a></li>
+                        <li><a href="#">Log off</a></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div data-bind="foreach: errors" class="padding-error">
-            <p class="text-danger" data-bind="text: $data"></p>
-        </div>
-        @Html.Partial("_Home")
-        @Html.Partial("_Login")
-        @Html.Partial("_Register")
-        @Html.Partial("_RegisterExternal")
-        @Html.Partial("_Manage")
+        <h1>Content</h1>
+        <div data-ng-view=""></div>
+
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
@@ -56,8 +49,7 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/app")
-    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

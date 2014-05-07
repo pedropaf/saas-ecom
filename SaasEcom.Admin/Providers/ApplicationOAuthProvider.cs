@@ -50,6 +50,7 @@ namespace SaasEcom.Admin.Providers
                 AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
                 context.Validated(ticket);
                 context.Request.Context.Authentication.SignIn(cookiesIdentity);
+                context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             }
         }
 
