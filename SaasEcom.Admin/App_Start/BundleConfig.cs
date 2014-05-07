@@ -39,9 +39,10 @@ namespace SaasEcom.Admin
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                 "~/Content/bootstrap.css",
-                 "~/Content/Site.css"));
+            // Admin styles
+            bundles.Add(new LessBundle("~/Content/css").Include(
+                "~/Content/fontawesome/font-awesome.less",
+                "~/Content/admin.less"));
         }
     }
 }
