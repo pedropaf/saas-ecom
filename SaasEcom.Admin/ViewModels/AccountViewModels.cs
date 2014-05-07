@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SaasEcom.Admin.Models
+namespace SaasEcom.Admin.ViewModels
 {
     // Models returned by AccountController actions.
 

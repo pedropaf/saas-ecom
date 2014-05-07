@@ -8,6 +8,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SaasEcom.Admin.Providers;
+using SaasEcom.Data;
+using SaasEcom.Data.Infrastructure.Identity;
+using SaasEcom.Data.Models;
 
 namespace SaasEcom.Admin
 {
@@ -17,7 +20,7 @@ namespace SaasEcom.Admin
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            UserManagerFactory = () => new ApplicationUserManager(new UserStore<ApplicationUser>());
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -31,7 +34,7 @@ namespace SaasEcom.Admin
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
+        public static Func<ApplicationUserManager> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 
@@ -60,6 +63,11 @@ namespace SaasEcom.Admin
             //    appSecret: "");
 
             //app.UseGoogleAuthentication();
+
+            // Register these two callback methods to create one instance of each per Request
+            app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
         }
     }
 }

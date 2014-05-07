@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Data.Infrastructure.Identity;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers

@@ -3,6 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using SaasEcom.Data;
+using SaasEcom.Data.Infrastructure.Identity;
 
 namespace SaasEcom.Web
 {

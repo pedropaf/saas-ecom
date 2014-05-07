@@ -88,6 +88,9 @@
     <Compile Include="DataServices\Interfaces\IInvoiceDataService.cs" />
     <Compile Include="DataServices\Interfaces\ISubscriptionDataService.cs" />
     <Compile Include="DataServices\InvoiceDataService.cs" />
+    <Compile Include="Infrastructure\EmailIdentityService.cs" />
+    <Compile Include="Infrastructure\Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
     <Compile Include="Infrastructure\Invoicing\InvoicingProvider.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.Designer.cs">

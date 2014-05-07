@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using SaasEcom.Data;
 using SaasEcom.Data.Models;
-using SaasEcom.Web.Infrastructure;
 
-namespace SaasEcom.Web
+namespace SaasEcom.Data.Infrastructure.Identity
 {
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
@@ -42,20 +39,6 @@ namespace SaasEcom.Web
             }
 
             return manager;
-        }
-    }
-
-    // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
-    public class ApplicationRoleManager : RoleManager<IdentityRole>
-    {
-        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
-            : base(roleStore)
-        {
-        }
-
-        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-        {
-            return new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>()));
         }
     }
 }

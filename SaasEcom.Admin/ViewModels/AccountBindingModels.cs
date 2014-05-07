@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SaasEcom.Admin.Models
+namespace SaasEcom.Admin.ViewModels
 {
     // Models used as parameters to AccountController actions.
 
