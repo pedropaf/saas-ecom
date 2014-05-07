@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Data", "SaasEcom.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Web", "SaasEcom.Web\SaasEcom.Web.csproj", "{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Admin", "SaasEcom.Admin\SaasEcom.Admin.csproj", "{EAE55A1E-3102-4328-8C8A-FFAC60022DB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE55A1E-3102-4328-8C8A-FFAC60022DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE55A1E-3102-4328-8C8A-FFAC60022DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE55A1E-3102-4328-8C8A-FFAC60022DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE55A1E-3102-4328-8C8A-FFAC60022DB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
