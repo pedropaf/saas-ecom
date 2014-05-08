@@ -47,17 +47,14 @@ namespace SaasEcom.Web
 
             // Site CSS
             bundles.Add(new LessBundle("~/bundles/css").Include(
-                "~/Content/bootstrap/bootstrap.less",
                 "~/Content/site.less"));
 
             // Billing CSS
             bundles.Add(new LessBundle("~/bundles/billing/css").Include(
-                "~/Content/bootstrap/bootstrap.less",
                 "~/Content/billing/billing.less"));
             
             // Dashboard CSS
             bundles.Add(new LessBundle("~/bundles/dashboard/css").Include(
-                "~/Content/bootstrap/bootstrap.less",
                 "~/Content/dashboard/dashboard.less"));
 
             // Font awesome
