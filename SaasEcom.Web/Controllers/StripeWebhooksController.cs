@@ -6,8 +6,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices;
-using SaasEcom.Web.Analytics;
-using SaasEcom.Web.Analytics.Stripe;
+using SaasEcom.Data.Infrastructure.Analytics;
+using SaasEcom.Data.Infrastructure.Analytics.Stripe;
 using SaasEcom.Web.Mappers;
 using Stripe;
 

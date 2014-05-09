@@ -20,5 +20,7 @@ namespace SaasEcom.Data
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
+
+        public DbSet<Setting> Settings { get; set; }
     }
 }
