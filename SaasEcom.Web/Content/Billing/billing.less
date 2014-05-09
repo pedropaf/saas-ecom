@@ -1,18 +1,9 @@
-﻿@import "./bootstrap/variables.less";
-// import custom variables
-@import "./bootstrap/bootstrap.less";
+﻿@import "../bootstrap/variables.less";
+@import "../billing/custom-variables.less";
+@import "../bootstrap/bootstrap.less";
 
 body {
-    .content {
-        display: block;
-        margin-top: 50px;
-
-        .title {
-            margin-top: 25px;
-            margin-bottom: 25px;
-        }
-    }
-
+    margin-top: 50px;
     // Validation
     .field-validation-error {
         color: #b94a48;
@@ -46,5 +37,177 @@ body {
 
     .validation-summary-valid {
         display: none;
+    }
+}
+
+/* ATTN: This is mobile first CSS - to update 786px and up screen width use the media query near the bottom of the document! */
+
+/* Global Styles */
+#wrapper {
+    padding-left: 0;
+}
+
+#page-wrapper {
+    width: 100%;
+    padding: 5px 15px;
+}
+
+/* Nav Messages */
+
+.messages-dropdown .dropdown-menu .message-preview .avatar,
+.messages-dropdown .dropdown-menu .message-preview .name,
+.messages-dropdown .dropdown-menu .message-preview .message,
+.messages-dropdown .dropdown-menu .message-preview .time {
+    display: block;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .avatar {
+    float: left;
+    margin-right: 15px;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .name {
+    font-weight: bold;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .message {
+    font-size: 12px;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .time {
+    font-size: 12px;
+}
+
+
+/* Nav Announcements */
+
+.announcement-heading {
+    font-size: 50px;
+    margin: 0;
+}
+
+.announcement-text {
+    margin: 0;
+}
+
+/* Table Headers */
+
+table.tablesorter thead {
+    cursor: pointer;
+}
+
+    table.tablesorter thead tr th:hover {
+        background-color: #f5f5f5;
+    }
+
+/* Flot Chart Containers */
+
+.flot-chart {
+    display: block;
+    height: 400px;
+}
+
+.flot-chart-content {
+    width: 100%;
+    height: 100%;
+}
+
+/* Edit Below to Customize Widths > 768px */
+@media (min-width:768px) {
+
+    /* Wrappers */
+
+    #wrapper {
+        padding-left: 225px;
+    }
+
+    #page-wrapper {
+        padding: 15px 25px;
+    }
+
+    /* Side Nav */
+
+    .side-nav {
+        margin-left: -225px;
+        left: 225px;
+        width: 225px;
+        position: fixed;
+        top: 50px;
+        height: 100%;
+        border-radius: 0;
+        border: none;
+        background-color: #222222;
+        overflow-y: auto;
+        /* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
+        li.dropdown {
+            ul.dropdown-menu {
+                position: relative;
+                min-width: 225px;
+                margin: 0;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                background-color: transparent;
+                box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+
+            ul.dropdown-menu {
+                li {
+                    a {
+                        color: #999999;
+                        padding: 15px 15px 15px 25px;
+
+                        &:hover, &:focus, .active {
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        li {
+            width: 225px;
+            height: 70px;
+            border-left: 3px black solid;
+            border-bottom: 1px #444 solid;
+
+            a {
+                padding-top: 30px;
+                padding-bottom: 20px;
+                width: 225px;
+                padding-left: 25px;
+            }
+
+            &:hover, &.active {
+                background-color: black;
+                border-left: 3px blue solid;
+            }
+        }
+    }
+
+    .navbar-inverse .navbar-nav > .active > a,
+    .navbar-inverse .navbar-nav > .active > a:hover,
+    .navbar-inverse .navbar-nav > .active > a:focus {
+        background-color: black !important;
+    }
+
+    /* Nav Messages */
+
+    .messages-dropdown .dropdown-menu {
+        min-width: 300px;
+    }
+
+        .messages-dropdown .dropdown-menu li a {
+            white-space: normal;
+        }
+
+    .navbar-collapse {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .navbar-header {
+        border-left: 3px black solid;
     }
 }

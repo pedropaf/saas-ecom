@@ -155,6 +155,10 @@
     <Compile Include="Migrations\201404272146100_InvoicePlanCreatedNullable.Designer.cs">
       <DependentUpon>201404272146100_InvoicePlanCreatedNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405091949563_Settings.cs" />
+    <Compile Include="Migrations\201405091949563_Settings.Designer.cs">
+      <DependentUpon>201405091949563_Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -211,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404272146100_InvoicePlanCreatedNullable.resx">
       <DependentUpon>201404272146100_InvoicePlanCreatedNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405091949563_Settings.resx">
+      <DependentUpon>201405091949563_Settings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -9,51 +9,58 @@
     @Styles.Render("~/bundles/billing/css")
     @Styles.Render("~/bundles/fontawesome")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <div id="wrapper">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Billing", "Index", "Home", new { area = "billing" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Customers", "Index", "Customers", null, new { area = "billing" })</li>
-                    <li>@Html.ActionLink("Subscription Plans", "Index", "SubscriptionPlans", null, new { area = "billing" })</li>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                    <li><a href="@Url.Action("Index", "Customers", new { area = "billing" })"><i class="fa fa-users"></i> Customers</a></li>
+                    <li><a href="#"><i class="fa fa-edit"></i> Invoices</a></li>
+                    <li><a href="@Url.Action("Index", "SubscriptionPlans", new { area = "billing" })"><i class="fa fa-table"></i> Subscription Plans</a></li>
+                    <li><a href="#"><i class="fa fa-bar-chart-o"></i> Analytics</a></li>
+                    <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
                 </ul>
 
                 <!-- Log out -->
                 @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                 {
                     @Html.AntiForgeryToken()
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-                        </li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">
-                                <span class="glyphicon glyphicon-off"></span> Log out
-                            </a></li>
+                    <ul class="nav navbar-nav navbar-right navbar-user">
+                        <li class="dropdown user-dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> @User.Identity.GetUserName() <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Manage", "Account", new { area = "billing" })"><i class="fa fa-user"></i> Profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i> Log Out</a></li>
+                            </ul>
+                        </li> 
                     </ul>
                 }
-            </div>
-        </div>
-    </div>
-    <div class="container body-content content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Billing</p>
-        </footer>
-    </div>
+            </div><!-- /.navbar-collapse -->
+        </nav>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/billing/js")
-    @RenderSection("scripts", required: false)
+        <div id="page-wrapper">
+            @RenderBody()
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/billing/js")
+        @RenderSection("scripts", required: false)
+    </div>
 </body>
 </html>

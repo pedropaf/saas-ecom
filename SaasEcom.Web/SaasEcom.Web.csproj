@@ -260,6 +260,9 @@
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
     </Content>
+    <Content Include="Content\billing\custom-variables.css">
+      <DependentUpon>custom-variables.less</DependentUpon>
+    </Content>
     <Content Include="Content\dashboard\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>
@@ -353,6 +356,10 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\billing\custom-variables.less" />
+    <Content Include="Content\billing\custom-variables.css.map">
+      <DependentUpon>custom-variables.css</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\saas-ecom %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
