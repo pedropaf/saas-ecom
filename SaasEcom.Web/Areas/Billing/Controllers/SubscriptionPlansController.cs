@@ -73,26 +73,12 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             return View(subscriptionplan);
         }
 
-        // GET: /Billing/SubscriptionPlans/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SubscriptionPlan subscriptionplan = await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.FindAsync(id);
-            if (subscriptionplan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subscriptionplan);
-        }
-
         // POST: /Billing/SubscriptionPlans/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            // TODO: Validate if there are users subscribed to this plan.
+
             var db = Request.GetOwinContext().Get<ApplicationDbContext>();
             SubscriptionPlan subscriptionplan = await db.SubscriptionPlans.FindAsync(id);
             db.SubscriptionPlans.Remove(subscriptionplan);

@@ -17,6 +17,8 @@ namespace SaasEcom.Data.Models
         [Required]
         [Range(0.0, 10000)]
         public double Price { get; set; }
+        
+        // TODO: Setup in settings
         public string Currency { get; set; }
 
         [Required]

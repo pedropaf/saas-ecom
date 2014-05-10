@@ -246,7 +246,6 @@
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Create.cshtml" />
-    <Content Include="Areas\Billing\Views\SubscriptionPlans\Delete.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Edit.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Index.cshtml" />
     <Content Include="Content\billing\billing.css.map">
@@ -355,6 +354,7 @@
     <Content Include="Content\site.css.map">
       <DependentUpon>site.css</DependentUpon>
     </Content>
+    <Content Include="Areas\Billing\Views\SubscriptionPlans\_subscriptionPlanForm.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
