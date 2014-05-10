@@ -159,6 +159,10 @@
     <Compile Include="Migrations\201405091949563_Settings.Designer.cs">
       <DependentUpon>201405091949563_Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405102049234_SubscriptionPlanValidation.cs" />
+    <Compile Include="Migrations\201405102049234_SubscriptionPlanValidation.Designer.cs">
+      <DependentUpon>201405102049234_SubscriptionPlanValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -218,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405091949563_Settings.resx">
       <DependentUpon>201405091949563_Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405102049234_SubscriptionPlanValidation.resx">
+      <DependentUpon>201405102049234_SubscriptionPlanValidation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

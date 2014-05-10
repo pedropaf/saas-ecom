@@ -263,6 +263,9 @@
     <Content Include="Content\billing\custom-variables.css">
       <DependentUpon>custom-variables.less</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap\variables.css">
+      <DependentUpon>variables.less</DependentUpon>
+    </Content>
     <Content Include="Content\dashboard\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>
@@ -419,7 +422,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Billing\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

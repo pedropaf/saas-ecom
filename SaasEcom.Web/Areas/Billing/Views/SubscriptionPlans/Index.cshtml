@@ -7,13 +7,13 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2 class="title"><i class="fa fa-table"></i> Subscription plans</h2>
-        <hr />
+        <h1 class="title"><i class="fa fa-table"></i> Subscription plans</h1>
+        
 
         @if (Model != null && Model.Any())
         {
             <p>
-                <a href="@Url.Action("Create")" class="btn btn-primary">Create Plan</a>
+                <a href="@Url.Action("Create")" class="btn btn-primary">Create new Subscription plan</a>
             </p>
 
             <table class="table">

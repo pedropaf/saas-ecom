@@ -1,14 +1,30 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
     Layout = "~/Areas/Billing/Views/Shared/_BillingLayout.cshtml";
 }
 
 <div class="row">
     <div class="col-md-12">
-        <h2 class="title"><i class="fa fa-dashboard"></i> Dashboard</h2>
-        <hr />
+        <h1 class="title"><i class="fa fa-dashboard"></i> Dashboard</h1>
+        
+        <!-- Stripe integration setup -->
+        <div class="stripe-setup jumbotron">
+            <h2><i class="fa fa-hand-o-right"></i> Stripe setup</h2>
+            <p>Setup your stripe API keys to allow Saas ecom to import your data and integrate the payment gateway.</p>
+            <a href="@Url.Action("Stripe", "Settings", new { area = "billing" })" class="btn btn-primary">Setup stripe</a>
+        </div>
 
-        <p>TODO: Add content.</p>
+        <!-- TODO Subscription plans summary -->
+        <div id="subscrtion-plans">
+        </div>
+
+        <!-- No subscription plans available -->
+        <div class="add-subscription-plans jumbotron">
+            <h2>Subscription Plans</h2>
+            <p>You haven't setup any subscription plan yet.</p>
+            <a href="@Url.Action("Create", "SubscriptionPlans", new { area = "billing" })" class="btn btn-primary">Create subscription plans</a>
+        </div>
+
     </div>
 </div>

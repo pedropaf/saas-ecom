@@ -9,6 +9,7 @@
     @Styles.Render("~/bundles/billing/css")
     @Styles.Render("~/bundles/fontawesome")
     @Scripts.Render("~/bundles/modernizr")
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <div id="wrapper">
@@ -22,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Billing", "Index", "Home", new { area = "billing" }, new { @class = "navbar-brand" })
+                <span class ="navbar-brand">Saas ecom</span>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

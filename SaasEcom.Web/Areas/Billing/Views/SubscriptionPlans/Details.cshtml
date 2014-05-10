@@ -5,64 +5,68 @@
     Layout = "~/Areas/Billing/Views/Shared/_BillingLayout.cshtml";
 }
 
-<h2 class="title">Details</h2>
-<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="title">Details</h1>
 
-<div>
-    <h4>SubscriptionPlan</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FriendlyId)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FriendlyId)
-        </dd>
+        <div>
+            <h4>SubscriptionPlan</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FriendlyId)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FriendlyId)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Interval)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Interval)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Interval)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TrialPeriodInDays)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Interval)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TrialPeriodInDays)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TrialPeriodInDays)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StatementDescription)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TrialPeriodInDays)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.StatementDescription)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.StatementDescription)
+                </dt>
 
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.StatementDescription)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

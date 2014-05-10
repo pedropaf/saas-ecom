@@ -1,9 +1,36 @@
 ﻿@import "../bootstrap/variables.less";
 @import "../billing/custom-variables.less";
 @import "../bootstrap/bootstrap.less";
-
+ 
 body {
-    margin-top: 50px;
+    
+    margin-top: 70px;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 400;
+    }
+
+    .title {
+        margin-top: 25px;
+        margin-bottom: 40px;
+    }
+
+    .btn, .navbar {
+        border: none;
+    }
+
+    .navbar-brand {
+        line-height: 42px;
+    }
+
+    .navbar-user {
+        padding-top: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
     // Validation
     .field-validation-error {
         color: #b94a48;
@@ -132,7 +159,7 @@ table.tablesorter thead {
         left: 225px;
         width: 225px;
         position: fixed;
-        top: 50px;
+        top: 70px;
         height: 100%;
         border-radius: 0;
         border: none;
@@ -169,7 +196,7 @@ table.tablesorter thead {
         li {
             width: 225px;
             height: 70px;
-            border-left: 3px black solid;
+            border-left: @menu-border-width @menu-border-color solid;
             border-bottom: 1px #444 solid;
 
             a {
@@ -181,7 +208,7 @@ table.tablesorter thead {
 
             &:hover, &.active {
                 background-color: black;
-                border-left: 3px blue solid;
+                border-left: @menu-border-width lighten(@menu-border-color, 30%) solid;
             }
         }
     }
@@ -208,6 +235,6 @@ table.tablesorter thead {
     }
 
     .navbar-header {
-        border-left: 3px black solid;
+        border-left: @menu-border-width @menu-border-color solid;
     }
 }
