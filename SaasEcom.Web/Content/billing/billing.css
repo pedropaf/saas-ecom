@@ -4643,7 +4643,7 @@ a.list-group-item.active:focus .list-group-item-text {
   margin-bottom: 22px;
   background-color: #ffffff;
   border: 1px solid transparent;
-  border-radius: 0px;
+  border-radius: 0;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
@@ -4747,8 +4747,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
-  border-top-right-radius: -1px;
-  border-top-left-radius: -1px;
+  border-top-right-radius: -1;
+  border-top-left-radius: -1;
 }
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
@@ -4766,12 +4766,12 @@ a.list-group-item.active:focus .list-group-item-text {
   padding: 10px 15px;
   background-color: #f5f5f5;
   border-top: 1px solid #dddddd;
-  border-bottom-right-radius: -1px;
-  border-bottom-left-radius: -1px;
+  border-bottom-right-radius: -1;
+  border-bottom-left-radius: -1;
 }
 .panel-group .panel {
   margin-bottom: 0;
-  border-radius: 0px;
+  border-radius: 0;
   overflow: hidden;
 }
 .panel-group .panel + .panel {
@@ -6142,5 +6142,18 @@ table.tablesorter thead tr th:hover {
   .navbar-header {
     border-left: 4px #546573 solid;
   }
+}
+.subscription-panel {
+  min-height: 250px;
+}
+.subscription-panel .panel-title small {
+  color: white;
+}
+.subscription-panel .panel-body {
+  padding: 20px;
+  line-height: 30px;
+}
+.subscription-panel .plan-details {
+  padding-bottom: 20px;
 }
 /*# sourceMappingURL=billing.css.map */

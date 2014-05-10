@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
@@ -19,21 +15,6 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         public async Task<ActionResult> Index()
         {
             return View(await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.ToListAsync());
-        }
-
-        // GET: /Billing/SubscriptionPlans/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SubscriptionPlan subscriptionplan = await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.FindAsync(id);
-            if (subscriptionplan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subscriptionplan);
         }
 
         // GET: /Billing/SubscriptionPlans/Create

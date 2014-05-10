@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SaasEcom.Data.Models
 {
@@ -39,6 +40,24 @@ namespace SaasEcom.Data.Models
 
             [Display(Name="Every 3 months")]
             EveryThreeMonths
+        }
+
+        [NotMapped]
+        public string CurrencySymbol
+        {
+            get
+            {
+                switch (this.Currency)
+                {
+                    case ("gbp"):
+                        return "£";
+                    case ("usd"):
+                        return "$";
+                    case ("eur"):
+                        return "€";
+                }
+                return null;
+            }
         }
     }
 }

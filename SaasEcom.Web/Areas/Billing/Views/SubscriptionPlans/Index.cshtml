@@ -6,69 +6,38 @@
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-lg-12">
         <h1 class="title"><i class="fa fa-table"></i> Subscription plans</h1>
-        
 
         @if (Model != null && Model.Any())
         {
-            <p>
-                <a href="@Url.Action("Create")" class="btn btn-primary">Create new Subscription plan</a>
-            </p>
-
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FriendlyId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Interval)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TrialPeriodInDays)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.StatementDescription)
-                    </th>
-                    <th></th>
-                </tr>
-
+            <!-- Plans -->
+            <div class="row">
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FriendlyId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Interval)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TrialPeriodInDays)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StatementDescription)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Edit", new {id = item.Id})" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a href="@Url.Action("Details", new {id = item.Id})" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-list-alt"></span></a>
-                            <a href="@Url.Action("Delete", new {id = item.Id})" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-                    </tr>
-                }
+                    <div class="col-md-4 subscription-panel">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">@item.Name &nbsp;<small>@item.CurrencySymbol@string.Format("{0:F2}", item.Price) / @item.Interval</small></h2>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled plan-details">
+                                    <li><strong>Id:</strong> @item.FriendlyId</li>
+                                    <li><strong>Trial:</strong> @item.TrialPeriodInDays</li>
+                                    <li><strong>Bank statement</strong> @item.StatementDescription</li>
+                                </ul>
 
-            </table>
+                                <a href="@Url.Action("Edit", new {id = item.Id})" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                                <a href="@Url.Action("Delete", new {id = item.Id})" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <br/>
+            <div class="row clearfix">
+                <div class="col-md-12"><a href="@Url.Action("Create")" class="btn btn-primary">Create new Subscription plan</a></div>
+            </div>
         }
         else
         {

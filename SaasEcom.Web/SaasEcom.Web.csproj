@@ -247,7 +247,6 @@
     <Content Include="Areas\Dashboard\Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Create.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Delete.cshtml" />
-    <Content Include="Areas\Billing\Views\SubscriptionPlans\Details.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Edit.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Index.cshtml" />
     <Content Include="Content\billing\billing.css.map">
