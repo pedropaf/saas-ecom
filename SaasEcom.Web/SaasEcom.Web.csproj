@@ -216,8 +216,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Billing\BillingAreaRegistration.cs" />
+    <Compile Include="Areas\Billing\Controllers\AnalyticsController.cs" />
     <Compile Include="Areas\Billing\Controllers\CustomersController.cs" />
-    <Compile Include="Areas\Billing\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Billing\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Billing\Controllers\InvoicesController.cs" />
+    <Compile Include="Areas\Billing\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\Filters\SectionFilter.cs" />
     <Compile Include="Areas\Billing\ViewModels\BaseViewModel.cs" />
@@ -328,7 +331,7 @@
     <Content Include="Scripts\billing.js" />
     <Content Include="Areas\Billing\Views\web.config" />
     <Content Include="Areas\Billing\Views\Shared\_BillingLayout.cshtml" />
-    <Content Include="Areas\Billing\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Billing\Views\Dashboard\Index.cshtml" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -357,6 +360,9 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Areas\Billing\Views\SubscriptionPlans\_subscriptionPlanForm.cshtml" />
+    <Content Include="Areas\Billing\Views\Analytics\Index.cshtml" />
+    <Content Include="Areas\Billing\Views\Invoices\Index.cshtml" />
+    <Content Include="Areas\Billing\Views\Settings\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
