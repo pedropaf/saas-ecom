@@ -32,9 +32,13 @@ namespace SaasEcom.Web.Controllers
 
             var stripeEvent = StripeEventUtility.ParseEvent(json);
 
+            // Index events in Elasticsearch
             IEventLogger logger = new StripeEventLogger();
             logger.LogEvent(stripeEvent);
 
+            // TODO: Send email notifications?
+
+            #region All Event types
             // All the event types explained here: https://stripe.com/docs/api#event_types
             switch (stripeEvent.Type)
             {
@@ -127,6 +131,7 @@ namespace SaasEcom.Web.Controllers
                 case "transfer.failed": // Occurs whenever Stripe attempts to send a transfer and that transfer fails.
                     break;
             }
+            #endregion
 
             return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }

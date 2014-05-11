@@ -96,6 +96,7 @@
     <Compile Include="Infrastructure\Analytics\Stripe\StripeIndexer.cs" />
     <Compile Include="Infrastructure\Analytics\IEventLogger.cs" />
     <Compile Include="Infrastructure\Analytics\Stripe\StripeEventLogger.cs" />
+    <Compile Include="Infrastructure\Analytics\Stripe\StripeSearcher.cs" />
     <Compile Include="Infrastructure\EmailIdentityService.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
