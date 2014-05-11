@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SaasEcom.Web.Areas.Billing.ViewModels
 {
-    public class CustomersViewModel
+    public class CustomersViewModel : BaseViewModel
     {
         public List<Data.Models.ApplicationUser> Customers { get; set; }
     }

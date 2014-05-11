@@ -4,13 +4,15 @@ using System.Web.Mvc;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data.Infrastructure.Identity;
+using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
+    [Authorize(Roles = "admin")]
+    [SectionFilter(Section = "customers")]
     public class CustomersController : Controller
     {
-        // GET: /Billing/Customers/
         public ActionResult Index()
         {
             var db = Request.GetOwinContext().Get<ApplicationDbContext>();
@@ -20,7 +22,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
             var model = new CustomersViewModel
             {
-                Customers = users
+                Customers = users,
             };
 
             return View(model);

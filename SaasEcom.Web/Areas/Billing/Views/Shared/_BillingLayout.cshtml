@@ -29,12 +29,24 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active"><a href="@Url.Action("Index", "Home", new { area = "billing" })"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                    <li><a href="@Url.Action("Index", "Customers", new { area = "billing" })"><i class="fa fa-users"></i> Customers</a></li>
-                    <li><a href="#"><i class="fa fa-edit"></i> Invoices</a></li>
-                    <li><a href="@Url.Action("Index", "SubscriptionPlans", new { area = "billing" })"><i class="fa fa-table"></i> Subscription Plans</a></li>
-                    <li><a href="#"><i class="fa fa-bar-chart-o"></i> Analytics</a></li>
-                    <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                    <li class="@(ViewBag.Section == "dashboard" ? "active" : "")">
+                        <a href="@Url.Action("Index", "Home", new { area = "billing" })"><i class="fa fa-dashboard"></i> Dashboard</a>
+                    </li>
+                    <li class="@(ViewBag.Section == "customers" ? "active" : "")">
+                        <a href="@Url.Action("Index", "Customers", new { area = "billing" })"><i class="fa fa-users"></i> Customers</a>
+                    </li>
+                    <li class="@(ViewBag.Section == "invoices" ? "active" : "")">
+                        <a href="#"><i class="fa fa-edit"></i> Invoices</a>
+                    </li>
+                    <li class="@(ViewBag.Section == "subscription-plans" ? "active" : "")">
+                        <a href="@Url.Action("Index", "SubscriptionPlans", new { area = "billing" })"><i class="fa fa-table"></i> Subscription Plans</a>
+                    </li>
+                    <li class="@(ViewBag.Section == "analytics" ? "active" : "")">
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> Analytics</a>
+                    </li>
+                    <li class="@(ViewBag.Section == "settings" ? "active" : "")">
+                        <a href="#"><i class="fa fa-gear"></i> Settings</a>
+                    </li>
                 </ul>
 
                 <!-- Log out -->

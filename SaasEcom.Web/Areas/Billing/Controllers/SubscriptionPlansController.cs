@@ -6,26 +6,25 @@ using System.Web.Mvc;
 using SaasEcom.Data.Models;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Web.Areas.Billing.Filters;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
+    [Authorize(Roles = "admin")]
+    [SectionFilter(Section = "subscription-plans")]
     public class SubscriptionPlansController : Controller
     {
-        // GET: /Billing/SubscriptionPlans/
         public async Task<ActionResult> Index()
         {
             return View(await Request.GetOwinContext().Get<ApplicationDbContext>().SubscriptionPlans.ToListAsync());
         }
 
-        // GET: /Billing/SubscriptionPlans/Create
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: /Billing/SubscriptionPlans/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include="Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays,StatementDescription")] SubscriptionPlan subscriptionplan)
@@ -57,8 +56,6 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         }
 
         // POST: /Billing/SubscriptionPlans/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include="Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays,StatementDescription")] SubscriptionPlan subscriptionplan)
