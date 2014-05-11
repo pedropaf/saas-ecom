@@ -5,17 +5,35 @@
     Layout = "~/Areas/Billing/Views/Shared/_BillingLayout.cshtml";
 }
 
+@helper PlanWidth(int numPlans)
+{
+    if (numPlans <= 2)
+    {
+        @("6")
+    }
+    else if (numPlans == 3)
+    {
+        @("4")
+    }
+    else
+    {
+        @("3")
+    }
+}
+
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <h1 class="title"><i class="fa fa-table"></i> Subscription plans</h1>
 
         @if (Model != null && Model.Any())
         {
+            var numPlans = Model.Count();
+                
             <!-- Plans -->
             <div class="row">
                 @foreach (var item in Model)
                 {
-                    <div class="col-md-4 subscription-panel">
+                    <div class="col-md-@PlanWidth(numPlans) subscription-panel">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h2 class="panel-title">@item.Name &nbsp;<small>@item.CurrencySymbol@string.Format("{0:F2}", item.Price) / @item.Interval</small></h2>
@@ -28,7 +46,7 @@
                                 </ul>
 
                                 <a href="@Url.Action("Edit", new {id = item.Id})" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                                <a href="@Url.Action("Delete", new {id = item.Id})" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                                <a href="@Url.Action("Delete", new {id = item.Id})" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Disable</a>
                             </div>
                         </div>
                     </div>
