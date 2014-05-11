@@ -1,61 +1,58 @@
 ﻿@model SaasEcom.Data.Models.SubscriptionPlan
 
-@using (Html.BeginForm("Create", "SubscriptionPlan", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.FriendlyId, new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(model => model.FriendlyId, new { @class = "form-control", placeholder = "Subscription plan identifier (eg: starter-plan)" })
-            @Html.ValidationMessageFor(model => model.FriendlyId)
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.FriendlyId, new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(model => model.FriendlyId, new { @class = "form-control", placeholder = "Subscription plan identifier (eg: starter-plan)" })
+        @Html.ValidationMessageFor(model => model.FriendlyId)
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Subscription plan Name" })
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Subscription plan Name" })
+        @Html.ValidationMessageFor(model => model.Name)
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "Plan Price" })
-            @Html.ValidationMessageFor(model => model.Price)
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "Plan Price" })
+        @Html.ValidationMessageFor(model => model.Price)
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Interval, new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.EnumDropDownListFor(model => model.Interval, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Interval)
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.Interval, new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.EnumDropDownListFor(model => model.Interval, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Interval)
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.TrialPeriodInDays, new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(model => model.TrialPeriodInDays, new { @class = "form-control", placeholder = "Trial period (min: 0 days)" })
-            @Html.ValidationMessageFor(model => model.TrialPeriodInDays)
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.TrialPeriodInDays, new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(model => model.TrialPeriodInDays, new { @class = "form-control", placeholder = "Trial period (min: 0 days)" })
+        @Html.ValidationMessageFor(model => model.TrialPeriodInDays)
     </div>
+</div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.StatementDescription, new { @class = "control-label col-md-3" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(model => model.StatementDescription, new { @class = "form-control", placeholder = "Bank statement description for each charge" })
-            @Html.ValidationMessageFor(model => model.StatementDescription)
-        </div>
+<div class="form-group">
+    @Html.LabelFor(model => model.StatementDescription, new { @class = "control-label col-md-3" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(model => model.StatementDescription, new { @class = "form-control", placeholder = "Bank statement description for each charge" })
+        @Html.ValidationMessageFor(model => model.StatementDescription)
     </div>
+</div>
 
-    <div class="form-group">
-        <div class="col-md-offset-3 col-md-10">
-            <input type="submit" value="Create new Subscription Plan" class="btn btn-primary" />
-        </div>
+<div class="form-group">
+    <div class="col-md-offset-3 col-md-10">
+        <input type="submit" value="Save Subscription Plan" class="btn btn-primary" />
     </div>
-}
+</div>

@@ -8,7 +8,10 @@
 <div class="row">
     <div class="col-md-11 col-lg-9">
         <h1 class="title"><i class="fa fa-angle-right"></i> New Subscription Plan</h1>
-        @Html.Partial("_subscriptionPlanForm")
+        @using (Html.BeginForm("Create", "SubscriptionPlans", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.Partial("_subscriptionPlanForm")
+        }
     </div>
 </div>
 @section Scripts {
