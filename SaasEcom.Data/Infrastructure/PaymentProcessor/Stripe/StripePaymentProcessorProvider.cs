@@ -80,9 +80,9 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             }
         }
 
-        public IEnumerable<StripePlan> GetAllPlans(int limit = 10)
+        public IEnumerable<StripePlan> GetAllPlans(StripeListOptions options)
         {
-            return PlanService.List(limit);
+            return PlanService.List(options);
         }
 
         public void DeleteSubscriptionPlan(string planId)
@@ -146,7 +146,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 
         public IEnumerable<StripeCustomer> GetAllCustomers(int limit = 100)
         {
-            return CustomerService.List(limit);
+            return CustomerService.List(new StripeCustomerListOptions() { Limit = limit });
         }
 
         #endregion
@@ -222,7 +222,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 
         public IEnumerable<StripeCard> List(string customerId, int limit = 10)
         {
-            return CardService.List(customerId, limit);
+            return CardService.List(customerId, new StripeListOptions() { Limit = limit });
         }
 
         public StripeCard Update(string customerId, string cardId, CreditCard card)
