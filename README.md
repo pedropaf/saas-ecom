@@ -3,6 +3,10 @@ SAAS Ecommerce
 
 Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe.com), including out-of-the-box pricing pages, payment pages, and  subscription management for your customers. Also makes it easy to manage logic related to new subscriptions, cancellations, payment failures, and streamlines hooking up notifications, etc.
 
+You can see [more information about the project in this blog post](http://www.pedroalonso.net/blog/2014/04/28/saas-ecom-open-source-for-net-mvc-5-stripe/)
+
+![Web](http://www.pedroalonso.net/images/posts/2014/04/01-SAAS-Ecom.png)
+
 See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's connected to Stripe test gateway, so you can add one of their [test credit cards](https://stripe.com/docs/testing).
 
 * **Test Card Number:** 4242 4242 4242 4242 
@@ -26,19 +30,6 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 5. Create your database, and add the connection string to Web.config. By default is using SQL Compact.
 
 **Contributions and feedback is very welcome.**
-
-## Roadmap
-
-For future releases these is a list of features that it would be nice to support:
-
-* Paypal subscriptions.
-* Add unit tests.
-* Support multiple subscriptions per user.
-* Cancel subscriptions individually.
-* Upgrade / downgrade subscription.
-* Social Logins: Register using your facebook / twitter / google account?
-* MailChimp Integration
-* Move copy to Resx files and add translations.
 
 ## Libraries used
 
