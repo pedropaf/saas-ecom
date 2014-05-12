@@ -6,8 +6,6 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices;
-using SaasEcom.Data.Infrastructure.Analytics;
-using SaasEcom.Data.Infrastructure.Analytics.Stripe;
 using SaasEcom.Web.Mappers;
 using Stripe;
 
@@ -32,9 +30,9 @@ namespace SaasEcom.Web.Controllers
 
             var stripeEvent = StripeEventUtility.ParseEvent(json);
 
-            // Index events in Elasticsearch
-            IEventLogger logger = new StripeEventLogger();
-            logger.LogEvent(stripeEvent);
+            // TODO: Index events in Elasticsearch
+            //IEventLogger logger = new StripeEventLogger();
+            //logger.LogEvent(stripeEvent);
 
             // TODO: Send email notifications?
 

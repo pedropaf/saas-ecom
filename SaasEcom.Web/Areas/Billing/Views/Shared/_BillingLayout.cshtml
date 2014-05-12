@@ -41,9 +41,16 @@
                     <li class="@(ViewBag.Section == "subscription-plans" ? "active" : "")">
                         <a href="@Url.Action("Index", "SubscriptionPlans", new { area = "billing" })"><i class="fa fa-table"></i> Subscription Plans</a>
                     </li>
+                    
+                    <!-- Future features
                     <li class="@(ViewBag.Section == "analytics" ? "active" : "")">
                         <a href="@Url.Action("Index", "Analytics", new { area = "billing" })"><i class="fa fa-bar-chart-o"></i> Analytics</a>
                     </li>
+                    <li class="@(ViewBag.Section == "notifications" ? "active" : "")">
+                        <a href="@Url.Action("Index", "Notifications", new { area = "billing" })"><i class="fa fa-envelope"></i> Notifications</a>
+                    </li>
+                    -->
+
                     <li class="@(ViewBag.Section == "settings" ? "active" : "")">
                         <a href="@Url.Action("Index", "Settings", new { area = "billing" })"><i class="fa fa-gear"></i> Settings</a>
                     </li>

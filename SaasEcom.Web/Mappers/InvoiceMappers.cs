@@ -5,6 +5,7 @@ using Stripe;
 
 namespace SaasEcom.Web.Mappers
 {
+    // TODO: Move to automapper
     public static class InvoiceMappers
     {
         public static Invoice MapToInvoice(StripeInvoice stripeInvoice)
