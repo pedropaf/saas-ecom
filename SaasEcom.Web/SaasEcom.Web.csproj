@@ -229,8 +229,8 @@
     <Compile Include="Areas\Billing\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\Filters\SectionFilter.cs" />
-    <Compile Include="Areas\Billing\ViewModels\BaseViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
+    <Compile Include="Areas\Billing\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Dashboard\Controllers\CardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\InvoiceController.cs" />

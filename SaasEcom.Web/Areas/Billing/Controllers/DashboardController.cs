@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using SaasEcom.Web.Areas.Billing.Filters;
+using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
@@ -9,7 +10,9 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new DashboardViewModel();
+
+            return View(model);
         }
 	}
 }

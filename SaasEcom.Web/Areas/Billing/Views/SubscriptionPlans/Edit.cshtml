@@ -8,9 +8,58 @@
 <div class="row">
     <div class="col-md-11 col-lg-9">
         <h1 class="title"><i class="fa fa-angle-right"></i> Edit Subscription Plan</h1>
+        <div class="alert alert-info">
+            <strong>Info:</strong> Only the plan name can be edited.<br />
+            You can disable the plan, and create a new one. If you disable a plan, you can't add new customers to that plan, but the current customers won't be affected.
+        </div>
+
         @using (Html.BeginForm("Edit", "SubscriptionPlans", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-            @Html.Partial("_subscriptionPlanForm", Model)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FriendlyId, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <span class="form-control" disabled>@Model.FriendlyId</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Subscription plan Name" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <span class="form-control" disabled>@Model.Price</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Interval, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <span class="form-control" disabled>@Model.Interval</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrialPeriodInDays, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <span class="form-control" disabled>@Model.TrialPeriodInDays</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <input type="submit" value="Update Subscription Plan" class="btn btn-primary" />
+                </div>
+            </div>
+
         }
     </div>
 </div>

@@ -44,14 +44,6 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.StatementDescription, new { @class = "control-label col-md-3" })
-    <div class="col-md-9">
-        @Html.TextBoxFor(model => model.StatementDescription, new { @class = "form-control", placeholder = "Bank statement description for each charge" })
-        @Html.ValidationMessageFor(model => model.StatementDescription)
-    </div>
-</div>
-
-<div class="form-group">
     <div class="col-md-offset-3 col-md-10">
         <input type="submit" value="Save Subscription Plan" class="btn btn-primary" />
     </div>
