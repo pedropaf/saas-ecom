@@ -16,6 +16,8 @@ namespace SaasEcom.Data.Models
         public int ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; }
 
+        public virtual StripeAccount StripeAccount { get; set; }
+
         public string Status()
         {
             string result = null;

@@ -101,10 +101,11 @@
     <Compile Include="DataServices\Interfaces\ISubscriptionPlanService.cs" />
     <Compile Include="DataServices\Storage\InvoiceDataService.cs" />
     <Compile Include="DataServices\Storage\SubscriptionPlanDataService.cs" />
-    <Compile Include="DataServices\Stripe\StripeCardService.cs" />
-    <Compile Include="DataServices\Stripe\StripeInvoiceService.cs" />
-    <Compile Include="DataServices\Stripe\StripeSubscriptionPlanService.cs" />
-    <Compile Include="DataServices\Stripe\StripeSubscriptionService.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Stripe\CardService.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Stripe\CustomerService.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Stripe\InvoiceService.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Stripe\SubscriptionPlanService.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Stripe\SubscriptionService.cs" />
     <Compile Include="Infrastructure\EmailIdentityService.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
@@ -176,11 +177,15 @@
     <Compile Include="Migrations\201405131543041_SubscriptionPlanUpdated.Designer.cs">
       <DependentUpon>201405131543041_SubscriptionPlanUpdated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405132019259_StripeAccountAdded.cs" />
+    <Compile Include="Migrations\201405132019259_StripeAccountAdded.Designer.cs">
+      <DependentUpon>201405132019259_StripeAccountAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\Setting.cs" />
+    <Compile Include="Models\StripeAccount.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\StripePaymentProcessorProvider.cs" />
@@ -191,6 +196,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Models\ModelDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405131543041_SubscriptionPlanUpdated.resx">
       <DependentUpon>201405131543041_SubscriptionPlanUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405132019259_StripeAccountAdded.resx">
+      <DependentUpon>201405132019259_StripeAccountAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -20,7 +20,15 @@ namespace SaasEcom.Data
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
+        public DbSet<StripeAccount> StripeAccounts { get; set; }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        public DbSet<Setting> Settings { get; set; }
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOptional(u => u.StripeAccount)
+                .WithRequired(sa => sa.ApplicationUser);
+        }
     }
 }

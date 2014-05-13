@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.Models;
 
-namespace SaasEcom.Data.DataServices.Stripe
+namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class StripeSubscriptionPlanService : ISubscriptionPlanService
+    public class StripeSubscriptionPlanService
     {
         public Task<List<SubscriptionPlan>> GetAllAsync()
         {

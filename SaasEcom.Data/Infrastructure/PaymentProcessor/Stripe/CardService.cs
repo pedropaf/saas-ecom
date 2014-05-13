@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Models;
 
-namespace SaasEcom.Data.DataServices.Stripe
+namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class StripeCardService : ICardService
+    public class CardService
     {
+        private readonly StripePaymentProcessorProvider _stripeService;
+
+        public CardService(string apiKey)
+        {
+            this._stripeService = new StripePaymentProcessorProvider(apiKey);
+        }
+
         public Task<IList<Models.CreditCard>> GetAllAsync(string customerId)
         {
             throw new NotImplementedException();
@@ -19,9 +24,12 @@ namespace SaasEcom.Data.DataServices.Stripe
             throw new NotImplementedException();
         }
 
-        public Task AddAsync(Models.CreditCard creditcard)
+        public Task AddAsync(ApplicationUser user, CreditCard creditcard)
         {
-            throw new NotImplementedException();
+            var stripeCustomerId = user.StripeCustomerId;
+            this._stripeService.AddCard(stripeCustomerId, creditcard);
+            
+            return null;
         }
 
         public Task UpdateAsync(string customerId, Models.CreditCard creditcard)

@@ -30,6 +30,8 @@ namespace SaasEcom.Data.Models
 
         public bool Disabled { get; set; }
 
+        public virtual StripeAccount StripeAccount { get; set; }
+
         public enum SubscriptionInterval
         {
             Monthly,

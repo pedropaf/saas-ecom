@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SaasEcom.Data.Models
 {
-    public sealed class CreditCard
+    public class CreditCard
     {
         public int Id { get; set; }
 
@@ -60,5 +60,7 @@ namespace SaasEcom.Data.Models
         public string ExpirationYear { get; set; }
 
         public string ApplicationUserId { get; set; }
+
+        public virtual StripeAccount StripeAccount { get; set; }
     }
 }

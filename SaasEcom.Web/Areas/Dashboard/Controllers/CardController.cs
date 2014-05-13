@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -78,9 +79,9 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 var userId = User.Identity.GetUserId();
                 creditcard.ApplicationUserId = userId;
 
-                // Add card to Stripe
-                var stripeCustomerId = DbContext.Users.First(u => u.Id == userId).StripeCustomerId;
-                this.StripeService.AddCard(stripeCustomerId, creditcard);
+                // Add card to Stripe (TODO: Abstract to another service?)
+                var user = await DbContext.Users.FirstAsync(u => u.Id == userId);
+                StripeService.AddCard(user.StripeCustomerId, creditcard);
                 
                 // Add card to DB
                 await CardDataService.AddAsync(creditcard);
@@ -127,6 +128,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
             if (ModelState.IsValid && await CardBelongToUser(creditcard.Id, userId))
             {
+                // Stripe integration (TODO: Move to another service?)
                 // Remove current card from stripe
                 var currentCard = await CardDataService.FindAsync(userId, creditcard.Id);
                 var stripeCustomerId = DbContext.Users.First(u => u.Id == userId).StripeCustomerId;

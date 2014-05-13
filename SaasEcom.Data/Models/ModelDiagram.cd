@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SaasEcom.Data.Models.ApplicationUser">
+    <Position X="0.75" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAACAAAAEAIAACAAQAAQAAAAAACAAAEACIAAAg=</HashCode>
+      <FileName>Models\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="StripeAccount" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Subscriptions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SaasEcom.Data.Models.CreditCard" Collapsed="true">
+    <Position X="4.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAAACAAAKBAEAACQRACAAAICgAAQAACAAQAAA=</HashCode>
+      <FileName>Models\CreditCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaasEcom.Data.Models.Invoice" Collapsed="true">
+    <Position X="4.75" Y="7" Width="1.5" />
+    <NestedTypes>
+      <Class Name="SaasEcom.Data.Models.Invoice.LineItem" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Invoice.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="SaasEcom.Data.Models.Invoice.Period" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Invoice.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="SaasEcom.Data.Models.Invoice.Plan" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Invoice.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABEGgABAAAQkAEIAAEAiAQAACAAAQAABAgCAAESAAEA=</HashCode>
+      <FileName>Models\Invoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaasEcom.Data.Models.StripeAccount">
+    <Position X="0.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAQAAAAAAgAAAAAAAAAAQAAIAABAAA=</HashCode>
+      <FileName>Models\StripeAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaasEcom.Data.Models.Subscription">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIDAAAEACAAAACJgAAAAQBAACAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Subscription.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="StripeAccount" />
+      <Property Name="User" />
+      <Property Name="SubscriptionPlan" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SaasEcom.Data.Models.SubscriptionPlan" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="SaasEcom.Data.Models.SubscriptionPlan.SubscriptionInterval" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\SubscriptionPlan.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAABAAQAAAAAAAICAAQQACAAAgAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Models\SubscriptionPlan.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="StripeAccount" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
