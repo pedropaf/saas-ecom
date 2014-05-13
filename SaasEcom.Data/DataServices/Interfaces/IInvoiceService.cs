@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SaasEcom.Data.DataServices.Interfaces
 {
-    public interface IInvoiceDataService
+    public interface IInvoiceService
     {
         Task<List<Invoice>> UserInvoicesAsync(string id);
         Task<Invoice> UserInvoiceAsync(string userId, int invoiceId);

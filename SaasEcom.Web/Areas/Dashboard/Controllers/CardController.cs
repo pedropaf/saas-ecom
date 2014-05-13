@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
-using SaasEcom.Data.DataServices;
+using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Data.Infrastructure.Identity;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
@@ -64,13 +64,11 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             }
         }
 
-        // GET: /Dashboard/Card/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /Dashboard/Card/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreditCard creditcard)
@@ -95,7 +93,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return View(creditcard);
         }
 
-        // GET: /Dashboard/Card/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -122,7 +119,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return View(creditcard);
         }
 
-        // POST: /Dashboard/Card/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(CreditCard creditcard)

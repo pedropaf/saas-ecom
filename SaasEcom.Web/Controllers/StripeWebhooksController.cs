@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices;
+using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Web.Mappers;
 using Stripe;
 

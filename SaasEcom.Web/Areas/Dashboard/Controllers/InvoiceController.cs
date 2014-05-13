@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
-using SaasEcom.Data.DataServices;
+using SaasEcom.Data.DataServices.Storage;
 
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {

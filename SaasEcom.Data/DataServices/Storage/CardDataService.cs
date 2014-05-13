@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using SaasEcom.Data.Models;
 using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Models;
 
-namespace SaasEcom.Data.DataServices
+namespace SaasEcom.Data.DataServices.Storage
 {
-    public class CardDataService : ICardDataService
+    public class CardDataService : ICardService
     {
         private readonly ApplicationDbContext _dbContext;
 

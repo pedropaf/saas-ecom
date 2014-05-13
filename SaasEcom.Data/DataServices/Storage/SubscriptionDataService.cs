@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using SaasEcom.Data.Models;
 using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Models;
 
-namespace SaasEcom.Data.DataServices
+namespace SaasEcom.Data.DataServices.Storage
 {
-    public class SubscriptionDataService : ISubscriptionDataService
+    public class SubscriptionDataService : ISubscriptionService
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -21,6 +21,7 @@ namespace SaasEcom.Data.DataServices
         {
             var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.FriendlyId == planId);
 
+            // TODO: Check if there's a trial option enabled for the plan
             var s = new Subscription
             {
                 Start = DateTime.UtcNow,
@@ -52,5 +53,9 @@ namespace SaasEcom.Data.DataServices
             var user = _dbContext.Users.Find(userId);
             return user.Subscriptions.Any(s => s.Id == subscriptionId);
         }
+
+        // TODO: Implement Upgrade and downgrade!!
+
+
     }
 }

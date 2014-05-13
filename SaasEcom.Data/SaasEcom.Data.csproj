@@ -94,11 +94,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
-    <Compile Include="DataServices\CardDataService.cs" />
-    <Compile Include="DataServices\Interfaces\ICardDataService.cs" />
-    <Compile Include="DataServices\Interfaces\IInvoiceDataService.cs" />
-    <Compile Include="DataServices\Interfaces\ISubscriptionDataService.cs" />
-    <Compile Include="DataServices\InvoiceDataService.cs" />
+    <Compile Include="DataServices\Storage\CardDataService.cs" />
+    <Compile Include="DataServices\Interfaces\ICardService.cs" />
+    <Compile Include="DataServices\Interfaces\IInvoiceService.cs" />
+    <Compile Include="DataServices\Interfaces\ISubscriptionService.cs" />
+    <Compile Include="DataServices\Interfaces\ISubscriptionPlanService.cs" />
+    <Compile Include="DataServices\Storage\InvoiceDataService.cs" />
+    <Compile Include="DataServices\Storage\SubscriptionPlanDataService.cs" />
+    <Compile Include="DataServices\Stripe\StripeCardService.cs" />
+    <Compile Include="DataServices\Stripe\StripeInvoiceService.cs" />
+    <Compile Include="DataServices\Stripe\StripeSubscriptionPlanService.cs" />
+    <Compile Include="DataServices\Stripe\StripeSubscriptionService.cs" />
     <Compile Include="Infrastructure\EmailIdentityService.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
@@ -166,6 +172,10 @@
     <Compile Include="Migrations\201405102049234_SubscriptionPlanValidation.Designer.cs">
       <DependentUpon>201405102049234_SubscriptionPlanValidation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405131543041_SubscriptionPlanUpdated.cs" />
+    <Compile Include="Migrations\201405131543041_SubscriptionPlanUpdated.Designer.cs">
+      <DependentUpon>201405131543041_SubscriptionPlanUpdated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -175,7 +185,7 @@
     <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\StripePaymentProcessorProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataServices\SubscriptionDataService.cs" />
+    <Compile Include="DataServices\Storage\SubscriptionDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -228,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405102049234_SubscriptionPlanValidation.resx">
       <DependentUpon>201405102049234_SubscriptionPlanValidation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405131543041_SubscriptionPlanUpdated.resx">
+      <DependentUpon>201405131543041_SubscriptionPlanUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

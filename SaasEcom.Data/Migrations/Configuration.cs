@@ -49,8 +49,7 @@ namespace SaasEcom.Data.Migrations
                 Interval = SubscriptionPlan.SubscriptionInterval.Monthly,
                 Name = "Starter",
                 Price = 14.99,
-                TrialPeriodInDays = 30,
-                StatementDescription = "SAAS billing starter"
+                TrialPeriodInDays = 30
             };
             var premiumPlan = new SubscriptionPlan
             {
@@ -58,8 +57,7 @@ namespace SaasEcom.Data.Migrations
                 Interval = SubscriptionPlan.SubscriptionInterval.Monthly,
                 Name = "Premium",
                 Price = 29.99,
-                TrialPeriodInDays = 30,
-                StatementDescription = "SAAS billing premium"
+                TrialPeriodInDays = 30
             };
             var ultimatePlan = new SubscriptionPlan
             {
@@ -67,8 +65,7 @@ namespace SaasEcom.Data.Migrations
                 Interval = SubscriptionPlan.SubscriptionInterval.Monthly,
                 Name = "Ultimate",
                 Price = 74.99,
-                TrialPeriodInDays = 30,
-                StatementDescription = "SAAS billing ultimate"
+                TrialPeriodInDays = 30
             };
 
             context.SubscriptionPlans.AddOrUpdate(p => p.FriendlyId, starterPlan, premiumPlan, ultimatePlan);

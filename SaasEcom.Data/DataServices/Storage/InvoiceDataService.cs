@@ -2,12 +2,12 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using SaasEcom.Data.Models;
 using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Models;
 
-namespace SaasEcom.Data.DataServices
+namespace SaasEcom.Data.DataServices.Storage
 {
-    public class InvoiceDataService : IInvoiceDataService
+    public class InvoiceDataService : IInvoiceService
     {
         private readonly ApplicationDbContext _dbContext;
 

@@ -28,8 +28,7 @@ namespace SaasEcom.Data.Models
         [Range(0, 365)]
         public int TrialPeriodInDays { get; set; }
 
-        [Display(Name = "Statement")]
-        public string StatementDescription { get; set; }
+        public bool Disabled { get; set; }
 
         public enum SubscriptionInterval
         {
