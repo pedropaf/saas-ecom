@@ -7,6 +7,7 @@ using SaasEcom.Data.Models;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Web.Areas.Billing.Filters;
+using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
@@ -41,8 +42,8 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             if (ModelState.IsValid)
             {
                 await SubscriptionPlanDataService.AddAsync(subscriptionplan);
-                
-                // TODO: Add flash message
+
+                TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been created successfully."));
 
                 return RedirectToAction("Index");
             }
@@ -71,9 +72,9 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (ModelState.IsValid)
             {
-                await SubscriptionPlanDataService.UpdateAsync(subscriptionplan); 
+                await SubscriptionPlanDataService.UpdateAsync(subscriptionplan);
 
-                // TODO: Add flash message
+                TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been updated successfully."));
 
                 return RedirectToAction("Index");
             }
@@ -88,10 +89,12 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             if (true)
             {
                 await SubscriptionPlanDataService.DisableAsync(id);
+                TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been disabled successfully."));
             }
             else
             {
-                await SubscriptionPlanDataService.DeleteAsync(id);    
+                await SubscriptionPlanDataService.DeleteAsync(id);
+                TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been deleted successfully."));
             }
             
             return RedirectToAction("Index");
