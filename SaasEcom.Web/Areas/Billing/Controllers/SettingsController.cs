@@ -43,19 +43,27 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (ModelState.IsValid)
             {
+                string action;
+                
                 model.StripeAccount.ApplicationUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
 
                 if (model.StripeAccount.Id == 0)
                 {
+                    action = "saved";
                     await AccountDataService.AddStripeAccountAsync(model.StripeAccount);
                 }
                 else
                 {
+                    action = "updated";
                     await AccountDataService.UpdateStripeAccountAsync(model.StripeAccount);
                 }
-            }
 
-            // TODO: Add flash
+                TempData.Add("flash", new FlashSuccessViewModel("Your stripe details have been " + action + " successfully."));
+            }
+            else
+            {
+                TempData.Add("flash", new FlashDangerViewModel("There was an error saving your stripe details"));
+            }
 
             return View("Index", model);
         }

@@ -75,6 +75,11 @@
         </nav>
 
         <div id="page-wrapper">
+            @if (TempData.ContainsKey("flash"))
+            {
+                @Html.Partial("Alert", TempData["flash"]);
+            }
+
             @RenderBody()
         </div>
 
