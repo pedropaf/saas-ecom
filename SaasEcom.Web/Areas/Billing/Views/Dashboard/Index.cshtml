@@ -7,14 +7,16 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="title"><i class="fa fa-dashboard"></i> Dashboard</h1>
+        <h1 class="dashboard-title title"><i class="fa fa-dashboard"></i> Dashboard</h1>
         
         <!-- Stripe integration setup -->
+        @if (!Model.IsStripeSetup) { 
         <div class="stripe-setup jumbotron">
             <h2><i class="fa fa-hand-o-right"></i> Stripe setup</h2>
             <p>Setup your stripe API keys to allow Saas ecom to import your data and integrate the payment gateway.</p>
-            <a href="@Url.Action("Stripe", "Settings", new { area = "billing" })" class="btn btn-primary">Setup stripe</a>
+            <a href="@Url.Action("Index", "Settings", new { area = "billing" })" class="btn btn-primary">Setup stripe</a>
         </div>
+        }
         
         @if (Model.SubscriptionPlans != null && Model.SubscriptionPlans.Any())
         {

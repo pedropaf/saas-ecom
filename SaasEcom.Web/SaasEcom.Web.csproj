@@ -370,6 +370,7 @@
     <Content Include="Areas\Billing\Views\Invoices\Index.cshtml" />
     <Content Include="Areas\Billing\Views\Settings\Index.cshtml" />
     <Content Include="Areas\Billing\Views\Shared\Alert.cshtml" />
+    <Content Include="Areas\Billing\Views\Dashboard\_subscriptionPlans.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

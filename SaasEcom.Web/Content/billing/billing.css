@@ -5969,6 +5969,9 @@ body .title {
   margin-top: 25px;
   margin-bottom: 40px;
 }
+body .dashboard-title {
+  margin-bottom: 0;
+}
 body .btn,
 body .navbar {
   border: none;
