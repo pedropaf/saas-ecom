@@ -7,6 +7,15 @@
     <div class="col-md-12">
         <h1 class="title"><i class="fa fa-gear"></i> Settings</h1>
 
+        <h3>Stripe Account Details</h3>
 
+        @using (Html.BeginForm("EditStripeAccount", "Settings", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            
+            
+        }
     </div>
 </div>

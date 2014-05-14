@@ -17,6 +17,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.Id)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.FriendlyId, new { @class = "control-label col-md-3" })
