@@ -28,10 +28,10 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         public async Task<ViewResult> Index()
         {
+            var sa = await AccountDataService.GetStripeAccountAsync(User.Identity.GetUserId());
             var model = new SettingsViewModel
             {
-                StripeAccount =
-                    await _accountDataService.GetStripeAccountAsync(User.Identity.GetUserId()) ?? new StripeAccount()
+                StripeAccount = sa ?? new StripeAccount()
             };
 
             return View(model);
@@ -39,9 +39,25 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditStripeAccount()
+        public async Task<ViewResult> EditStripeAccount(SettingsViewModel model)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                model.StripeAccount.ApplicationUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
+
+                if (model.StripeAccount.Id == 0)
+                {
+                    await AccountDataService.AddStripeAccountAsync(model.StripeAccount);
+                }
+                else
+                {
+                    await AccountDataService.UpdateStripeAccountAsync(model.StripeAccount);
+                }
+            }
+
+            // TODO: Add flash
+
+            return View("Index", model);
         }
 	}
 }

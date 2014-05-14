@@ -15,9 +15,101 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
-
-            // TODO: Add form details    
             
+            @Html.HiddenFor(m => m.StripeAccount.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StripeAccount.StripeTestPublicApiKey, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.StripeAccount.StripeTestPublicApiKey, new { @class = "form-control", placeholder = "Test public API Key" })
+                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeTestPublicApiKey)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StripeAccount.StripeTestSecretApiKey, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.StripeAccount.StripeTestSecretApiKey, new { @class = "form-control", placeholder = "Test secret API Key" })
+                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeTestSecretApiKey)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StripeAccount.StripeLivePublicApiKey, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.StripeAccount.StripeLivePublicApiKey, new { @class = "form-control", placeholder = "Live public API Key" })
+                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeLivePublicApiKey)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StripeAccount.StripeLiveSecretApiKey, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.StripeAccount.StripeLiveSecretApiKey, new { @class = "form-control", placeholder = "Live secret API Key" })
+                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeLiveSecretApiKey)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-7">
+                    <div class="btn-group" data-toggle="buttons">
+                        <input type="hidden" data-live="@Model.StripeAccount.LiveMode" id="StripeLiveMode" name="StripeLiveMode" />
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.StripeAccount.LiveMode, "true", new { id = "live" }) Live Mode
+                        </label>
+                        <label class="btn btn-default">
+                            @Html.RadioButtonFor(m => m.StripeAccount.LiveMode, "flase", new { id = "test" }) Test Mode
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
         }
     </div>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(function() {
+            $('.btn').button();
+
+            var live = $('#StripeLiveMode').data('live');
+            console.log('live: ' + live);
+            if (live === "True") {
+                $('#live').parent().addClass('btn-primary');
+                $('#live').parent().removeClass('btn-default');
+            } else {
+                $('#test').parent().addClass('btn-primary');
+                $('#test').parent().removeClass('btn-default');
+            }
+
+            $('#live').change(function() {
+                if ($(this).is(':checked')) {
+                    console.log('live is checked');
+                    $('#live').parent().addClass('btn-primary');
+                    $('#live').parent().removeClass('btn-default');
+
+                    $('#test').parent().addClass('btn-default');
+                    $('#test').parent().removeClass('btn-primary');
+                } 
+            });
+
+            $('#test').change(function() {
+                if ($(this).is(':checked')) {
+                    console.log('test is checked');
+
+                    $('#live').parent().addClass('btn-default');
+                    $('#live').parent().removeClass('btn-primary');
+
+                    $('#test').parent().addClass('btn-primary');
+                    $('#test').parent().removeClass('btn-default');
+                }
+            });
+        });
+    </script>
+}
