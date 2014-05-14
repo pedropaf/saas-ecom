@@ -1,4 +1,6 @@
-﻿@{
+﻿@model SaasEcom.Web.Areas.Billing.ViewModels.SettingsViewModel
+
+@{
     ViewBag.Title = "Invoices";
     Layout = "~/Areas/Billing/Views/Shared/_BillingLayout.cshtml";
 }
@@ -14,7 +16,7 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-            
+            // TODO: Add form details    
             
         }
     </div>

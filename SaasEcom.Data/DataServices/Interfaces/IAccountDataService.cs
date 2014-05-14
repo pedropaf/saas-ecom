@@ -5,8 +5,8 @@ namespace SaasEcom.Data.DataServices.Interfaces
 {
     public interface IAccountDataService
     {
-        Task<ApplicationUser> GetUser(string userId);
+        Task<ApplicationUser> GetUserAsync(string userId);
 
-        Task<StripeAccount> GetStripeAccount(string userId);
+        Task<StripeAccount> GetStripeAccountAsync(string userId);
     }
 }

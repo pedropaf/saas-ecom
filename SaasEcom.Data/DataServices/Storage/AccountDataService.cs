@@ -14,12 +14,12 @@ namespace SaasEcom.Data.DataServices.Storage
             this.DbContext = dbContext;
         }
 
-        public async Task<ApplicationUser> GetUser(string userId)
+        public async Task<ApplicationUser> GetUserAsync(string userId)
         {
             return await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
 
-        public async Task<StripeAccount> GetStripeAccount(string userId)
+        public async Task<StripeAccount> GetStripeAccountAsync(string userId)
         {
             return await DbContext.StripeAccounts.FirstOrDefaultAsync(
                 stripeAccount => stripeAccount.ApplicationUser.Id == userId);
