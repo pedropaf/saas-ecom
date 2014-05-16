@@ -84,7 +84,7 @@ namespace SaasEcom.Web.Controllers
                     // Redirect to the user dashboard (Depending on the role)
                     if (await UserIsAdmin(user))
                     {
-                        return RedirectToAction("Index", "Home", new {area = "billing"});
+                        return RedirectToAction("Index", "Dashboard", new {area = "billing"});
                     }
 
                     return RedirectToAction("Index", "Home", new { area = "dashboard" });

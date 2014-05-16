@@ -28,6 +28,11 @@ namespace SaasEcom.Data.DataServices.Storage
 
         public async Task AddStripeAccountAsync(StripeAccount stripeAccount)
         {
+            stripeAccount.StripeTestPublicApiKey = stripeAccount.StripeTestPublicApiKey.Trim();
+            stripeAccount.StripeTestSecretApiKey = stripeAccount.StripeTestSecretApiKey.Trim();
+            stripeAccount.StripeLivePublicApiKey = stripeAccount.StripeLivePublicApiKey.Trim();
+            stripeAccount.StripeLiveSecretApiKey = stripeAccount.StripeLiveSecretApiKey.Trim();
+
             DbContext.StripeAccounts.Add(stripeAccount);
             await DbContext.SaveChangesAsync();
         }
@@ -40,10 +45,10 @@ namespace SaasEcom.Data.DataServices.Storage
             if (sa == null)
                 throw new ArgumentException("Stripe Account");
 
-            sa.StripeTestPublicApiKey = stripeAccount.StripeTestPublicApiKey;
-            sa.StripeTestSecretApiKey = stripeAccount.StripeTestSecretApiKey;
-            sa.StripeLivePublicApiKey = stripeAccount.StripeLivePublicApiKey;
-            sa.StripeLiveSecretApiKey = stripeAccount.StripeLiveSecretApiKey;
+            sa.StripeTestPublicApiKey = stripeAccount.StripeTestPublicApiKey.Trim();
+            sa.StripeTestSecretApiKey = stripeAccount.StripeTestSecretApiKey.Trim();
+            sa.StripeLivePublicApiKey = stripeAccount.StripeLivePublicApiKey.Trim();
+            sa.StripeLiveSecretApiKey = stripeAccount.StripeLiveSecretApiKey.Trim();
 
             await DbContext.SaveChangesAsync();
         }

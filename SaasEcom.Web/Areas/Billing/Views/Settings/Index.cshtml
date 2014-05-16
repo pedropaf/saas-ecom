@@ -15,8 +15,16 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
-            
+
             @Html.HiddenFor(m => m.StripeAccount.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StripeAccount.StripeTestSecretApiKey, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.StripeAccount.StripeTestSecretApiKey, new { @class = "form-control", placeholder = "Test secret API Key" })
+                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeTestSecretApiKey)
+                </div>
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.StripeAccount.StripeTestPublicApiKey, new { @class = "control-label col-md-3" })
@@ -27,10 +35,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.StripeAccount.StripeTestSecretApiKey, new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.StripeAccount.StripeLiveSecretApiKey, new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    @Html.TextBoxFor(model => model.StripeAccount.StripeTestSecretApiKey, new { @class = "form-control", placeholder = "Test secret API Key" })
-                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeTestSecretApiKey)
+                    @Html.TextBoxFor(model => model.StripeAccount.StripeLiveSecretApiKey, new { @class = "form-control", placeholder = "Live secret API Key" })
+                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeLiveSecretApiKey)
                 </div>
             </div>
 
@@ -42,14 +50,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.StripeAccount.StripeLiveSecretApiKey, new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.TextBoxFor(model => model.StripeAccount.StripeLiveSecretApiKey, new { @class = "form-control", placeholder = "Live secret API Key" })
-                    @Html.ValidationMessageFor(model => model.StripeAccount.StripeLiveSecretApiKey)
-                </div>
-            </div>
-            
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-7">
                     <div class="btn-group" data-toggle="buttons">
@@ -75,7 +75,7 @@
 
 @section scripts {
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $('.btn').button();
 
             var live = $('#StripeLiveMode').data('live');
@@ -88,7 +88,7 @@
                 $('#test').parent().removeClass('btn-default');
             }
 
-            $('#live').change(function() {
+            $('#live').change(function () {
                 if ($(this).is(':checked')) {
                     console.log('live is checked');
                     $('#live').parent().addClass('btn-primary');
@@ -96,10 +96,10 @@
 
                     $('#test').parent().addClass('btn-default');
                     $('#test').parent().removeClass('btn-primary');
-                } 
+                }
             });
 
-            $('#test').change(function() {
+            $('#test').change(function () {
                 if ($(this).is(':checked')) {
                     console.log('test is checked');
 

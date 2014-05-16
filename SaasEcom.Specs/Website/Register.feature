@@ -1,0 +1,23 @@
+﻿Feature: Register
+	I can visit the website
+	As a user
+	I want to register
+
+@UI
+Scenario: Open homepage
+	Given I have the homepage open
+	Then I should see "This is a template that can be used as a startup point to build your SAAS subscription website using ASP.NET MVC 5." on the screen
+
+@UI
+Scenario: Navigate to register
+	Given I have the homepage open
+	When I click on "hero-btn"
+	Then I see the registration form
+	
+@UI
+Scenario: Register
+	Given I fill in the registration form 
+	When I click on "Register"
+	Then I see thank you page
+
+

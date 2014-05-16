@@ -11,7 +11,7 @@ namespace SaasEcom.Data.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
 
-    public sealed class Configuration : DbMigrationsConfiguration<SaasEcom.Data.ApplicationDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
@@ -41,6 +41,10 @@ namespace SaasEcom.Data.Migrations
                 userManager.Create(user, "password");
                 userManager.AddToRole(user.Id, "admin");
             }
+
+            #region Create plans
+
+            return;
 
             // Create Subscriptions Plans
             var starterPlan = new SubscriptionPlan
@@ -99,6 +103,7 @@ namespace SaasEcom.Data.Migrations
             {
                 Debug.WriteLine("Add the stripe-key in Web.config.");
             }
+            #endregion
         }
     }
 }

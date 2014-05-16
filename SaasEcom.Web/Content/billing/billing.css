@@ -6148,6 +6148,9 @@ table.tablesorter thead tr th:hover {
     border-left: 4px #546573 solid;
   }
 }
+.stripe-setup {
+  margin-top: 20px;
+}
 .subscription-panel {
   min-height: 250px;
 }
