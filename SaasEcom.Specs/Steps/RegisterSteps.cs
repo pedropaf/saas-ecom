@@ -26,12 +26,6 @@ namespace SaasEcom.Specs.Steps
             WebBrowser.Current.FindElement(new ByIdOrName(buttonId)).Click();
         }
 
-        [Given(@"I fill in the registration form")]
-        public void GivenIFillInTheRegistrationForm()
-        {
-            ScenarioContext.Current.Pending();
-        }
-
         [Then(@"I should see ""(.*)"" on the screen")]
         public void ThenIShouldSeeOnTheScreen(string p0)
         {
@@ -44,10 +38,52 @@ namespace SaasEcom.Specs.Steps
             Assert.AreEqual("Register - SAAS Ecom", WebBrowser.Current.Title);
         }
 
-        [Then(@"I see thank you page")]
-        public void ThenISeeThankYouPage()
+        [Given(@"I am at the registration page")]
+        public void GivenIAmAtTheRegistrationPage()
+        {
+            WebBrowser.Current.Navigate().GoToUrl(BaseUrl + "Account/Register");
+            Assert.AreEqual("Register - SAAS Ecom", WebBrowser.Current.Title);
+        }
+
+        [When(@"I fill the registration form")]
+        public void WhenIFillTheRegistrationForm(Table table)
+        {
+            ScenarioContext.Current.Pending();
+
+            //foreach (var row in table.Rows)
+            //{
+            //    var field = row["Field"];
+            //    var value = row["Value"];
+            //    switch (field)
+            //    {
+            //        case "SubscriptionPlan":  // Put exceptions here for drop downs, date pickers, radio buttons, etc.
+            //            WebBrowser.Current.SelectDropDownByText(By.Id(field), value);
+            //            break;
+            //        default:
+            //            WebBrowser.Current.SetTextForControl(By.Id(field), value);
+            //            break;
+            //    }
+            //}
+
+        }
+
+        [When(@"I fill the registration form with invalid data")]
+        public void WhenIFillTheRegistrationFormWithInvalidData()
         {
             ScenarioContext.Current.Pending();
         }
+
+        [Then(@"I see validation errors")]
+        public void ThenISeeValidationErrors()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"I see thank you flash message")]
+        public void ThenISeeThankYouFlashMessage()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
     }
 }

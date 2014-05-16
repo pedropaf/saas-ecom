@@ -32,7 +32,7 @@ namespace SaasEcom.Specs.Website
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Register", "I can visit the website\nAs a user\nI want to register", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Register", "I can visit the website\r\nAs a user\r\nI want to register", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -102,20 +102,60 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Register")]
+        [NUnit.Framework.DescriptionAttribute("Register valid data")]
         [NUnit.Framework.CategoryAttribute("UI")]
-        public virtual void Register()
+        public virtual void RegisterValidData()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register valid data", new string[] {
                         "UI"});
 #line 18
 this.ScenarioSetup(scenarioInfo);
 #line 19
- testRunner.Given("I fill in the registration form", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("I am at the registration page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "field",
+                        "value"});
+            table1.AddRow(new string[] {
+                        "Email",
+                        "test@test.com"});
+            table1.AddRow(new string[] {
+                        "Password",
+                        "pass01"});
+            table1.AddRow(new string[] {
+                        "ConfirmPassword",
+                        "pass01"});
+            table1.AddRow(new string[] {
+                        "SubscriptionPlan",
+                        "Premium"});
 #line 20
- testRunner.When("I click on \"Register\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 21
- testRunner.Then("I see thank you page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.When("I fill the registration form", ((string)(null)), table1, "When ");
+#line 26
+    testRunner.And("I click on \"Register\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+    testRunner.Then("I should see \"This is a template that can be used as a startup point to build you" +
+                    "r SAAS subscription website using ASP.NET MVC 5.\" on the screen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Register with invalid data")]
+        [NUnit.Framework.CategoryAttribute("UI")]
+        public virtual void RegisterWithInvalidData()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Register with invalid data", new string[] {
+                        "UI"});
+#line 30
+this.ScenarioSetup(scenarioInfo);
+#line 31
+    testRunner.Given("I am at the registration page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 32
+    testRunner.When("I fill the registration form with invalid data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 33
+    testRunner.And("I click on \"Register\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 34
+    testRunner.Then("I see validation errors", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
