@@ -127,7 +127,7 @@ this.ScenarioSetup(scenarioInfo);
                         "pass01"});
             table1.AddRow(new string[] {
                         "SubscriptionPlan",
-                        "Premium"});
+                        "Ultimate"});
 #line 20
     testRunner.When("I fill the registration form", ((string)(null)), table1, "When ");
 #line 26

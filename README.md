@@ -19,6 +19,7 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 *  **Trials supported:** You have the option to let your customers to try your application first. Don't even ask them for a credit card to register.
 *  **Invoicing:** The invoices are created automatically, and Stripe will try to get them paid.
 *  **Customers dashboard:** Dashboard area for your customers, where they can manage their subscription / password / credit card.
+*  **Business owner admin panel:** Admin panel for the business owner to manage plans, customers, invoices, sign-ups, etc. 
 *  **Only SSL needed:** Your customers' credit card number don't hit your server (stripe.js). You only need SSL to deploy this app.
 
 ## Installation
@@ -29,11 +30,23 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 4. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
 5. Create your database, and add the connection string to Web.config. By default is using SQL Compact.
 
-**Contributions and feedback is very welcome.**
+I'm currently working on an update. I'm focused on building an admin panel for this. The new setup workflow will be:
+
+1. Register in Stripe.com, and get your API Keys.
+2. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
+3. Add your email server details to Web.config. Recommended to use [Mandrill](http://www.mandrill.com) / [Sendgrid](http://www.sendgrid.com).
+4. Create your database, and add the connection string to Web.config. By default is using SQL Compact.
+5. Run migrations and create an admin user.
+6. Add subscription plans from admin panel (they're created in Stripe too). If you already have your plans / customers in stripe, they'd need to be imported to the DB.
+
+## Testing
+
+There's a project using SpecFlow / Selenium / WebDriver to test the functionality from a UI (user) point of view. It should work as a good integration testing suite. This isn't still completed.
+
 
 ## Libraries used
 
-* Entity Framework
+* Entity Framework 6.1
 * Json.NET
 * jQuery
 * jQuery Validation
@@ -47,4 +60,4 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 * Font Awesome
 * Postal
 * Stripe.net
-
+* Specflow / Selenium / WebDriver

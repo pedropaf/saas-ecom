@@ -22,7 +22,7 @@ Scenario: Register valid data
     | Email            | test@test.com |
     | Password         | pass01        |
     | ConfirmPassword  | pass01        |
-    | SubscriptionPlan | Premium       |
+    | SubscriptionPlan | Ultimate      |
     And I click on "Register"
     Then I should see "This is a template that can be used as a startup point to build your SAAS subscription website using ASP.NET MVC 5." on the screen
 

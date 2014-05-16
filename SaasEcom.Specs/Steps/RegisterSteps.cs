@@ -23,7 +23,7 @@ namespace SaasEcom.Specs.Steps
         [When(@"I click on ""(.*)""")]
         public void WhenIClickOn(string buttonId)
         {
-            WebBrowser.Current.FindElement(new ByIdOrName(buttonId)).Click();
+            WebBrowser.Current.FindElement(By.Id(buttonId)).Click();
         }
 
         [Then(@"I should see ""(.*)"" on the screen")]
@@ -48,23 +48,20 @@ namespace SaasEcom.Specs.Steps
         [When(@"I fill the registration form")]
         public void WhenIFillTheRegistrationForm(Table table)
         {
-            ScenarioContext.Current.Pending();
-
-            //foreach (var row in table.Rows)
-            //{
-            //    var field = row["Field"];
-            //    var value = row["Value"];
-            //    switch (field)
-            //    {
-            //        case "SubscriptionPlan":  // Put exceptions here for drop downs, date pickers, radio buttons, etc.
-            //            WebBrowser.Current.SelectDropDownByText(By.Id(field), value);
-            //            break;
-            //        default:
-            //            WebBrowser.Current.SetTextForControl(By.Id(field), value);
-            //            break;
-            //    }
-            //}
-
+            foreach (var row in table.Rows)
+            {
+                var field = row["field"];
+                var value = row["value"];
+                switch (field)
+                {
+                    case "SubscriptionPlan":  // Put exceptions here for drop downs, date pickers, radio buttons, etc.
+                        WebBrowser.Current.SelectDropDownByValue(By.Id(field), value);
+                        break;
+                    default:
+                        WebBrowser.Current.SetTextForControl(By.Id(field), value);
+                        break;
+                }
+            }
         }
 
         [When(@"I fill the registration form with invalid data")]
