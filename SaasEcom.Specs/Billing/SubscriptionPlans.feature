@@ -26,13 +26,7 @@ Scenario: I can add a subscription plan
 Scenario: Add a subscription plan validation
 	Given I am in the plans section of the Admin panel
 	And I click on Start creating a subscription plan
-	When I fill in the plan details wrong
-	| field | value |
-	| FriendlyId | test plan  |
-	| Name |  |
-	| Price | -1 |
-	| Interval | Monthly |
-	| TrialPeriodInDays | -1 |
+	When I click on save plan
 	Then I can see the plan form validation
 
 @Admin

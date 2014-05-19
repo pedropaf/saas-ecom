@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
-using SaasEcom.Data.Infrastructure.Identity;
+using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 
@@ -13,16 +13,21 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "customers")]
     public class CustomersController : Controller
     {
-        public ActionResult Index()
+        private AccountDataService _accountDataService;
+        private AccountDataService AccountDataService
         {
-            var db = Request.GetOwinContext().Get<ApplicationDbContext>();
+            get
+            {
+                return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
 
-            var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var users = db.Users.ToList(); // TODO: Filter by subscriber only
-
+        public async Task<ViewResult> Index()
+        {
             var model = new CustomersViewModel
             {
-                Customers = users,
+                Customers = await AccountDataService.GetCustomersAsync()
             };
 
             return View(model);

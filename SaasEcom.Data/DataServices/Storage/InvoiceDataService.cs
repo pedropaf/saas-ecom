@@ -56,5 +56,11 @@ namespace SaasEcom.Data.DataServices.Storage
 
             return res;
         }
+
+        public async Task<List<Invoice>> GetInvoicesAsync()
+        {
+            // TODO: Implement
+            return new List<Invoice>();
+        }
     }
 }

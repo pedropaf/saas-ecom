@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,6 +47,12 @@ namespace SaasEcom.Data.DataServices.Storage
             }
 
             await DbContext.SaveChangesAsync();
+        }
+
+        public async Task<List<ApplicationUser>> GetCustomersAsync()
+        {
+            // TODO: Implement
+            return new List<ApplicationUser>();
         }
     }
 }

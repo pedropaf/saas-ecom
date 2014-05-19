@@ -142,28 +142,9 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("I am in the plans section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 28
  testRunner.And("I click on Start creating a subscription plan", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "field",
-                        "value"});
-            table2.AddRow(new string[] {
-                        "FriendlyId",
-                        "test plan"});
-            table2.AddRow(new string[] {
-                        "Name",
-                        ""});
-            table2.AddRow(new string[] {
-                        "Price",
-                        "-1"});
-            table2.AddRow(new string[] {
-                        "Interval",
-                        "Monthly"});
-            table2.AddRow(new string[] {
-                        "TrialPeriodInDays",
-                        "-1"});
 #line 29
- testRunner.When("I fill in the plan details wrong", ((string)(null)), table2, "When ");
-#line 36
+ testRunner.When("I click on save plan", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 30
  testRunner.Then("I can see the plan form validation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -178,13 +159,13 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can see a list of subscription plans", new string[] {
                         "Admin",
                         "AdminSubscriptionPlans"});
-#line 40
+#line 34
 this.ScenarioSetup(scenarioInfo);
-#line 41
+#line 35
  testRunner.When("I am in the plans section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 42
+#line 36
  testRunner.And("There are plans in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
+#line 37
  testRunner.Then("I can see a list of plans", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -199,19 +180,19 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can edit the name of a subscription plans", new string[] {
                         "Admin",
                         "AdminSubscriptionPlans"});
-#line 47
+#line 41
 this.ScenarioSetup(scenarioInfo);
-#line 48
+#line 42
  testRunner.Given("I am in the plans section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 49
+#line 43
  testRunner.And("There are plans in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 50
+#line 44
  testRunner.When("I click on edit", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 51
+#line 45
  testRunner.And("Fill in the form with a valid name", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 52
+#line 46
  testRunner.And("I click on save", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 53
+#line 47
  testRunner.Then("I can see a list of plans with the plan updated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -226,15 +207,15 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can disable a subscription plan", new string[] {
                         "Admin",
                         "AdminSubscriptionPlans"});
-#line 57
+#line 51
 this.ScenarioSetup(scenarioInfo);
-#line 58
+#line 52
  testRunner.Given("I am in the plans section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 59
+#line 53
  testRunner.And("There are plans in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 60
+#line 54
  testRunner.When("I click on disable plan and confirm", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 61
+#line 55
  testRunner.Then("The plan is disabled and no more customers can join", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -249,17 +230,17 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can delete a subscription plan", new string[] {
                         "Admin",
                         "AdminSubscriptionPlans"});
-#line 65
+#line 59
 this.ScenarioSetup(scenarioInfo);
-#line 66
+#line 60
  testRunner.Given("I am in the plans section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 67
+#line 61
  testRunner.And("There are plans in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 68
+#line 62
  testRunner.And("No customers have signed up for the plan yet", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 69
+#line 63
  testRunner.When("I click on delete plan and confirm", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 70
+#line 64
  testRunner.Then("The plan is deleted from the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

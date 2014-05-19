@@ -234,6 +234,7 @@
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\FlashViewModels.cs" />
+    <Compile Include="Areas\Billing\ViewModels\InvoicesViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\SettingsViewModel.cs" />
     <Compile Include="Areas\Dashboard\Controllers\CardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />

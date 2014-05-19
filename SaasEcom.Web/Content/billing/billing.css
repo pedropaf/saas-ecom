@@ -5970,7 +5970,7 @@ body .title {
   margin-bottom: 40px;
 }
 body .dashboard-title {
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 body .btn,
 body .navbar {
@@ -6147,9 +6147,6 @@ table.tablesorter thead tr th:hover {
   .navbar-header {
     border-left: 4px #546573 solid;
   }
-}
-.stripe-setup {
-  margin-top: 20px;
 }
 .subscription-panel {
   min-height: 250px;

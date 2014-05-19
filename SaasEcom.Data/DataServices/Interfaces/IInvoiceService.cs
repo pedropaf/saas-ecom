@@ -9,5 +9,7 @@ namespace SaasEcom.Data.DataServices.Interfaces
         Task<List<Invoice>> UserInvoicesAsync(string id);
         Task<Invoice> UserInvoiceAsync(string userId, int invoiceId);
         Task<int> CreateOrUpdateAsync(Invoice invoice);
+
+        Task<List<Invoice>> GetInvoicesAsync();
     }
 }
