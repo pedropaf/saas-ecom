@@ -28,7 +28,7 @@
         @if (Model != null && Model.Any())
         {
             var numPlans = Model.Count();
-                
+
             <!-- Plans -->
             <div class="row">
                 @foreach (var item in Model)
@@ -51,17 +51,19 @@
                     </div>
                 }
             </div>
-            <br/>
+            <br />
             <div class="row clearfix">
                 <div class="col-md-12"><a href="@Url.Action("Create")" class="btn btn-primary">Create new Subscription plan</a></div>
             </div>
         }
         else
         {
-            <p>You still don't have any subscription plan.</p>
-            <p>
-                <a href="@Url.Action("Create")" class="btn btn-primary btn-lg">Start creating a subscription plan!</a>
-            </p>
+
+            <div class="no-plans jumbotron">
+                <h2>No plans yet</h2>
+                <p>There are no subscription plans to show here.</p>
+                <a href="@Url.Action("Create")" class="btn btn-primary">Create a subscription plan</a>
+            </div>
         }
     </div>
 </div>

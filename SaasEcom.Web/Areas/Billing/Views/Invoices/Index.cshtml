@@ -1,4 +1,4 @@
-﻿
+﻿@model SaasEcom.Web.Areas.Billing.ViewModels.InvoicesViewModel
 
 @{
     ViewBag.Title = "Invoices";
@@ -8,8 +8,18 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="title"><i class="fa fa-copy"></i> Invoices</h1>
-        
 
+        @if (!Model.Invoices.Any())
+        {
+            <div class="no-invoices jumbotron">
+                <h2>No invoices yet</h2>
+                <p>There are no invoices to show here.</p>
+            </div>
+        }
+        else
+        {
+            // TODO: Table with invoices list
+        }
 
     </div>
 </div>

@@ -9,6 +9,17 @@
     <div class="col-md-12">
         <h1 class="title"><i class="fa fa-users"></i> Customers</h1>
         
+        @if (!Model.Customers.Any())
+        {
+            <div class="no-customers jumbotron">
+                <h2>No customers yet</h2>
+                <p>There are no customers to show here.</p>
+            </div>
+        }
+        else
+        {
+            // TODO: Table with customers list
+        }
 
     </div>
 </div>
