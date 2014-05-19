@@ -40,22 +40,13 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ViewResult> EditStripeAccount(SettingsViewModel model)
         {
+            ModelState.Remove("StripeAccount.LiveMode"); // boolean field makes validation fail.
             if (ModelState.IsValid)
             {
-                string action;
-                
                 model.StripeAccount.ApplicationUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
 
-                if (model.StripeAccount.Id == 0)
-                {
-                    action = "saved";
-                    await AccountDataService.AddStripeAccountAsync(model.StripeAccount);
-                }
-                else
-                {
-                    action = "updated";
-                    await AccountDataService.UpdateStripeAccountAsync(model.StripeAccount);
-                }
+                var action = model.StripeAccount.Id == 0 ? "saved" : "updated";
+                await AccountDataService.AddOrUpdateStripeAccountAsync(model.StripeAccount);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your stripe details have been " + action + " successfully."));
             }

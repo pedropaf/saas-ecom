@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.Models;
@@ -26,29 +27,24 @@ namespace SaasEcom.Data.DataServices.Storage
                 stripeAccount => stripeAccount.ApplicationUser.Id == userId);
         }
 
-        public async Task AddStripeAccountAsync(StripeAccount stripeAccount)
+        public async Task AddOrUpdateStripeAccountAsync(StripeAccount stripeAccount)
         {
-            stripeAccount.StripeTestPublicApiKey = stripeAccount.StripeTestPublicApiKey.Trim();
-            stripeAccount.StripeTestSecretApiKey = stripeAccount.StripeTestSecretApiKey.Trim();
-            stripeAccount.StripeLivePublicApiKey = stripeAccount.StripeLivePublicApiKey.Trim();
-            stripeAccount.StripeLiveSecretApiKey = stripeAccount.StripeLiveSecretApiKey.Trim();
+            StripeAccount sa = await DbContext.Users.Include(u => u.StripeAccount)
+                .Where(u => u.Id == stripeAccount.ApplicationUser.Id).Select(u => u.StripeAccount).FirstOrDefaultAsync();
 
-            DbContext.StripeAccounts.Add(stripeAccount);
-            await DbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateStripeAccountAsync(StripeAccount stripeAccount)
-        {
-            StripeAccount sa = await DbContext.StripeAccounts
-                .FirstOrDefaultAsync(m => m.Id == stripeAccount.Id && m.ApplicationUser.Id == stripeAccount.ApplicationUser.Id);
-            
             if (sa == null)
-                throw new ArgumentException("Stripe Account");
-
-            sa.StripeTestPublicApiKey = stripeAccount.StripeTestPublicApiKey.Trim();
-            sa.StripeTestSecretApiKey = stripeAccount.StripeTestSecretApiKey.Trim();
-            sa.StripeLivePublicApiKey = stripeAccount.StripeLivePublicApiKey.Trim();
-            sa.StripeLiveSecretApiKey = stripeAccount.StripeLiveSecretApiKey.Trim();
+            {
+                var user = await DbContext.Users.FirstAsync(u => u.Id == stripeAccount.ApplicationUser.Id);
+                user.StripeAccount = stripeAccount;
+            }
+            else
+            {
+                sa.LiveMode = stripeAccount.LiveMode;
+                sa.StripeLivePublicApiKey = stripeAccount.StripeLivePublicApiKey;
+                sa.StripeLiveSecretApiKey = stripeAccount.StripeLiveSecretApiKey;
+                sa.StripeTestPublicApiKey = stripeAccount.StripeTestPublicApiKey;
+                sa.StripeTestSecretApiKey = stripeAccount.StripeTestSecretApiKey;
+            }
 
             await DbContext.SaveChangesAsync();
         }

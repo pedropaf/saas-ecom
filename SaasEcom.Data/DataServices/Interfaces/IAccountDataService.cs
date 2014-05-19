@@ -7,7 +7,6 @@ namespace SaasEcom.Data.DataServices.Interfaces
     {
         Task<ApplicationUser> GetUserAsync(string userId);
         Task<StripeAccount> GetStripeAccountAsync(string userId);
-        Task AddStripeAccountAsync(StripeAccount stripeAccount);
-        Task UpdateStripeAccountAsync(StripeAccount stripeAccount);
+        Task AddOrUpdateStripeAccountAsync(StripeAccount stripeAccount);
     }
 }
