@@ -226,9 +226,11 @@
     <Compile Include="Areas\Billing\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Billing\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Billing\Controllers\InvoicesController.cs" />
+    <Compile Include="Areas\Billing\Controllers\AccountController.cs" />
     <Compile Include="Areas\Billing\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\Filters\SectionFilter.cs" />
+    <Compile Include="Areas\Billing\ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\FlashViewModels.cs" />
@@ -236,7 +238,7 @@
     <Compile Include="Areas\Dashboard\Controllers\CardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\InvoiceController.cs" />
-    <Compile Include="Areas\Dashboard\Controllers\ManageController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\FlashViewModels.cs" />
@@ -371,6 +373,7 @@
     <Content Include="Areas\Billing\Views\Settings\Index.cshtml" />
     <Content Include="Areas\Billing\Views\Shared\Alert.cshtml" />
     <Content Include="Areas\Billing\Views\Dashboard\_subscriptionPlans.cshtml" />
+    <Content Include="Areas\Billing\Views\Account\ChangePassword.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

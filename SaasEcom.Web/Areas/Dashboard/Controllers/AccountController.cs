@@ -15,13 +15,13 @@ using SaasEcom.Web.Areas.Dashboard.ViewModels;
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class AccountController : Controller
     {
-        public ManageController()
+        public AccountController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager)
+        public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
