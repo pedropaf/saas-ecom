@@ -1,12 +1,9 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
-using OpenQA.Selenium.Support.UI;
 using SaasEcom.Specs.Base;
 using TechTalk.SpecFlow;
 
-namespace SaasEcom.Specs.Steps
+namespace SaasEcom.Specs.Steps.Website
 {
     [Binding]
     public class RegisterSteps

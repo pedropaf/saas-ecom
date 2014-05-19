@@ -73,9 +73,54 @@
   <ItemGroup>
     <Compile Include="Base\Extensions.cs" />
     <Compile Include="Base\WebBrowser.cs" />
+    <Compile Include="Billing\Customers.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customers.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Billing\Dashboard.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dashboard.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Billing\Invoices.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Invoices.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Billing\Logout.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Logout.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Billing\StripeSettings.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StripeSettings.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Billing\SubscriptionPlans.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubscriptionPlans.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Billing\UserProfile.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserProfile.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlowNUnitExtension.cs" />
-    <Compile Include="Steps\RegisterSteps.cs" />
+    <Compile Include="Steps\Website\RegisterSteps.cs" />
+    <Compile Include="Website\Login.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Website\Logout.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Logout.feature</DependentUpon>
+    </Compile>
     <Compile Include="Website\Register1.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -84,15 +129,52 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Billing\Customers.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Customers.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Billing\Dashboard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Dashboard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Billing\Invoices.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Invoices.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Billing\Logout.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Logout.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Billing\StripeSettings.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>StripeSettings.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Billing\SubscriptionPlans.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SubscriptionPlans.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Billing\UserProfile.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UserProfile.feature.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+    <None Include="Website\Login.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Login.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Website\Logout.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Logout.feature.cs</LastGenOutput>
+    </None>
     <None Include="Website\Register.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Register1.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Billing\" />
     <Folder Include="Dashboard\" />
+    <Folder Include="Steps\Billing\" />
+    <Folder Include="Steps\Dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
