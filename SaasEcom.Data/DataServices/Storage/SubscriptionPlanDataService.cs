@@ -51,5 +51,13 @@ namespace SaasEcom.Data.DataServices.Storage
             dbPlan.Disabled = true;
             return await _dbContext.SaveChangesAsync();
         }
+
+        // Move to Subscription service?
+        public async Task<int> CountUsersAsync(int planId)
+        {
+            var count = await _dbContext.Subscriptions.CountAsync(s => s.SubscriptionPlanId == planId);
+
+            return count;
+        }
     }
 }

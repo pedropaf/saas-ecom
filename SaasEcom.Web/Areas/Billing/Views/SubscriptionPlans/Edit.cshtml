@@ -9,7 +9,7 @@
     <div class="col-md-11 col-lg-9">
         <h1 class="title"><i class="fa fa-angle-right"></i> Edit Subscription Plan</h1>
         <div class="alert alert-info">
-            <strong>Info:</strong> Only the plan name can be edited.<br />
+            <strong>Info:</strong> Only the plan name can be edited.<br /><br />
             You can disable the plan, and create a new one. If you disable a plan, you can't add new customers to that plan, but the current customers won't be affected.
         </div>
 
@@ -18,6 +18,10 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
             @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.FriendlyId)
+            @Html.HiddenFor(m => m.Price)
+            @Html.HiddenFor(m => m.Interval)
+            @Html.HiddenFor(m => m.TrialPeriodInDays)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.FriendlyId, new { @class = "control-label col-md-3" })
@@ -51,7 +55,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.TrialPeriodInDays, new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
-                    <span class="form-control" disabled>@Model.TrialPeriodInDays</span>
+                    <span class="form-control" disabled>@Model.TrialPeriodInDays days</span>
                 </div>
             </div>
 

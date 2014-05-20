@@ -16,6 +16,17 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "subscription-plans")]
     public class SubscriptionPlansController : Controller
     {
+        private AccountDataService _accountDataService;
+        private AccountDataService AccountDataService
+        {
+            get
+            {
+                return _accountDataService ??
+                  (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
+        // DB
         private SubscriptionPlanDataService _subscriptionPlanDataService;
         private SubscriptionPlanDataService SubscriptionPlanDataService
         {
@@ -26,16 +37,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             }
         }
 
-        private AccountDataService _accountDataService;
-        private AccountDataService AccountDataService
-        {
-            get
-            {
-                return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
-        }
-
+        // Stripe
         private SubscriptionPlanService _subscriptionPlanService;
         private SubscriptionPlanService StripePlanService
         {
@@ -58,11 +60,15 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays,StatementDescription")] SubscriptionPlan subscriptionplan)
+        public async Task<ActionResult> Create([Bind(Include="Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays")] SubscriptionPlan subscriptionplan)
         {
             if (ModelState.IsValid)
             {
+                // DB
                 await SubscriptionPlanDataService.AddAsync(subscriptionplan);
+
+                // Stripe
+                StripePlanService.Add(subscriptionplan);
 
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been created successfully."));
 
@@ -89,11 +95,15 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name")] SubscriptionPlan subscriptionplan)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays")] SubscriptionPlan subscriptionplan)
         {
             if (ModelState.IsValid)
             {
+                // DB
                 await SubscriptionPlanDataService.UpdateAsync(subscriptionplan);
+
+                // Stripe
+                StripePlanService.Update(subscriptionplan);
 
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been updated successfully."));
 
@@ -105,10 +115,13 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            // TODO: Validate if there are users subscribed to this plan.
+            var plan = await SubscriptionPlanDataService.FindAsync(id);
+            var countUsersInPlan = await SubscriptionPlanDataService.CountUsersAsync(plan.Id);
+
             // If plan has users only disable
-            if (true)
+            if (countUsersInPlan > 0)
             {
+                // DB
                 await SubscriptionPlanDataService.DisableAsync(id);
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been disabled successfully."));
             }
@@ -117,7 +130,10 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 await SubscriptionPlanDataService.DeleteAsync(id);
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been deleted successfully."));
             }
-            
+
+            // Delete from Stripe
+            StripePlanService.Delete(plan.FriendlyId);
+
             return RedirectToAction("Index");
         }
 

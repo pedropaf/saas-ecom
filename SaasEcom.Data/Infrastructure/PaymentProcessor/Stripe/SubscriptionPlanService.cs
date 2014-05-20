@@ -64,7 +64,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return res;
         }
 
-        public void DeleteAsync(string planId)
+        public void Delete(string planId)
         {
             PlanService.Delete(planId);
         }

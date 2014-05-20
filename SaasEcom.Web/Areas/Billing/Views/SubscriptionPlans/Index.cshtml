@@ -41,11 +41,11 @@
                             <div class="panel-body">
                                 <ul class="list-unstyled plan-details">
                                     <li><strong>Id:</strong> @item.FriendlyId</li>
-                                    <li><strong>Trial:</strong> @item.TrialPeriodInDays</li>
+                                    <li><strong>Trial:</strong> @item.TrialPeriodInDays days</li>
                                 </ul>
 
                                 <a href="@Url.Action("Edit", new {id = item.Id})" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                                <a href="@Url.Action("Delete", new {id = item.Id})" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Disable</a>
+                                <a href="@Url.Action("Delete", new {id = item.Id})" class="btn btn-danger btn-sm delete-link"><span class="glyphicon glyphicon-trash"></span> Disable</a>
                             </div>
                         </div>
                     </div>
