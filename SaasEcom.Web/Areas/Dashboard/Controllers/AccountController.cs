@@ -39,13 +39,23 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             }
         }
 
+        private AccountDataService _accountDataService;
+        private AccountDataService AccountDataService
+        {
+            get
+            {
+                return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
         private StripePaymentProcessorProvider _stripeService;
         private StripePaymentProcessorProvider StripeService
         {
             get
             {
                 return _stripeService ??
-                      (_stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]));
+                      (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey()));
             }
         }
 

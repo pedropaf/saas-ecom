@@ -129,7 +129,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-        Stripe.setPublishableKey('@System.Configuration.ConfigurationManager.AppSettings["stripe_publishable_key"]');
+        Stripe.setPublishableKey('@ViewBag.PublishableKey');
 
         var stripeResponseHandler = function (status, response) {
             var $form = $('#add-card-form');

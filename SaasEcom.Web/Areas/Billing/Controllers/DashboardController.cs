@@ -38,7 +38,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             var model = new DashboardViewModel
             {
-                IsStripeSetup = await AccountDataService.GetStripeAccountAsync(User.Identity.GetUserId()) != null,
+                IsStripeSetup = AccountDataService.GetStripeAccount() != null,
                 SubscriptionPlans = await SubscriptionPlanDataService.GetAllAsync()
             };
 

@@ -25,9 +25,9 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             }
         }
 
-        public async Task<ViewResult> Index()
+        public ViewResult Index()
         {
-            var sa = await AccountDataService.GetStripeAccountAsync(User.Identity.GetUserId());
+            var sa = AccountDataService.GetStripeAccount();
             var model = new SettingsViewModel
             {
                 StripeAccount = sa ?? new StripeAccount()

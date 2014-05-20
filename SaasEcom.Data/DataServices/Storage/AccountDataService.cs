@@ -21,10 +21,10 @@ namespace SaasEcom.Data.DataServices.Storage
             return await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
 
-        public async Task<StripeAccount> GetStripeAccountAsync(string userId)
+        public StripeAccount GetStripeAccount()
         {
-            return await DbContext.StripeAccounts.FirstOrDefaultAsync(
-                stripeAccount => stripeAccount.ApplicationUser.Id == userId);
+            // The system is designed to have only one account at the moment
+            return DbContext.StripeAccounts.FirstOrDefault();
         }
 
         public async Task AddOrUpdateStripeAccountAsync(StripeAccount stripeAccount)
@@ -53,6 +53,18 @@ namespace SaasEcom.Data.DataServices.Storage
         {
             // TODO: Implement
             return new List<ApplicationUser>();
+        }
+
+        public string GetStripeSecretKey()
+        {
+            var account = this.GetStripeAccount();
+            return account.LiveMode ? account.StripeLiveSecretApiKey : account.StripeTestSecretApiKey;
+        }
+
+        public string GetStripePublicKey()
+        {
+            var account = this.GetStripeAccount();
+            return account.LiveMode ? account.StripeLivePublicApiKey : account.StripeTestPublicApiKey;
         }
     }
 }

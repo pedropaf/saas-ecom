@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -43,10 +42,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
         private ApplicationDbContext DbContext
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            }
+            get { return HttpContext.GetOwinContext().Get<ApplicationDbContext>(); }
         }
 
         private CardDataService _cardService;
@@ -55,18 +51,29 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             get { return _cardService ?? (_cardService = new CardDataService(DbContext)); }
         }
 
+        private AccountDataService _accountDataService;
+        private AccountDataService AccountDataService
+        {
+            get
+            {
+                return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
         private StripePaymentProcessorProvider _stripeService;
         private StripePaymentProcessorProvider StripeService
         {
-            get 
-            { 
-                return _stripeService ?? 
-                        (_stripeService = new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]));
+            get
+            {
+                return _stripeService ?? (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey()));
             }
         }
 
         public ActionResult Create()
         {
+            ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
+
             return View();
         }
 
@@ -90,6 +97,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
             return View(creditcard);
         }
@@ -116,6 +125,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             creditcard.StripeToken = null;
             creditcard.Cvc = null;
             creditcard.Type = null;
+
+            ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
             return View(creditcard);
         }
@@ -145,6 +156,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
             return View(creditcard);
         }

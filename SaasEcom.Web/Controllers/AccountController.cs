@@ -7,7 +7,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
-using SaasEcom.Data.DataServices;
 using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Data.Infrastructure.Identity;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
@@ -54,7 +53,16 @@ namespace SaasEcom.Web.Controllers
             }
         }
 
-        // GET: /Account/Login
+        private AccountDataService _accountDataService;
+        private AccountDataService AccountDataService
+        {
+            get
+            {
+                return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -62,7 +70,6 @@ namespace SaasEcom.Web.Controllers
             return View();
         }
 
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -99,14 +106,12 @@ namespace SaasEcom.Web.Controllers
             return View(model);
         }
         
-        // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -131,7 +136,7 @@ namespace SaasEcom.Web.Controllers
                     
                     // Create a new customer in Stripe and subscribe him to the plan
                     var stripeService =
-                        new StripePaymentProcessorProvider(ConfigurationManager.AppSettings["stripe_secret_key"]);
+                        new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey());
                     var stripeUser = await stripeService.CreateCustomerAsync(user, model.SubscriptionPlan);
                     
                     // Add subscription Id to the user
@@ -161,7 +166,6 @@ namespace SaasEcom.Web.Controllers
             return View(model);
         }
 
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -170,14 +174,12 @@ namespace SaasEcom.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
 
-        // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -211,21 +213,18 @@ namespace SaasEcom.Web.Controllers
             return View(model);
         }
 
-        // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
 
-        // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
         }
 
-        // POST: /Account/ResetPassword
         [HttpPost] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -250,7 +249,6 @@ namespace SaasEcom.Web.Controllers
             return View();
         }
 
-        // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
