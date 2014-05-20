@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Web", "SaasEcom.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Specs", "SaasEcom.Specs\SaasEcom.Specs.csproj", "{0881AF65-1637-40B3-9C72-01E0C73B693D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Tests", "SaasEcom.Tests\SaasEcom.Tests.csproj", "{526690CD-F87E-44AC-B900-2726C8B82F6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{0881AF65-1637-40B3-9C72-01E0C73B693D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0881AF65-1637-40B3-9C72-01E0C73B693D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0881AF65-1637-40B3-9C72-01E0C73B693D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{526690CD-F87E-44AC-B900-2726C8B82F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{526690CD-F87E-44AC-B900-2726C8B82F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{526690CD-F87E-44AC-B900-2726C8B82F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{526690CD-F87E-44AC-B900-2726C8B82F6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

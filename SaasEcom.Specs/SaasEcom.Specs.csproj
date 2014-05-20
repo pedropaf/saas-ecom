@@ -110,6 +110,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecFlowNUnitExtension.cs" />
+    <Compile Include="Steps\Billing\CustomersSteps.cs" />
+    <Compile Include="Steps\CommonSteps.cs" />
+    <Compile Include="Steps\StepsHelpers.cs" />
     <Compile Include="Steps\Website\RegisterSteps.cs" />
     <Compile Include="Website\Login.feature.cs">
       <AutoGen>True</AutoGen>
@@ -173,7 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\" />
-    <Folder Include="Steps\Billing\" />
     <Folder Include="Steps\Dashboard\" />
   </ItemGroup>
   <ItemGroup>

@@ -2,17 +2,17 @@
 
 @Admin
 @AdminInvoices
-Scenario: I can see a list of invoices
-	Given I am in the invoices section of the Admin panel
-	When  There are invoices in the system
-	Then I can see the list of invoices
-
-@Admin
-@AdminInvoices
 Scenario: I can see an empty list of invoices
 	Given I am in the invoices section of the Admin panel
 	When There are no invoices in the system
 	Then I can see an empty list of invoices (placeholder)
+
+@Admin
+@AdminInvoices
+Scenario: I can see a list of invoices
+	Given I am in the invoices section of the Admin panel
+	When  There are invoices in the system
+	Then I can see the list of invoices
 
 @Admin
 @AdminInvoices

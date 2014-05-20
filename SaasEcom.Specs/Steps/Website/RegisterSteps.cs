@@ -8,12 +8,10 @@ namespace SaasEcom.Specs.Steps.Website
     [Binding]
     public class RegisterSteps
     {
-        private const string BaseUrl = "http://localhost:52337/";
-
         [Given(@"I have the homepage open")]
         public void GivenIHaveTheHomepageOpen()
         {
-            WebBrowser.Current.Navigate().GoToUrl(BaseUrl);
+            WebBrowser.Current.Navigate().GoToUrl(StepsHelpers.BaseUrl);
             Assert.AreEqual("Home - SAAS Ecom", WebBrowser.Current.Title);
         }
 
@@ -38,7 +36,7 @@ namespace SaasEcom.Specs.Steps.Website
         [Given(@"I am at the registration page")]
         public void GivenIAmAtTheRegistrationPage()
         {
-            WebBrowser.Current.Navigate().GoToUrl(BaseUrl + "Account/Register");
+            WebBrowser.Current.Navigate().GoToUrl(StepsHelpers.BaseUrl + "Account/Register");
             Assert.AreEqual("Register - SAAS Ecom", WebBrowser.Current.Title);
         }
 
@@ -78,6 +76,5 @@ namespace SaasEcom.Specs.Steps.Website
         {
             ScenarioContext.Current.Pending();
         }
-
     }
 }

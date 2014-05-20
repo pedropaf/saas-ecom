@@ -65,27 +65,6 @@ namespace SaasEcom.Specs.Billing
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("I can see a list of invoices")]
-        [NUnit.Framework.CategoryAttribute("Admin")]
-        [NUnit.Framework.CategoryAttribute("AdminInvoices")]
-        public virtual void ICanSeeAListOfInvoices()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can see a list of invoices", new string[] {
-                        "Admin",
-                        "AdminInvoices"});
-#line 5
-this.ScenarioSetup(scenarioInfo);
-#line 6
- testRunner.Given("I am in the invoices section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 7
- testRunner.When("There are invoices in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 8
- testRunner.Then("I can see the list of invoices", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("I can see an empty list of invoices")]
         [NUnit.Framework.CategoryAttribute("Admin")]
         [NUnit.Framework.CategoryAttribute("AdminInvoices")]
@@ -94,14 +73,35 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can see an empty list of invoices", new string[] {
                         "Admin",
                         "AdminInvoices"});
+#line 5
+this.ScenarioSetup(scenarioInfo);
+#line 6
+ testRunner.Given("I am in the invoices section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 7
+ testRunner.When("There are no invoices in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 8
+ testRunner.Then("I can see an empty list of invoices (placeholder)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("I can see a list of invoices")]
+        [NUnit.Framework.CategoryAttribute("Admin")]
+        [NUnit.Framework.CategoryAttribute("AdminInvoices")]
+        public virtual void ICanSeeAListOfInvoices()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I can see a list of invoices", new string[] {
+                        "Admin",
+                        "AdminInvoices"});
 #line 12
 this.ScenarioSetup(scenarioInfo);
 #line 13
  testRunner.Given("I am in the invoices section of the Admin panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.When("There are no invoices in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("There are invoices in the system", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 15
- testRunner.Then("I can see an empty list of invoices (placeholder)", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I can see the list of invoices", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
