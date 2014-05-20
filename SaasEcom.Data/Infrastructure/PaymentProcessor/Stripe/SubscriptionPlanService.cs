@@ -5,13 +5,13 @@ using Stripe;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class StripeSubscriptionPlanService
+    public class SubscriptionPlanService
     {
         private readonly string _apiKey;
 
         private StripePlanService _planService;
 
-        public StripeSubscriptionPlanService(string apiKey)
+        public SubscriptionPlanService(string apiKey)
         {
             _apiKey = apiKey;
         }

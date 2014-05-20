@@ -17,11 +17,8 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         private IInvoiceService _invoiceDataService;
         private IInvoiceService InvoiceDataService
         {
-            get
-            {
-                return _invoiceDataService ??
-                    (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _invoiceDataService ??
+                    (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         public async Task<ViewResult> Index()

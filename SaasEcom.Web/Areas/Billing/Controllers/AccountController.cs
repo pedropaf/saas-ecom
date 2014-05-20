@@ -12,11 +12,11 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 {
     public class AccountController : Controller
     {
-                public AccountController()
+        public AccountController()
         {
         }
 
-                public AccountController(ApplicationUserManager userManager)
+        public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
         }
@@ -24,14 +24,8 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         public ActionResult ChangePassword()

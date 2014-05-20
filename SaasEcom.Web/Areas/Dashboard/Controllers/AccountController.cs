@@ -29,34 +29,22 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
-            get
-            {
-                return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         private StripePaymentProcessorProvider _stripeService;
         private StripePaymentProcessorProvider StripeService
         {
-            get
-            {
-                return _stripeService ??
-                      (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey()));
-            }
+            get { return _stripeService ??
+                      (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey())); }
         }
 
         public ActionResult ChangePassword()

@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -30,45 +28,30 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            set
-            {
-                _userManager = value;
-            }
-        }
-
-        private ApplicationDbContext DbContext
-        {
-            get { return HttpContext.GetOwinContext().Get<ApplicationDbContext>(); }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            set { _userManager = value; }
         }
 
         private CardDataService _cardService;
         private CardDataService CardDataService
         {
-            get { return _cardService ?? (_cardService = new CardDataService(DbContext)); }
+            get { return _cardService ?? (_cardService = new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
-            get
-            {
-                return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         private StripePaymentProcessorProvider _stripeService;
         private StripePaymentProcessorProvider StripeService
         {
-            get
-            {
-                return _stripeService ?? (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey()));
-            }
+            get { return _stripeService ?? (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey())); }
         }
+
+        // ACTIONS
 
         public ActionResult Create()
         {
@@ -87,7 +70,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 creditcard.ApplicationUserId = userId;
 
                 // Add card to Stripe (TODO: Abstract to another service?)
-                var user = await DbContext.Users.FirstAsync(u => u.Id == userId);
+                var user = await AccountDataService.GetUserAsync(userId);
                 StripeService.AddCard(user.StripeCustomerId, creditcard);
                 
                 // Add card to DB
@@ -142,7 +125,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 // Stripe integration (TODO: Move to another service?)
                 // Remove current card from stripe
                 var currentCard = await CardDataService.FindAsync(userId, creditcard.Id);
-                var stripeCustomerId = DbContext.Users.First(u => u.Id == userId).StripeCustomerId;
+                var stripeCustomerId = (await AccountDataService.GetUserAsync(userId)).StripeCustomerId;
                 StripeService.DeleteCard(stripeCustomerId, currentCard.StripeId);
 
                 // Add card to Stripe

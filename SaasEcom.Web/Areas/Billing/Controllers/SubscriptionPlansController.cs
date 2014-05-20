@@ -3,6 +3,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SaasEcom.Data.DataServices.Storage;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
@@ -22,6 +23,26 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             {
                 return _subscriptionPlanDataService ??
                     (_subscriptionPlanDataService = new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
+        private AccountDataService _accountDataService;
+        private AccountDataService AccountDataService
+        {
+            get
+            {
+                return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
+        private SubscriptionPlanService _subscriptionPlanService;
+        private SubscriptionPlanService StripePlanService
+        {
+            get
+            {
+                return _subscriptionPlanService ??
+                    (new SubscriptionPlanService(AccountDataService.GetStripeSecretKey()));
             }
         }
 

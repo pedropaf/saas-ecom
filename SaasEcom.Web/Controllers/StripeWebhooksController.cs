@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
-using SaasEcom.Data.DataServices;
 using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Web.Mappers;
 using Stripe;
@@ -17,11 +16,8 @@ namespace SaasEcom.Web.Controllers
         private InvoiceDataService _invoiceDataService;
         private InvoiceDataService InvoiceDataService
         {
-            get
-            {
-                return _invoiceDataService ??
-                       (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _invoiceDataService ??
+                       (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         // GET: /StripeWebhooks/

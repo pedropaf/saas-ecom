@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices.Storage;
@@ -17,21 +16,15 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
-            get
-            {
-                return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         private SubscriptionPlanDataService _subscriptionPlanDataService;
         private SubscriptionPlanDataService SubscriptionPlanDataService
         {
-            get
-            {
-                return _subscriptionPlanDataService ??
-                    (_subscriptionPlanDataService = new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _subscriptionPlanDataService ??
+                    (_subscriptionPlanDataService = new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         public async Task<ViewResult> Index()

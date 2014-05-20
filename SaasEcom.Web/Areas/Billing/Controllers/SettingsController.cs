@@ -18,11 +18,8 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
-            get
-            {
-                return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _accountDataService ??
+                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
         public ViewResult Index()

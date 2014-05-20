@@ -14,14 +14,12 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         private InvoiceDataService _invoiceDataService;
         private InvoiceDataService InvoiceDataService
         {
-            get
-            {
-                return _invoiceDataService ??
-                    (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
+            get { return _invoiceDataService ??
+                    (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));}
         }
 
-        // GET: /Dashboard/Invoice/Detail?id=1
+        // ACTIONS
+
         public async Task<ViewResult> Detail(int id)
         {
             var invoice = await InvoiceDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);
