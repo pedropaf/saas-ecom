@@ -16,6 +16,21 @@ namespace SaasEcom.Web
             bundles.Add(new ScriptBundle("~/bundles/jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js")
                 .Include("~/Scripts/jquery-{version}.js", "~/Scripts/jquery.confirm.js"));
 
+            // jQuery confirm
+            bundles.Add(new ScriptBundle("~/bundles/jquery.confirm")
+                .Include("~/Scripts/jquery.confirm.js"));
+
+            // Angular JS
+            bundles.Add(new ScriptBundle("~/bundles/angularjs", "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js")
+                .Include("~/Scripts/angular.js"));
+
+            // Angular UI Bootstrap
+            bundles.Add(new ScriptBundle("~/bundles/angular-ui-bootstrap").Include("~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
+
+            // Angular ng-table
+            bundles.Add(new ScriptBundle("~/bundles/angular-ng-table")
+                .Include("~/Scripts/angular-ng-table.min.js"));
+
             // Modernizr
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -51,7 +66,7 @@ namespace SaasEcom.Web
 
             // Billing CSS
             bundles.Add(new LessBundle("~/bundles/billing/css").Include(
-                "~/Content/billing/billing.less"));
+                "~/Content/billing/billing.less", "~/Content/billing/ng-table.less"));
             
             // Dashboard CSS
             bundles.Add(new LessBundle("~/bundles/dashboard/css").Include(

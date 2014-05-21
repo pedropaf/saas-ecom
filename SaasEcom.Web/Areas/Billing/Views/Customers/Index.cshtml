@@ -8,8 +8,8 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="title"><i class="fa fa-users"></i> Customers</h1>
-        
-        @if (!Model.Customers.Any())
+
+        @if (false && !Model.Customers.Any())
         {
             <div class="no-customers jumbotron">
                 <h2>No customers yet</h2>
@@ -18,8 +18,129 @@
         }
         else
         {
-            // TODO: Table with customers list
+            <div ng-app="customersApp" ng-controller="customersController" class="customers-container">
+                <table ng-table="customersTable" data-template-pagination="custom-pager" data-show-filter="true" class="table">
+                    <tr ng-repeat="user in $data" data-ng-click="open('lg')">
+                        <td data-title="'Name'" data-sortable="'name'" filter="{ 'name': 'text' }"><i class="fa fa-user"></i> {{ user.name }}</td>
+                        <td data-title="'Email'" data-sortable="'email'" filter="{ 'email': 'text' }">{{ user.email }}</td>
+                        <td data-title="'Plan'" data-sortable="'plan'" filter="{ 'plan': 'text' }">{{ user.plan }}</td>
+                        <td data-title="'Total Revenue'" data-sortable="'totalRevenue'">{{ user.totalRevenue }}</td>
+                    </tr>
+                </table>
+                
+                <script type="text/ng-template" id="custom-pager">
+                    <ul class="pager ng-cloak">
+                        <li ng-repeat="page in pages"
+                            ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+                            ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
+                            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
+                            <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
+                        </li>
+                    </ul>
+                </script>
+                
+                <script type="text/ng-template" id="myModalContent.html">
+                    <div class="modal-header">
+                        <h3 class="modal-title">I'm a modal!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li ng-repeat="item in items">
+                                <a ng-click="selected.item = item">{{ item }}</a>
+                            </li>
+                        </ul>
+                        Selected: <b>{{ selected.item }}</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" ng-click="ok()">OK</button>
+                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                    </div>
+                </script>
+            </div>
         }
-
     </div>
 </div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/angular-ng-table")
+    @Scripts.Render("~/bundles/angular-ui-bootstrap")
+
+    <script language="javascript">
+        var customersModule = angular.module('customersApp', ['ngTable', 'ui.bootstrap']);
+
+        customersModule.controller('customersController', function($scope, $filter, $modal, ngTableParams) {
+            var data = [
+                { name: "Moroni", email: "moroni@User.com", plan: "Ultimate", totalRevenue: "£411" },
+                { name: "Tiancum", email: "tiancum@User.com", plan: "Premium", totalRevenue: "£380" },
+                { name: "Jacob", email: "jacob@User.com", plan: "Starter", totalRevenue: "£0" },
+                { name: "Nephi", email: "nephi@User.com", plan: "Premium", totalRevenue: "£780" },
+                { name: "Enos", email: "enos@User.com", plan: "Ultimate", totalRevenue: "£1080" },
+                { name: "Moroni", email: "moroni@User.com", plan: "Ultimate", totalRevenue: "£411" },
+                { name: "Tiancum", email: "tiancum@User.com", plan: "Premium", totalRevenue: "£380" },
+                { name: "Jacob", email: "jacob@User.com", plan: "Starter", totalRevenue: "£0" },
+                { name: "Nephi", email: "nephi@User.com", plan: "Premium", totalRevenue: "£780" },
+                { name: "Enos", email: "enos@User.com", plan: "Ultimate", totalRevenue: "£1080" },
+                { name: "Moroni", email: "moroni@User.com", plan: "Ultimate", totalRevenue: "£411" },
+                { name: "Tiancum", email: "tiancum@User.com", plan: "Premium", totalRevenue: "£380" },
+                { name: "Jacob", email: "jacob@User.com", plan: "Starter", totalRevenue: "£0" },
+                { name: "Nephi", email: "nephi@User.com", plan: "Premium", totalRevenue: "£780" },
+                { name: "Enos", email: "enos@User.com", plan: "Ultimate", totalRevenue: "£1080" },
+                { name: "Moroni", email: "moroni@User.com", plan: "Ultimate", totalRevenue: "£411" },
+                { name: "Tiancum", email: "tiancum@User.com", plan: "Premium", totalRevenue: "£380" },
+                { name: "Jacob", email: "jacob@User.com", plan: "Starter", totalRevenue: "£0" },
+                { name: "Nephi", email: "nephi@User.com", plan: "Premium", totalRevenue: "£780" },
+                { name: "Enos", email: "enos@User.com", plan: "Ultimate", totalRevenue: "£1080" }
+            ];
+
+            $scope.customersTable = new ngTableParams({
+                page: 1, // show first page
+                count: 10, // count per page
+                filter: {},
+                sorting: {
+                    name: 'asc' // initial sorting
+                },
+                filterDelay: 200
+            }, {
+                total: data.length, // length of data
+                getData: function($defer, params) {
+                    // use build-in angular filter
+                    var filteredData = params.filter() ?
+                        $filter('filter')(data, params.filter()) :
+                        data;
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, params.orderBy()) :
+                        data;
+
+                    params.total(orderedData.length); // set total for recalc pagination
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
+
+            $scope.open = function(size) {
+
+                var modalInstance = $modal.open({
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: size,
+                    resolve: {
+                        items: function() {
+                            return $scope.data;
+                        }
+                    }
+                });
+            };
+        });
+
+        customersModule.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+            $scope.ok = function () {
+                $modalInstance.close();
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        });
+    </script>
+}

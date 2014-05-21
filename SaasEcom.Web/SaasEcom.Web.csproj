@@ -269,7 +269,7 @@
     </Content>
     <Content Include="Areas\Billing\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Dashboard\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\ChangePassword.cshtml" />
     <Content Include="Content\billing\billing.less" />
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
@@ -339,6 +339,13 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\site.less" />
     <Content Include="robots.txt" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\billing.js" />
     <Content Include="Areas\Billing\Views\web.config" />
     <Content Include="Areas\Billing\Views\Shared\_BillingLayout.cshtml" />
@@ -382,11 +389,13 @@
     <Content Include="Content\billing\custom-variables.css.map">
       <DependentUpon>custom-variables.css</DependentUpon>
     </Content>
+    <Content Include="Content\billing\ng-table.less" />
     <None Include="Properties\PublishProfiles\saas-ecom %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dashboard.js" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.0.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
@@ -404,6 +413,7 @@
     <Content Include="Scripts\less-1.5.1.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
+    <Content Include="Scripts\angular-ng-table.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
