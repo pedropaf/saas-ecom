@@ -20,7 +20,7 @@
         {
             <div ng-app="customersApp" ng-controller="customersController" class="customers-container">
                 <table ng-table="customersTable" data-template-pagination="custom-pager" data-show-filter="true" class="table">
-                    <tr ng-repeat="user in $data" data-ng-click="open('lg')">
+                    <tr ng-repeat="user in $data" data-ng-click="open('lg', user)">
                         <td data-title="'Name'" data-sortable="'name'" filter="{ 'name': 'text' }"><i class="fa fa-user"></i> {{ user.name }}</td>
                         <td data-title="'Email'" data-sortable="'email'" filter="{ 'email': 'text' }">{{ user.email }}</td>
                         <td data-title="'Plan'" data-sortable="'plan'" filter="{ 'plan': 'text' }">{{ user.plan }}</td>
@@ -41,19 +41,16 @@
                 
                 <script type="text/ng-template" id="myModalContent.html">
                     <div class="modal-header">
-                        <h3 class="modal-title">I'm a modal!</h3>
+                        <h3 class="modal-title">{{ customer.name }} <small>{{ customer.email }}</small></h3>
                     </div>
                     <div class="modal-body">
                         <ul>
-                            <li ng-repeat="item in items">
-                                <a ng-click="selected.item = item">{{ item }}</a>
-                            </li>
+                            <li>{{ customer.plan }}</li>
+                            <li>{{ customer.totalRevenue }}</li>
                         </ul>
-                        Selected: <b>{{ selected.item }}</b>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" ng-click="ok()">OK</button>
-                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                        <button class="btn btn-primary" ng-click="close()">Close</button>
                     </div>
                 </script>
             </div>
@@ -117,30 +114,28 @@
                 }
             });
 
-            $scope.open = function(size) {
-
+            $scope.open = function(size, $customer) {
+                console.log($customer);
                 var modalInstance = $modal.open({
                     templateUrl: 'myModalContent.html',
                     controller: 'ModalInstanceCtrl',
                     size: size,
-                    resolve: {
-                        items: function() {
-                            return $scope.data;
-                        }
-                    }
+                    resolve: { customer: function() {
+                        return angular.copy($customer);
+                    }}
                 });
             };
         });
 
-        customersModule.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+        customersModule.controller('ModalInstanceCtrl', function ($scope, $modalInstance, customer) {
+            console.log('customer: ' + customer);
+            $scope.customer = customer;
 
-            $scope.ok = function () {
-                $modalInstance.close();
+            $scope.close = function () {
+                $modalInstance.dismiss();
             };
 
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
+            this.$inject = ["$scope", "$modalInstance", "customer"];
         });
     </script>
 }
