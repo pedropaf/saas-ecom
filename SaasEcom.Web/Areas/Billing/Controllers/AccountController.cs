@@ -52,7 +52,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your password has been changed successfully."));
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
             AddErrors(result);
             return View(model);

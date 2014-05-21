@@ -116,23 +116,27 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var plan = await SubscriptionPlanDataService.FindAsync(id);
-            var countUsersInPlan = await SubscriptionPlanDataService.CountUsersAsync(plan.Id);
 
-            // If plan has users only disable
-            if (countUsersInPlan > 0)
+            if (!plan.Disabled)
             {
-                // DB
-                await SubscriptionPlanDataService.DisableAsync(id);
-                TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been disabled successfully."));
-            }
-            else
-            {
-                await SubscriptionPlanDataService.DeleteAsync(id);
-                TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been deleted successfully."));
-            }
+                var countUsersInPlan = await SubscriptionPlanDataService.CountUsersAsync(plan.Id);
 
-            // Delete from Stripe
-            StripePlanService.Delete(plan.FriendlyId);
+                // If plan has users only disable
+                if (countUsersInPlan > 0)
+                {
+                    // DB
+                    await SubscriptionPlanDataService.DisableAsync(id);
+                    TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been disabled successfully."));
+                }
+                else
+                {
+                    await SubscriptionPlanDataService.DeleteAsync(id);
+                    TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been deleted successfully."));
+                }
+
+                // Delete from Stripe
+                StripePlanService.Delete(plan.FriendlyId);
+            }
 
             return RedirectToAction("Index");
         }
