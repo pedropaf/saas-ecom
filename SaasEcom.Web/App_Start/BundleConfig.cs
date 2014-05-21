@@ -8,13 +8,13 @@ namespace SaasEcom.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             // TODO: Set to true for production
-            BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = false;
             
             bundles.UseCdn = true;
 
             // jQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js")
-                .Include("~/Scripts/jquery-{version}.js"));
+                .Include("~/Scripts/jquery-{version}.js", "~/Scripts/jquery.confirm.js"));
 
             // Modernizr
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

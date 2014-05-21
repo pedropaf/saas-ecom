@@ -10,7 +10,7 @@ namespace SaasEcom.Data.DataServices.Interfaces
         Task<SubscriptionPlan> FindAsync(int planId);
         Task AddAsync(SubscriptionPlan plan);
         Task<int> UpdateAsync(SubscriptionPlan plan);
-        Task DeleteAsync(int planId);
+        Task<int> DeleteAsync(int planId);
 
         Task<int> CountUsersAsync(int planId);
     }

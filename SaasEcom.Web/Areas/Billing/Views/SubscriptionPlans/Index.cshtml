@@ -58,7 +58,6 @@
         }
         else
         {
-
             <div class="no-plans jumbotron">
                 <h2>No plans yet</h2>
                 <p>There are no subscription plans to show here.</p>
@@ -67,3 +66,9 @@
         }
     </div>
 </div>
+
+@section scripts {
+    <script language="javascript">
+        $(".delete-link").confirm();
+    </script>
+}

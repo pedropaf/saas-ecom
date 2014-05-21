@@ -39,10 +39,11 @@ namespace SaasEcom.Data.DataServices.Storage
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int planId)
+        public async Task<int> DeleteAsync(int planId)
         {
             var dbPlan = await FindAsync(planId);
             _dbContext.SubscriptionPlans.Remove(dbPlan);
+            return await _dbContext.SaveChangesAsync();
         }
 
         public async Task<int> DisableAsync(int id)

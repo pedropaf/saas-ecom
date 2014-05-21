@@ -112,7 +112,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             return View(subscriptionplan);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpGet, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var plan = await SubscriptionPlanDataService.FindAsync(id);
