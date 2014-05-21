@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.Models;
 
@@ -51,8 +53,14 @@ namespace SaasEcom.Data.DataServices.Storage
 
         public async Task<List<ApplicationUser>> GetCustomersAsync()
         {
-            // TODO: Implement
-            return new List<ApplicationUser>();
+            IdentityRole adminRole = await DbContext.Roles.Where(r => r.Name == "admin").FirstOrDefaultAsync();
+
+            var customers = await DbContext.Users
+                .Include(u => u.Roles).Include(u => u.Invoices)
+                .Where(u => u.StripeCustomerId != null) // Not admin
+                .Select(u => u).ToListAsync();
+
+            return customers;
         }
 
         public string GetStripeSecretKey()

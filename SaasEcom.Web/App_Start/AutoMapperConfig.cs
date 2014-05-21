@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
+using SaasEcom.Data.Models;
+using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web
 {
@@ -6,10 +9,19 @@ namespace SaasEcom.Web
     {
         public static void RegisterMappings()
         {
-            //Mapper.CreateMap<StripeCustomer, Customer>();
-            //Mapper.CreateMap<StripeDiscount, Discount>();
-            //Mapper.CreateMap<StripeSubscription, Subscription>();
-            //Mapper.CreateMap<StripeCard, Card>();
+            Mapper.CreateMap<ApplicationUser, CustomerViewModel>()
+                .AfterMap((user, viewModel) =>
+                {
+                    viewModel.SubscriptionPlan = user.Subscriptions.FirstOrDefault() == null
+                        ? "No subscription"
+                        : user.Subscriptions.First().SubscriptionPlan.Name;
+                    viewModel.SubscriptionPlanPrice = user.Subscriptions.FirstOrDefault() == null
+                        ? "--"
+                        : user.Subscriptions.First().SubscriptionPlan.Price.ToString();
+                    viewModel.SubscriptionPlanCurrency = user.Subscriptions.FirstOrDefault() == null
+                        ? ""
+                        : user.Subscriptions.First().SubscriptionPlan.CurrencySymbol;
+                });
         }
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data.DataServices.Storage;
@@ -22,12 +25,16 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         public async Task<ViewResult> Index()
         {
-            var model = new CustomersViewModel
-            {
-                Customers = await AccountDataService.GetCustomersAsync()
-            };
+            ViewBag.AnyCustomers = (await AccountDataService.GetCustomersAsync()).Any();
+            
+            return View();
+        }
 
-            return View(model);
+        public async Task<JsonResult> GetCustomers()
+        {
+            var customers = await AccountDataService.GetCustomersAsync();
+
+            return Json(Mapper.Map<List<CustomerViewModel>>(customers), JsonRequestBehavior.AllowGet);
         }
 	}
 }

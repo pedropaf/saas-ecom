@@ -231,7 +231,7 @@
     <Compile Include="Areas\Billing\Controllers\SubscriptionPlansController.cs" />
     <Compile Include="Areas\Billing\Filters\SectionFilter.cs" />
     <Compile Include="Areas\Billing\ViewModels\ChangePasswordViewModel.cs" />
-    <Compile Include="Areas\Billing\ViewModels\CustomersViewModel.cs" />
+    <Compile Include="Areas\Billing\ViewModels\CustomerViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\FlashViewModels.cs" />
     <Compile Include="Areas\Billing\ViewModels\InvoicesViewModel.cs" />
