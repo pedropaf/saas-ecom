@@ -17,23 +17,29 @@ namespace SaasEcom.Data.DataServices.Storage
             this._dbContext = context;
         }
 
-        public async Task<int> SubscribeUserAsync(ApplicationUser user, string planId)
+        public async Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId)
         {
             var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.FriendlyId == planId);
 
-            // TODO: Check if there's a trial option enabled for the plan
             var s = new Subscription
             {
                 Start = DateTime.UtcNow,
                 End = null,
-                TrialEnd = DateTime.UtcNow.AddDays(30),
+                TrialEnd = DateTime.UtcNow.AddDays(plan.TrialPeriodInDays),
                 TrialStart = DateTime.UtcNow,
                 User = user,
                 SubscriptionPlan = plan
             };
 
             _dbContext.Subscriptions.Add(s);
-            return await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
+
+            return s;
+        }
+
+        public async Task<Subscription> UserActiveSubscriptionAsync(string userId)
+        {
+            return await _dbContext.Subscriptions.Where(s => s.User.Id == userId && s.End == null).FirstOrDefaultAsync();
         }
 
         public async Task<List<Subscription>> UserSubscriptionsAsync(string userId)
@@ -48,14 +54,13 @@ namespace SaasEcom.Data.DataServices.Storage
             await _dbContext.SaveChangesAsync();
         }
 
-        public bool SubscriptionBelongsToUser(string userId, int subscriptionId)
+        public async Task UpdateSubscriptionAsync(Subscription subscription)
         {
-            var user = _dbContext.Users.Find(userId);
-            return user.Subscriptions.Any(s => s.Id == subscriptionId);
+            _dbContext.Entry(subscription).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
         }
-
+        
         // TODO: Implement Upgrade and downgrade!!
-
-
+        
     }
 }

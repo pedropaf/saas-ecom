@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SaasEcom.Data.Models
 {
@@ -15,6 +17,10 @@ namespace SaasEcom.Data.Models
 
         public int ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        [Index]
+        [MaxLength(50)]
+        public string StripeId { get; set; }
 
         public virtual StripeAccount StripeAccount { get; set; }
 

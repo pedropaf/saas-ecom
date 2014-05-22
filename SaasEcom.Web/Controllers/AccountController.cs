@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using dotless.Core.Loggers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -119,7 +120,7 @@ namespace SaasEcom.Web.Controllers
                     // Subscribe the user to the plan
                     var subscriptionService = new SubscriptionDataService
                         (Request.GetOwinContext().Get<ApplicationDbContext>());
-                    await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
+                    var subscription = await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
                     
                     // Create a new customer in Stripe and subscribe him to the plan
                     var stripeService =
@@ -129,6 +130,9 @@ namespace SaasEcom.Web.Controllers
                     // Add subscription Id to the user
                     user.StripeCustomerId = stripeUser.Id;
                     await userManager.UpdateAsync(user);
+
+                    subscription.StripeId = GetStripeSubscriptionId(stripeUser);
+                    await subscriptionService.UpdateSubscriptionAsync(subscription);
 
                     // Send Welcome Email
                     var email = new WelcomeEmail
@@ -151,6 +155,11 @@ namespace SaasEcom.Web.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private string GetStripeSubscriptionId(Stripe.StripeCustomer stripeUser)
+        {
+            return stripeUser.StripeSubscriptionList.TotalCount > 0 ? stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
         }
 
         [HttpPost]

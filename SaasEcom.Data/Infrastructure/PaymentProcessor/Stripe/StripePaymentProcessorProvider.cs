@@ -174,10 +174,10 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return CustomerService.UpdateSubscription(customerId, myUpdatedSubscription);
         }
 
-        // TODO: This cancels all subscriptions for the customer. Add support for individual subscriptions
-        public StripeSubscription CancelCustomerSubscription(string customerId, bool cancelAtPeriodEnd = false)
+        public StripeSubscription CancelCustomerSubscription(string customerId, string subscriptionId, bool cancelAtPeriodEnd = false)
         {
-            return CustomerService.CancelSubscription(customerId, cancelAtPeriodEnd);
+            // TODO Pass also subscription Id
+            return CustomerService.CancelSubscription(customerId/*, subscriptionId*/, cancelAtPeriodEnd);
         }
 
         #endregion

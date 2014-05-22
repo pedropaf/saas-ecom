@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -82,15 +82,21 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
             var subscriptionsService = new SubscriptionDataService(db);
 
-            if (subscriptionsService.SubscriptionBelongsToUser(User.Identity.GetUserId(), id))
+            var subscription = await subscriptionsService.UserActiveSubscriptionAsync(User.Identity.GetUserId());
+
+            if (subscription != null && subscription.Id == id)
             {
                 await subscriptionsService.EndSubscriptionAsync(id);
 
                 var user = db.Users.Find(User.Identity.GetUserId());
-                this.StripeService.CancelCustomerSubscription(user.StripeCustomerId); // TODO: Cancel individual subscription
+                this.StripeService.CancelCustomerSubscription(user.StripeCustomerId, subscription.StripeId);
+            
+                TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
             }
-
-            TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
+            else
+            {
+                TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem cancelling your subscription."));
+            }
 
             return RedirectToAction("Index", "Home");
         }
