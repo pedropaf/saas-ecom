@@ -9,6 +9,7 @@ namespace SaasEcom.Data.DataServices.Interfaces
         Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId);
         Task<List<Subscription>> UserSubscriptionsAsync(string userId);
         Task<Subscription> UserActiveSubscriptionAsync(string userId);
+        Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId);
         Task EndSubscriptionAsync(int subscriptionId);
         Task UpdateSubscriptionAsync(Subscription subscription);
     }

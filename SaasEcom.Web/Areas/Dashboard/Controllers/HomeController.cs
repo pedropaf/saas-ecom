@@ -25,7 +25,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             var viewModel = new DashboardViewModel
             {
                 Invoices = await invService.UserInvoicesAsync(User.Identity.GetUserId()),
-                Subscriptions = (await subService.UserSubscriptionsAsync(User.Identity.GetUserId())).Select(
+                Subscriptions = (await subService.UserActiveSubscriptionsAsync(User.Identity.GetUserId())).Select(
                     s => new SubscriptionViewModel
                     {
                         Subscription = s,

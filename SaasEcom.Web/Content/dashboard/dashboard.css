@@ -5960,6 +5960,7 @@ body {
   /* Wrapper for page content to push down footer */
   /* Set the fixed height of the footer here */
   /* Invoice */
+  /* Pricing page */
 }
 html #wrap,
 body #wrap {
@@ -6060,5 +6061,34 @@ body .invoice-container {
   background: white;
   max-width: 720px;
   margin: auto;
+}
+html .price,
+body .price {
+  font-size: 4em;
+}
+html .price-cents,
+body .price-cents {
+  vertical-align: super;
+  font-size: 50%;
+}
+html .price-month,
+body .price-month {
+  font-size: 35%;
+  font-style: italic;
+}
+html .panel,
+body .panel {
+  -webkit-transition-property: scale;
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+}
+html .panel:hover,
+body .panel:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
 }
 /*# sourceMappingURL=dashboard.css.map */

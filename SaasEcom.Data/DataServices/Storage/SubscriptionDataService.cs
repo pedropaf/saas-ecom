@@ -47,6 +47,11 @@ namespace SaasEcom.Data.DataServices.Storage
             return await _dbContext.Subscriptions.Where(s => s.User.Id == userId).Select(s => s).ToListAsync();
         }
 
+        public async Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId)
+        {
+            return await _dbContext.Subscriptions.Where(s => s.User.Id == userId && s.End == null).Select(s => s).ToListAsync();
+        }
+
         public async Task EndSubscriptionAsync(int subscriptionId)
         {
             var dbSub = await _dbContext.Subscriptions.FindAsync(subscriptionId);

@@ -6,6 +6,7 @@
 
 <h3><i class="fa fa-refresh"></i> Plans & Billing</h3>
 <div class="row">
+
     <!-- Subscriptions -->
     @if (Model.Subscriptions != null && Model.Subscriptions.Count > 0)
     {
@@ -16,7 +17,71 @@
     }
     else
     {
-        <p class="lead">You don't have any active subscription.</p>
+        <div class="container">
+            <div class="no-subscription-active jumbotron">
+                <h2>Re-activate your subscription</h2>
+                <p>Your subscription is not active. You're welcome to join to any of our plans.</p>
+            </div>
+
+            <div id="plans">
+                <h2 class="text-center">Plans</h2>
+                <hr>
+                <div class="col-sm-4">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <h3>Ultimate</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h3 class="panel-title price">$199<span class="price-cents">99</span><span class="price-month">mo.</span></h3>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">Unlimited</li>
+                            <li class="list-group-item">150 GB of Storage</li>
+                            <li class="list-group-item">Unlimited</li>
+                            <li class="list-group-item">500 GB Bandwidth</li>
+                            <li class="list-group-item">Security Suite</li>
+                            <li class="list-group-item"><a href="@Url.Action("Register", "Account")" class="btn btn-default">Join!</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-danger text-center">
+                        <div class="panel-heading">
+                            <h3>Premium</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h3 class="panel-title price">$69<span class="price-cents">99</span><span class="price-month">mo.</span></h3>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">Unlimited</li>
+                            <li class="list-group-item">50 GB of Storage</li>
+                            <li class="list-group-item">Up to 1000 Users</li>
+                            <li class="list-group-item">100 GB Bandwidth</li>
+                            <li class="list-group-item">Security Suite</li>
+                            <li class="list-group-item"><a href="@Url.Action("Register", "Account")" class="btn btn-danger ">Join!</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">
+                            <h3>Starter</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h3 class="panel-title price">$29<span class="price-cents">99</span><span class="price-month">mo.</span></h3>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">5 Projects</li>
+                            <li class="list-group-item">5 GB of Storage</li>
+                            <li class="list-group-item">Up to 100 Users</li>
+                            <li class="list-group-item">10 GB Bandwidth</li>
+                            <li class="list-group-item">Security Suite</li>
+                            <li class="list-group-item"><a href="@Url.Action("Register", "Account")" class="btn btn-default">Join!</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </div>
 
