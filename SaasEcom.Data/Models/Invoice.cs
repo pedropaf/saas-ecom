@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SaasEcom.Data.Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,29 +36,18 @@ namespace SaasEcom.Data.Models
         public bool? Paid { get; set; }
         public int? AttemptCount { get; set; }
         public int? AmountDue { get; set; }
-        public string Currency { get; set; }
         public int? StartingBalance { get; set; }
         public int? EndingBalance { get; set; }
         public DateTime? NextPaymentAttempt { get; set; }
         public int? Charge { get; set; }
         public int? Discount { get; set; }
         public int? ApplicationFee { get; set; }
-
+        public string Currency { get; set; }
+        
         [NotMapped]
-        public string CurrencySymbol {
-            get
-            {
-                switch (this.Currency)
-                {
-                    case ("gbp"):
-                        return "£";
-                    case ("usd"):
-                        return "$";
-                    case ("eur"):
-                        return "€";
-                }
-                return null;
-            }
+        public Currency CurrencyDetails
+        {
+            get { return CurrencyHelper.GetCurrencyInfo(Currency); }
         }
 
         [NotMapped]

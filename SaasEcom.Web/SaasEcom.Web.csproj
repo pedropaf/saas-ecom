@@ -274,11 +274,18 @@
     <Content Include="Content\billing\billing.css">
       <DependentUpon>billing.less</DependentUpon>
     </Content>
+    <Content Include="Content\billing\chosen.css" />
     <Content Include="Content\billing\custom-variables.css">
       <DependentUpon>custom-variables.less</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap\variables.css">
       <DependentUpon>variables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\chosen\chosen-sprite%402x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\chosen\chosen-sprite.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\dashboard\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
@@ -394,6 +401,8 @@
     <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />

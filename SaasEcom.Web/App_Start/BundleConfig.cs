@@ -51,6 +51,7 @@ namespace SaasEcom.Web
             // Billing Scripts
             bundles.Add(new ScriptBundle("~/bundles/billing/js").Include(
                 "~/Scripts/bootstrap.min.js",
+                "~/Scripts/chosen.jquery.min.js",
                 "~/Scripts/respond.js",
                 "~/Scripts/billing.js"));
 
@@ -66,7 +67,9 @@ namespace SaasEcom.Web
 
             // Billing CSS
             bundles.Add(new LessBundle("~/bundles/billing/css").Include(
-                "~/Content/billing/billing.less", "~/Content/billing/ng-table.less"));
+                "~/Content/billing/billing.less", 
+                "~/Content/billing/ng-table.less",
+                "~/Content/billing/chosen.css"));
             
             // Dashboard CSS
             bundles.Add(new LessBundle("~/bundles/dashboard/css").Include(

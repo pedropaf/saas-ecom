@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SaasEcom.Data.Infrastructure.Helpers;
 
 namespace SaasEcom.Data.Models
 {
@@ -18,8 +19,12 @@ namespace SaasEcom.Data.Models
         [Range(0.0, 10000)]
         public double Price { get; set; }
         
-        // TODO: Setup in settings
         public string Currency { get; set; }
+
+        [NotMapped]
+        public Currency CurrencyDetails {
+            get { return CurrencyHelper.GetCurrencyInfo(Currency); } 
+        }
 
         [Required]
         public SubscriptionInterval Interval { get; set; }
@@ -43,24 +48,6 @@ namespace SaasEcom.Data.Models
 
             [Display(Name="Every 3 months")]
             EveryThreeMonths
-        }
-
-        [NotMapped]
-        public string CurrencySymbol
-        {
-            get
-            {
-                switch (this.Currency)
-                {
-                    case ("gbp"):
-                        return "£";
-                    case ("usd"):
-                        return "$";
-                    case ("eur"):
-                        return "€";
-                }
-                return null;
-            }
         }
     }
 }

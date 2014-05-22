@@ -20,7 +20,7 @@ namespace SaasEcom.Web
                         : user.Subscriptions.First().SubscriptionPlan.Price.ToString();
                     viewModel.SubscriptionPlanCurrency = user.Subscriptions.FirstOrDefault() == null
                         ? ""
-                        : user.Subscriptions.First().SubscriptionPlan.CurrencySymbol;
+                        : user.Subscriptions.First().SubscriptionPlan.Currency; // TODO: Fix currency
                 });
         }
     }

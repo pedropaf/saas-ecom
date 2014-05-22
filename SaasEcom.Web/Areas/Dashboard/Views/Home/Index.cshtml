@@ -43,8 +43,8 @@
                     <td>@invoice.Id</td>
                     <td>@invoice.InvoicePeriod</td>
                     <td>@invoice.Date.Value.ToString("d MMM yyyy")</td>
-                    <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
-                    <td>@invoice.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
+                    <td>@invoice.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
+                    <td>@invoice.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
                     <td>
                         <a href="@Url.Action("Detail", "Invoice", new { id = @invoice.Id })">
                             <i class="fa fa-file-text-o"></i> Details

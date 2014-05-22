@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SaasEcom.Data.DataServices.Storage;
+using SaasEcom.Data.Infrastructure.Helpers;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
 using SaasEcom.Data;
@@ -55,12 +59,14 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Currencies = CurrenciesSelect(RegionInfo.CurrentRegion.ISOCurrencySymbol);
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays")] SubscriptionPlan subscriptionplan)
+        public async Task<ActionResult> Create([Bind(Include="Id,FriendlyId,Name,Price,Interval,Currency,TrialPeriodInDays")] SubscriptionPlan subscriptionplan)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +101,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,FriendlyId,Name,Price,Interval,TrialPeriodInDays")] SubscriptionPlan subscriptionplan)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,FriendlyId,Name,Price,Interval,Currency,TrialPeriodInDays")] SubscriptionPlan subscriptionplan)
         {
             if (ModelState.IsValid)
             {
@@ -148,6 +154,16 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 Request.GetOwinContext().Get<ApplicationDbContext>().Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private static IEnumerable<SelectListItem> CurrenciesSelect(string selected)
+        {
+            return CurrencyHelper.Currencies.Select(c => new SelectListItem
+            {
+                Selected = c.Value == selected,
+                Text = string.Format("{0} - {1}", c.Value, c.Key),
+                Value = c.Value
+            });
         }
     }
 }

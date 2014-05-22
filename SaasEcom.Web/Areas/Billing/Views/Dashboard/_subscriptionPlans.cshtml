@@ -28,7 +28,7 @@
                 <div class="col-md-@PlanWidth(numPlans) subscription-panel">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h2 class="panel-title">@item.Name &nbsp;<small>@item.CurrencySymbol@string.Format("{0:F2}", item.Price) / @item.Interval</small></h2>
+                            <h2 class="panel-title">@item.Name &nbsp;<small>@item.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", item.Price) / @item.Interval</small></h2>
                         </div>
                         <div class="panel-body">
                             <ul class="list-unstyled plan-details">
