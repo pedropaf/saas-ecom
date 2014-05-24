@@ -62,5 +62,17 @@ namespace SaasEcom.Data.Models
         public string ApplicationUserId { get; set; }
 
         public virtual StripeAccount StripeAccount { get; set; }
+
+        public void ClearCreditCardDetails()
+        {
+            this.ExpirationMonth = null;
+            this.ExpirationYear = null;
+            this.Last4 = null;
+            this.Fingerprint = null;
+            this.StripeId = null;
+            this.StripeToken = null;
+            this.Cvc = null;
+            this.Type = null;
+        }
     }
 }

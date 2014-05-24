@@ -30,8 +30,14 @@ namespace SaasEcom.Data.DataServices.Storage
             return user.CreditCards;
         }
 
-        public async Task<CreditCard> FindAsync(string customerId, int? cardId)
+        public async Task<CreditCard> FindAsync(string customerId, int? cardId, bool noTracking = false)
         {
+            if (noTracking)
+            {
+                return await this._dbContext.CreditCards.AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
+            }
+
             return await this._dbContext.CreditCards
                 .FirstOrDefaultAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
         }

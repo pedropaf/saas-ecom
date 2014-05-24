@@ -394,6 +394,8 @@
       <DependentUpon>custom-variables.css</DependentUpon>
     </Content>
     <Content Include="Content\billing\ng-table.less" />
+    <Content Include="Areas\Dashboard\Views\Card\_form.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\Subscribe.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -403,7 +405,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
-    <Content Include="Scripts\dashboard.js" />
+    <Content Include="Scripts\dashboard\card-form.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.0.js" />

@@ -1,24 +1,18 @@
 ﻿@model SaasEcom.Data.Models.CreditCard
 
 @{
-    ViewBag.Title = "Add credit card";
+    ViewBag.Title = "Subscribe";
     Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h3><i class="fa fa-credit-card"></i> Add credit card</h3>
+<h3><i class="fa fa-credit-card"></i> Subscribe to @ViewBag.PlanName</h3>
 <hr />
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         @using (Html.BeginForm("Create", "Card", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
         {
-            @Html.Partial("_form", Model)
+            @Html.Partial("~/Areas/Dashboard/Views/Card/_form.cshtml", Model)
         }
     </div>
 </div>
-
-@section Scripts {
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/dashboard/strip-card")
-}

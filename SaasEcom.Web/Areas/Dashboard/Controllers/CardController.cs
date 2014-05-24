@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices.Storage;
-using SaasEcom.Data.Infrastructure.Identity;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
 using SaasEcom.Web.Areas.Dashboard.ViewModels;
@@ -16,28 +15,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
     [Authorize]
     public class CardController : Controller
     {
-        public CardController()
-        {
-        }
-
-        public CardController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
-
-        private ApplicationUserManager _userManager;
-        private ApplicationUserManager UserManager
-        {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            set { _userManager = value; }
-        }
-
-        private CardDataService _cardService;
-        private CardDataService CardDataService
-        {
-            get { return _cardService ?? (_cardService = new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>())); }
-        }
-
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
@@ -45,19 +22,21 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
-        private StripePaymentProcessorProvider _stripeService;
-        private StripePaymentProcessorProvider StripeService
+        private CardService _cardService;
+        private CardService CardService
         {
-            get { return _stripeService ?? (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey())); }
+            get { return _cardService ?? (_cardService = new CardService(AccountDataService.GetStripeSecretKey(), 
+                new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()))); }
         }
 
-        // ACTIONS
 
+        // ACTIONS
+        
         public ActionResult Create()
         {
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
-            return View();
+            return View(new CreditCard());
         }
 
         [HttpPost]
@@ -66,15 +45,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.GetUserId();
-                creditcard.ApplicationUserId = userId;
-
-                // Add card to Stripe (TODO: Abstract to another service?)
-                var user = await AccountDataService.GetUserAsync(userId);
-                StripeService.AddCard(user.StripeCustomerId, creditcard);
-                
-                // Add card to DB
-                await CardDataService.AddAsync(creditcard);
+                var user = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
+                await CardService.AddAsync(user, creditcard);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
 
@@ -92,22 +64,15 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CreditCard creditcard = await CardDataService.FindAsync(User.Identity.GetUserId(), id);
+
+            CreditCard creditcard = await CardService.FindAsync(User.Identity.GetUserId(), id);
 
             // If the card doesn't exist or doesn't belong the logged in user
             if (creditcard == null || creditcard.ApplicationUserId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }
-
-            creditcard.ExpirationMonth = null;
-            creditcard.ExpirationYear = null;
-            creditcard.Last4 = null;
-            creditcard.Fingerprint = null;
-            creditcard.StripeId = null;
-            creditcard.StripeToken = null;
-            creditcard.Cvc = null;
-            creditcard.Type = null;
+            creditcard.ClearCreditCardDetails();
 
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
@@ -120,20 +85,10 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            if (ModelState.IsValid && await CardBelongToUser(creditcard.Id, userId))
+            if (ModelState.IsValid && await CardService.CardBelongToUser(creditcard.Id, userId))
             {
-                // Stripe integration (TODO: Move to another service?)
-                // Remove current card from stripe
-                var currentCard = await CardDataService.FindAsync(userId, creditcard.Id);
-                var stripeCustomerId = (await AccountDataService.GetUserAsync(userId)).StripeCustomerId;
-                StripeService.DeleteCard(stripeCustomerId, currentCard.StripeId);
-
-                // Add card to Stripe
-                StripeService.AddCard(stripeCustomerId, creditcard);
-
-                // Update card in the DB
-                creditcard.ApplicationUserId = userId;
-                await CardDataService.UpdateAsync(User.Identity.GetUserId(), creditcard);
+                var user = await AccountDataService.GetUserAsync(userId);
+                await CardService.UpdateAsync(user, creditcard);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
 
@@ -143,11 +98,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
             return View(creditcard);
-        }
-
-        private async Task<bool> CardBelongToUser(int cardId, string userId)
-        {
-            return await this.CardDataService.AnyAsync(cardId, userId);
         }
     }
 }

@@ -58,8 +58,11 @@ namespace SaasEcom.Web
             // Dashboard Scripts
             bundles.Add(new ScriptBundle("~/bundles/dashboard/js").Include(
                 "~/Scripts/bootstrap.min.js",
-                "~/Scripts/respond.js",
-                "~/Scripts/dashboard.js"));
+                "~/Scripts/respond.js"));
+
+            // Dashboard Stripe card form
+            bundles.Add(new ScriptBundle("~/bundles/dashboard/strip-card").Include(
+                "~/Scripts/dashboard/card-form.js"));
 
             // Site CSS
             bundles.Add(new LessBundle("~/bundles/css").Include(

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -101,6 +100,27 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<ActionResult> Subscribe(int plan)
+        {
+            var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
+            var subscriptionsService = new SubscriptionDataService(db);
+
+            ViewBag.PlanName = "Ultimate"; // TODO
+
+            if (true)
+            {
+                // TODO: Add
+
+                TempData.Add("flash", new FlashSuccessViewModel("Thanks for signing up again."));
+            }
+            else
+            {
+                TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem creating your subscription. Please try again."));
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

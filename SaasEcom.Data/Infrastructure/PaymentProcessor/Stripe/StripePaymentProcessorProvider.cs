@@ -6,7 +6,7 @@ using Stripe;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    // TODO: Abstract Interface and make more generic
+    // TODO: Split this class and eventually completely remove it.
     public class StripePaymentProcessorProvider
     {
         private readonly string _apiKey;
@@ -29,12 +29,6 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             get { return _invoiceService ?? (_invoiceService = new StripeInvoiceService(_apiKey)); }
         }
 
-        private StripeCardService _cardService;
-        private StripeCardService CardService
-        {
-            get { return _cardService ?? (_cardService = new StripeCardService(_apiKey)); }
-        }
-
         public StripePaymentProcessorProvider(string apiKey)
         {
             _apiKey = apiKey;
@@ -49,7 +43,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
                 Id = plan.FriendlyId,
                 Name = plan.Name,
                 Amount = (int) Math.Round(plan.Price * 100),
-                Currency = "GBP",
+                Currency = plan.Currency,
                 Interval = GetInterval(plan.Interval),
                 TrialPeriodDays = plan.TrialPeriodInDays,
                 IntervalCount = 1, // The number of intervals (specified in the interval property) between each subscription billing. For example, interval=month and interval_count=3 bills every 3 months.
@@ -179,80 +173,6 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             // TODO Pass also subscription Id
             return CustomerService.CancelSubscription(customerId/*, subscriptionId*/, cancelAtPeriodEnd);
         }
-
-        #endregion
-
-        #region Charges
-            
-            // TODO
-
-        #endregion
-
-        #region Cards
-
-        public StripeCard AddCard(string customerId, CreditCard card)
-        {
-            var options = new StripeCardCreateOptions
-            {
-                CardAddressCity = card.AddressCity,
-                CardAddressCountry = card.AddressCountry,
-                CardAddressLine1 = card.AddressLine1,
-                CardAddressLine2 = card.AddressLine2,
-                CardAddressState = card.AddressState,
-                CardAddressZip = card.AddressZip,
-                CardCvc = card.Cvc,
-                CardExpirationMonth = card.ExpirationMonth,
-                CardExpirationYear = card.ExpirationYear,
-                CardName = card.Name,
-                TokenId = card.StripeToken
-            };
-
-            return CardService.Create(customerId, options);
-        }
-
-        public void DeleteCard(string customerId, string cardId)
-        {
-            CardService.Delete(customerId, cardId);
-        }
-
-        public StripeCard Get(string customerId, string cardId)
-        {
-            return CardService.Get(customerId, cardId);
-        }
-
-        public IEnumerable<StripeCard> List(string customerId, int limit = 10)
-        {
-            return CardService.List(customerId, new StripeListOptions() { Limit = limit });
-        }
-
-        public StripeCard Update(string customerId, string cardId, CreditCard card)
-        {
-            var options = new StripeCardUpdateOptions
-            {
-                Name = card.Name,
-                AddressCity = card.AddressCity,
-                AddressCountry = card.AddressCountry,
-                AddressLine1 = card.AddressLine1,
-                AddressLine2 = card.AddressLine2,
-                AddressState = card.AddressState,
-                AddressZip = card.AddressZip,
-                ExpirationMonth = card.ExpirationMonth,
-                ExpirationYear = card.ExpirationYear
-            };
-
-            return CardService.Update(customerId, cardId, options);
-        }
-        #endregion
-
-        #region Tokens
-
-        #endregion
-
-        #region Invoices
-
-        #endregion
-
-        #region Account
 
         #endregion
 
