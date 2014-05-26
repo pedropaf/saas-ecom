@@ -1,9 +1,7 @@
-﻿using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using dotless.Core.Loggers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -47,6 +45,17 @@ namespace SaasEcom.Web.Controllers
         {
             get { return _accountDataService ??
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+        }
+
+        private CustomerService _customerService;
+
+        private CustomerService CustomerService
+        {
+            get
+            {
+                return _customerService ??
+                       (_customerService = new CustomerService(AccountDataService.GetStripeSecretKey()));
+            }
         }
 
         // ACTIONS
@@ -123,9 +132,8 @@ namespace SaasEcom.Web.Controllers
                     var subscription = await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
                     
                     // Create a new customer in Stripe and subscribe him to the plan
-                    var stripeService =
-                        new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey());
-                    var stripeUser = await stripeService.CreateCustomerAsync(user, model.SubscriptionPlan);
+                    var stripeService = new CustomerService(AccountDataService.GetStripeSecretKey());
+                    var stripeUser = await CustomerService.CreateCustomerAsync(user, model.SubscriptionPlan);
                     
                     // Add subscription Id to the user
                     user.StripeCustomerId = stripeUser.Id;

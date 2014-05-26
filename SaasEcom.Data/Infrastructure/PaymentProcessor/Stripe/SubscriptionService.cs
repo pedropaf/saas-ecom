@@ -34,7 +34,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             throw new NotImplementedException();
         }
 
-        public async Task<bool> EndSubscriptionAsync(int subscriptionId, ApplicationUser user)
+        public async Task<bool> EndSubscriptionAsync(int subscriptionId, ApplicationUser user, bool cancelAtPeriodEnd = false)
         {
             bool res = true;
             try
@@ -46,7 +46,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
                     await _subscriptionDataService.EndSubscriptionAsync(subscriptionId);
 
                     // Cancel subscription in stripe
-                    this._customerService.CancelSubscription(user.StripeCustomerId, subscription.StripeId);
+                    this._customerService.CancelSubscription(user.StripeCustomerId, /*subscription.StripeId,*/ cancelAtPeriodEnd);
                 }
             }
             catch (Exception)
@@ -58,9 +58,25 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return res;
         }
 
-        public Task UpdateSubscriptionAsync(string userId, int subscriptionId)
+        public StripeSubscription UpdateSubscriptionAsync(string customerId, CreditCard creditCard, string planId)
         {
-            throw new NotImplementedException();
+            var myUpdatedSubscription = new StripeCustomerUpdateSubscriptionOptions
+            {
+                CardNumber = creditCard.CardNumber,
+                CardExpirationYear = creditCard.ExpirationYear,
+                CardExpirationMonth = creditCard.ExpirationMonth,
+                CardAddressCountry = creditCard.AddressCountry,
+                CardAddressLine1 = creditCard.AddressLine1,
+                CardAddressLine2 = creditCard.AddressLine2,
+                CardAddressState = creditCard.AddressState,
+                CardAddressZip = creditCard.AddressZip,
+                CardName = creditCard.Name,
+                CardCvc = creditCard.Cvc,
+                CardAddressCity = creditCard.AddressCity,
+                PlanId = planId
+            };
+
+            return _customerService.UpdateSubscription(customerId, myUpdatedSubscription);
         }
     }
 }

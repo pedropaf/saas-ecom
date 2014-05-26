@@ -38,14 +38,14 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             }
         }
 
-        public StripePlan Add(Models.SubscriptionPlan plan)
+        public StripePlan Add(SubscriptionPlan plan)
         {
             var result = PlanService.Create(new StripePlanCreateOptions
             {
                 Id = plan.FriendlyId,
                 Name = plan.Name,
                 Amount = (int)Math.Round(plan.Price * 100),
-                Currency = "GBP",
+                Currency = plan.Currency,
                 Interval = GetInterval(plan.Interval),
                 TrialPeriodDays = plan.TrialPeriodInDays,
                 IntervalCount = 1, // The number of intervals (specified in the interval property) between each subscription billing. For example, interval=month and interval_count=3 bills every 3 months.
@@ -67,6 +67,23 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
         public void Delete(string planId)
         {
             PlanService.Delete(planId);
+        }
+
+        public StripePlan GetSubscriptionPlan(string planId)
+        {
+            try
+            {
+                return PlanService.Get(planId);
+            }
+            catch (StripeException ex)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<StripePlan> GetAllPlans(StripeListOptions options)
+        {
+            return PlanService.List(options);
         }
 
         private static string GetInterval(SubscriptionPlan.SubscriptionInterval interval)
