@@ -1,18 +1,18 @@
-﻿@model SaasEcom.Data.Models.CreditCard
+﻿@model SaasEcom.Web.Areas.Dashboard.ViewModels.SubscribeViewModel
 
 @{
     ViewBag.Title = "Subscribe";
     Layout = "~/Areas/Dashboard/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h3><i class="fa fa-credit-card"></i> Subscribe to @ViewBag.PlanName</h3>
+<h3><i class="fa fa-credit-card"></i> Subscribe to @Model.PlanFriendlyId</h3>
 <hr />
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        @using (Html.BeginForm("Create", "Card", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
+        @using (Html.BeginForm("Subscribe", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
         {
-            @Html.Partial("~/Areas/Dashboard/Views/Card/_form.cshtml", Model)
+            @Html.Partial("~/Areas/Dashboard/Views/Card/_form.cshtml", Model.CreditCard)
         }
     </div>
 </div>

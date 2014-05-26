@@ -39,11 +39,17 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
-        private StripePaymentProcessorProvider _stripeService;
-        private StripePaymentProcessorProvider StripeService
+        private SubscriptionService _subscriptionService;
+        private SubscriptionService SubscriptionService
         {
-            get { return _stripeService ??
-                      (_stripeService = new StripePaymentProcessorProvider(AccountDataService.GetStripeSecretKey())); }
+            get
+            {
+                return _subscriptionService ?? (_subscriptionService = new SubscriptionService(
+                    AccountDataService.GetStripeSecretKey(),
+                    new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()),
+                    new SubscriptionDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>())
+                    ));
+            }
         }
 
         public ActionResult ChangePassword()
@@ -78,18 +84,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
         public async Task<ActionResult> CancelSubscription(int id)
         {
-            var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            var subscriptionsService = new SubscriptionDataService(db);
-
-            var subscription = await subscriptionsService.UserActiveSubscriptionAsync(User.Identity.GetUserId());
-
-            if (subscription != null && subscription.Id == id)
+            if (await this._subscriptionService.EndSubscriptionAsync(id, await AccountDataService.GetUserAsync(User.Identity.GetUserId())))
             {
-                await subscriptionsService.EndSubscriptionAsync(id);
-
-                var user = db.Users.Find(User.Identity.GetUserId());
-                this.StripeService.CancelCustomerSubscription(user.StripeCustomerId, subscription.StripeId);
-            
                 TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
             }
             else
@@ -100,16 +96,30 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<ActionResult> Subscribe(int plan)
+        public async Task<ActionResult> Subscribe(string plan)
         {
             var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
             var subscriptionsService = new SubscriptionDataService(db);
 
-            ViewBag.PlanName = "Ultimate"; // TODO
+            var model = new SubscribeViewModel
+            {
+                PlanFriendlyId = plan,
+                CreditCard = new CreditCard()
+            };
 
-            if (true)
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Subscribe(SubscribeViewModel details)
+        {
+            if (ModelState.IsValid)
             {
                 // TODO: Add
+
+
+
 
                 TempData.Add("flash", new FlashSuccessViewModel("Thanks for signing up again."));
             }
