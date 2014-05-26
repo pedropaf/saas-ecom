@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
+using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Data.Infrastructure.Identity;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
@@ -39,14 +41,23 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
+        private ICardService _cardDataService;
+        private ICardService CardDataService
+        {
+            get
+            {
+                return _cardDataService ??
+                  (_cardDataService = new CardDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
+        }
+
         private SubscriptionService _subscriptionService;
         private SubscriptionService SubscriptionService
         {
             get
             {
                 return _subscriptionService ?? (_subscriptionService = new SubscriptionService(
-                    AccountDataService.GetStripeSecretKey(),
-                    new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()),
+                    AccountDataService.GetStripeSecretKey(), CardDataService,
                     new SubscriptionDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>())
                     ));
             }
@@ -98,14 +109,14 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
         public async Task<ActionResult> Subscribe(string plan)
         {
-            var db = HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            var subscriptionsService = new SubscriptionDataService(db);
-
             var model = new SubscribeViewModel
             {
                 PlanFriendlyId = plan,
-                CreditCard = new CreditCard()
+                CreditCard = (await CardDataService.GetAllAsync(User.Identity.GetUserId())).FirstOrDefault() ?? new CreditCard()
             };
+            model.CreditCard.ClearCreditCardDetails();
+
+            ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
             return View(model);
         }

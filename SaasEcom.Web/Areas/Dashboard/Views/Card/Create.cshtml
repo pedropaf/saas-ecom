@@ -1,4 +1,4 @@
-﻿@model SaasEcom.Data.Models.CreditCard
+﻿@model SaasEcom.Web.Areas.Dashboard.ViewModels.EditCreditCardViewModel
 
 @{
     ViewBag.Title = "Add credit card";
@@ -12,7 +12,7 @@
     <div class="col-md-8 col-md-offset-2">
         @using (Html.BeginForm("Create", "Card", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
         {
-            @Html.Partial("_form", Model)
+            @Html.EditorFor(m => m.CreditCard)
         }
     </div>
 </div>
@@ -20,5 +20,5 @@
 @section Scripts {
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/dashboard/strip-card")
+    @Scripts.Render("~/bundles/dashboard/stripe-card")
 }

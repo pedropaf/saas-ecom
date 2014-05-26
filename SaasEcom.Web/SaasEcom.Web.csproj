@@ -242,6 +242,7 @@
     <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\EditCreditCardViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\FlashViewModels.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\SubscribeViewModel.cs" />
@@ -395,7 +396,7 @@
       <DependentUpon>custom-variables.css</DependentUpon>
     </Content>
     <Content Include="Content\billing\ng-table.less" />
-    <Content Include="Areas\Dashboard\Views\Card\_form.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\EditorTemplates\CreditCard.cshtml" />
     <Content Include="Areas\Dashboard\Views\Account\Subscribe.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>

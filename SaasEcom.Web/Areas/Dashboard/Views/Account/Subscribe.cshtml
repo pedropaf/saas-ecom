@@ -12,7 +12,14 @@
     <div class="col-md-8 col-md-offset-2">
         @using (Html.BeginForm("Subscribe", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
         {
-            @Html.Partial("~/Areas/Dashboard/Views/Card/_form.cshtml", Model.CreditCard)
+            @Html.HiddenFor(m => m.PlanFriendlyId)
+            @Html.EditorFor(m => m.CreditCard, "~/Areas/Dashboard/Views/Card/_form.cshtml")
         }
     </div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/dashboard/stripe-card")
+}

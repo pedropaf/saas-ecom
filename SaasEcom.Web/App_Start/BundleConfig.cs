@@ -61,7 +61,7 @@ namespace SaasEcom.Web
                 "~/Scripts/respond.js"));
 
             // Dashboard Stripe card form
-            bundles.Add(new ScriptBundle("~/bundles/dashboard/strip-card").Include(
+            bundles.Add(new ScriptBundle("~/bundles/dashboard/stripe-card").Include(
                 "~/Scripts/dashboard/card-form.js"));
 
             // Site CSS

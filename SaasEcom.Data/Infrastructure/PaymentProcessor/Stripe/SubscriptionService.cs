@@ -24,12 +24,12 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             this._subscriptionDataService = subscriptionService;
         }
 
-        public Task<int> SubscribeUserAsync(Models.ApplicationUser user, string planId)
+        public Task<int> SubscribeUserAsync(ApplicationUser user, string planId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Models.Subscription>> UserSubscriptionsAsync(string userId)
+        public Task<List<Subscription>> UserSubscriptionsAsync(string userId)
         {
             throw new NotImplementedException();
         }

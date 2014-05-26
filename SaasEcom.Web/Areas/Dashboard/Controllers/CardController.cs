@@ -36,17 +36,22 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         {
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
-            return View(new CreditCard());
+            var model = new EditCreditCardViewModel
+            {
+                CreditCard = new CreditCard()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreditCard creditcard)
+        public async Task<ActionResult> Create(EditCreditCardViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
-                await CardService.AddAsync(user, creditcard);
+                await CardService.AddAsync(user, model.CreditCard);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
 
@@ -55,7 +60,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
-            return View(creditcard);
+            return View(model);
         }
 
         public async Task<ActionResult> Edit(int? id)
@@ -65,30 +70,33 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            CreditCard creditcard = await CardService.FindAsync(User.Identity.GetUserId(), id);
+            var model = new EditCreditCardViewModel
+            {
+                CreditCard = await CardService.FindAsync(User.Identity.GetUserId(), id)
+            };
 
             // If the card doesn't exist or doesn't belong the logged in user
-            if (creditcard == null || creditcard.ApplicationUserId != User.Identity.GetUserId())
+            if (model.CreditCard == null || model.CreditCard.ApplicationUserId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }
-            creditcard.ClearCreditCardDetails();
+            model.CreditCard.ClearCreditCardDetails();
 
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
-            return View(creditcard);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CreditCard creditcard)
+        public async Task<ActionResult> Edit(EditCreditCardViewModel model)
         {
             var userId = User.Identity.GetUserId();
 
-            if (ModelState.IsValid && await CardService.CardBelongToUser(creditcard.Id, userId))
+            if (ModelState.IsValid && await CardService.CardBelongToUser(model.CreditCard.Id, userId))
             {
                 var user = await AccountDataService.GetUserAsync(userId);
-                await CardService.UpdateAsync(user, creditcard);
+                await CardService.UpdateAsync(user, model.CreditCard);
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
 
@@ -97,7 +105,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
-            return View(creditcard);
+            return View(model);
         }
     }
 }

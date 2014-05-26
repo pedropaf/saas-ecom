@@ -18,9 +18,9 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             this._cardDataService = cardDataService;
         }
 
-        public Task<IList<CreditCard>> GetAllAsync(string customerId)
+        public async Task<IList<CreditCard>> GetAllAsync(string customerId)
         {
-            throw new NotImplementedException();
+            return await _cardDataService.GetAllAsync(customerId);
         }
 
         public async Task<CreditCard> FindAsync(string customerId, int? cardId)
