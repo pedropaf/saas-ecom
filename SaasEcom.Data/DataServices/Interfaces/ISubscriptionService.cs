@@ -6,7 +6,7 @@ namespace SaasEcom.Data.DataServices.Interfaces
 {
     public interface ISubscriptionService
     {
-        Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId);
+        Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId, int? trialPeriodInDays = null);
         Task<List<Subscription>> UserSubscriptionsAsync(string userId);
         Task<Subscription> UserActiveSubscriptionAsync(string userId);
         Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId);

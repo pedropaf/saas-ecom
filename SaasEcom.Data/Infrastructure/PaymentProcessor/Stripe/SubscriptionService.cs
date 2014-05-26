@@ -24,9 +24,18 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             this._subscriptionDataService = subscriptionService;
         }
 
-        public Task<int> SubscribeUserAsync(ApplicationUser user, string planId)
+        public async Task SubscribeUserAsync(ApplicationUser user, string planId, int trialInDays = 0)
         {
-            throw new NotImplementedException();
+            // Subscribe to stripe
+            this._customerService.UpdateSubscription(user.StripeCustomerId,
+                new StripeCustomerUpdateSubscriptionOptions
+                {
+                    PlanId = planId,
+                    TrialEnd = DateTime.UtcNow.AddDays(trialInDays)
+                });
+
+            // Subscribe to DB
+            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays);
         }
 
         public Task<List<Subscription>> UserSubscriptionsAsync(string userId)

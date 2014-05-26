@@ -51,6 +51,16 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             }
         }
 
+        private CardService _cardService;
+        private CardService CardService
+        {
+            get
+            {
+                return _cardService ??
+                  (_cardService = new CardService(AccountDataService.GetStripeSecretKey(), CardDataService));
+            }
+        }
+
         private SubscriptionService _subscriptionService;
         private SubscriptionService SubscriptionService
         {
@@ -95,7 +105,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
         public async Task<ActionResult> CancelSubscription(int id)
         {
-            if (await this._subscriptionService.EndSubscriptionAsync(id, await AccountDataService.GetUserAsync(User.Identity.GetUserId())))
+            if (await SubscriptionService.EndSubscriptionAsync(id, await AccountDataService.GetUserAsync(User.Identity.GetUserId())))
             {
                 TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
             }
@@ -112,7 +122,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             var model = new SubscribeViewModel
             {
                 PlanFriendlyId = plan,
-                CreditCard = (await CardDataService.GetAllAsync(User.Identity.GetUserId())).FirstOrDefault() ?? new CreditCard()
+                CreditCard = (await CardService.GetAllAsync(User.Identity.GetUserId())).FirstOrDefault() ?? new CreditCard()
             };
             model.CreditCard.ClearCreditCardDetails();
 
@@ -127,16 +137,29 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO: Add
+                var userId = User.Identity.GetUserId();
+                var user = await AccountDataService.GetUserAsync(userId);
+             
+                // Create subscription
+                await SubscriptionService.SubscribeUserAsync(user, details.PlanFriendlyId, 0);
 
-
-
-
+                // Save payment details
+                if (details.CreditCard.Id == 0)
+                {
+                    await CardService.AddAsync(user, details.CreditCard);
+                }
+                else
+                {
+                    await CardService.UpdateAsync(user, details.CreditCard);
+                }
+            
                 TempData.Add("flash", new FlashSuccessViewModel("Thanks for signing up again."));
             }
             else
             {
                 TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem creating your subscription. Please try again."));
+                ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
+                return View(details);
             }
 
             return RedirectToAction("Index", "Home");

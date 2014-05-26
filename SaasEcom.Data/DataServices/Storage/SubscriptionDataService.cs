@@ -17,7 +17,7 @@ namespace SaasEcom.Data.DataServices.Storage
             this._dbContext = context;
         }
 
-        public async Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId)
+        public async Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId, int? trialPeriodInDays = null)
         {
             var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.FriendlyId == planId);
 
@@ -25,7 +25,7 @@ namespace SaasEcom.Data.DataServices.Storage
             {
                 Start = DateTime.UtcNow,
                 End = null,
-                TrialEnd = DateTime.UtcNow.AddDays(plan.TrialPeriodInDays),
+                TrialEnd = DateTime.UtcNow.AddDays(trialPeriodInDays ?? plan.TrialPeriodInDays),
                 TrialStart = DateTime.UtcNow,
                 User = user,
                 SubscriptionPlan = plan

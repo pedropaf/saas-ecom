@@ -13,7 +13,8 @@
         @using (Html.BeginForm("Subscribe", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
         {
             @Html.HiddenFor(m => m.PlanFriendlyId)
-            @Html.EditorFor(m => m.CreditCard, "~/Areas/Dashboard/Views/Card/_form.cshtml")
+            @Html.HiddenFor(m => m.CreditCard.Id)
+            @Html.EditorFor(m => m.CreditCard)
         }
     </div>
 </div>
