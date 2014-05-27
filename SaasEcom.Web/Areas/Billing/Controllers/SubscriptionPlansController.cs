@@ -16,6 +16,7 @@ using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
+    // TODO: Refactor class to use provider
     [Authorize(Roles = "admin")]
     [SectionFilter(Section = "subscription-plans")]
     public class SubscriptionPlansController : Controller
@@ -42,13 +43,13 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         }
 
         // Stripe
-        private SubscriptionPlanService _subscriptionPlanService;
-        private SubscriptionPlanService StripePlanService
+        private SubscriptionPlanProvider _subscriptionPlanProvider;
+        private SubscriptionPlanProvider StripePlanProvider
         {
             get
             {
-                return _subscriptionPlanService ??
-                    (new SubscriptionPlanService(AccountDataService.GetStripeSecretKey()));
+                return _subscriptionPlanProvider ??
+                    (new SubscriptionPlanProvider(AccountDataService.GetStripeSecretKey()));
             }
         }
 
@@ -74,7 +75,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 await SubscriptionPlanDataService.AddAsync(subscriptionplan);
 
                 // Stripe
-                StripePlanService.Add(subscriptionplan);
+                StripePlanProvider.Add(subscriptionplan);
 
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been created successfully."));
 
@@ -109,7 +110,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 await SubscriptionPlanDataService.UpdateAsync(subscriptionplan);
 
                 // Stripe
-                StripePlanService.Update(subscriptionplan);
+                StripePlanProvider.Update(subscriptionplan);
 
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been updated successfully."));
 
@@ -141,7 +142,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 }
 
                 // Delete from Stripe
-                StripePlanService.Delete(plan.FriendlyId);
+                StripePlanProvider.Delete(plan.FriendlyId);
             }
 
             return RedirectToAction("Index");

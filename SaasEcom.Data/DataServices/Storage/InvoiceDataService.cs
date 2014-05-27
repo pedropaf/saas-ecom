@@ -7,7 +7,7 @@ using SaasEcom.Data.Models;
 
 namespace SaasEcom.Data.DataServices.Storage
 {
-    public class InvoiceDataService : IInvoiceService
+    public class InvoiceDataService : IInvoiceDataService
     {
         private readonly ApplicationDbContext _dbContext;
 

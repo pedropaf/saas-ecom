@@ -4,7 +4,7 @@ using SaasEcom.Data.Models;
 
 namespace SaasEcom.Data.DataServices.Interfaces
 {
-    public interface ISubscriptionPlanService
+    public interface ISubscriptionPlanDataService
     {
         Task<List<SubscriptionPlan>> GetAllAsync();
         Task<SubscriptionPlan> FindAsync(int planId);

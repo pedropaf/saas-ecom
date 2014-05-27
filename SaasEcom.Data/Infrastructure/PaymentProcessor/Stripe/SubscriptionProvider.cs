@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Data.Models;
 using Stripe;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class SubscriptionService
+    public class SubscriptionProvider : ISubscriptionProvider
     {
         private readonly StripeCardService _cardService;
         private readonly StripeCustomerService _customerService;
 
-        private readonly ICardService _cardDataService;
-        private readonly ISubscriptionService _subscriptionDataService;
+        private readonly ICardDataService _cardDataService;
+        private readonly ISubscriptionDataService _subscriptionDataService;
 
-        public SubscriptionService(string apiKey, ICardService cardDataService, ISubscriptionService subscriptionService)
+        public SubscriptionProvider(string apiKey, ICardDataService cardDataService, ISubscriptionDataService subscriptionService)
         {
             this._cardService = new StripeCardService(apiKey);
             this._customerService = new StripeCustomerService(apiKey);

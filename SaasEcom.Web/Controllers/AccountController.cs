@@ -11,6 +11,7 @@ using SaasEcom.Data.Infrastructure.Identity;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
 using SaasEcom.Web.ViewModels;
+using Stripe;
 
 namespace SaasEcom.Web.Controllers
 {
@@ -47,14 +48,14 @@ namespace SaasEcom.Web.Controllers
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
-        private CustomerService _customerService;
+        private CustomerProvider _customerProvider;
 
-        private CustomerService CustomerService
+        private CustomerProvider CustomerProvider
         {
             get
             {
-                return _customerService ??
-                       (_customerService = new CustomerService(AccountDataService.GetStripeSecretKey()));
+                return _customerProvider ??
+                       (_customerProvider = new CustomerProvider(AccountDataService.GetStripeSecretKey()));
             }
         }
 
@@ -132,8 +133,7 @@ namespace SaasEcom.Web.Controllers
                     var subscription = await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
                     
                     // Create a new customer in Stripe and subscribe him to the plan
-                    var stripeService = new CustomerService(AccountDataService.GetStripeSecretKey());
-                    var stripeUser = await CustomerService.CreateCustomerAsync(user, model.SubscriptionPlan);
+                    var stripeUser = (StripeCustomer) await CustomerProvider.CreateCustomerAsync(user, model.SubscriptionPlan);
                     
                     // Add subscription Id to the user
                     user.StripeCustomerId = stripeUser.Id;
@@ -285,7 +285,7 @@ namespace SaasEcom.Web.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+            AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, identity);
         }
 
         private void AddErrors(IdentityResult result)

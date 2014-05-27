@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Data.Models;
 using Stripe;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class SubscriptionPlanService
+    public class SubscriptionPlanProvider : ISubscriptionPlanProvider
     {
         private readonly string _apiKey;
 
         private StripePlanService _planService;
 
-        public SubscriptionPlanService(string apiKey)
+        public SubscriptionPlanProvider(string apiKey)
         {
             _apiKey = apiKey;
         }
@@ -38,7 +39,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             }
         }
 
-        public StripePlan Add(SubscriptionPlan plan)
+        public object Add(SubscriptionPlan plan)
         {
             var result = PlanService.Create(new StripePlanCreateOptions
             {
@@ -54,7 +55,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return result;
         }
 
-        public StripePlan Update(SubscriptionPlan plan)
+        public object Update(SubscriptionPlan plan)
         {
             var res = PlanService.Update(plan.FriendlyId, new StripePlanUpdateOptions
             {

@@ -13,6 +13,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        // TODO: Refactor
         public async Task<ViewResult> Index()
         {
             var context = Request.GetOwinContext().Get<ApplicationDbContext>();

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SaasEcom.Data.DataServices.Interfaces
 {
-    public interface ISubscriptionService
+    public interface ISubscriptionDataService
     {
         Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId, int? trialPeriodInDays = null);
         Task<List<Subscription>> UserSubscriptionsAsync(string userId);

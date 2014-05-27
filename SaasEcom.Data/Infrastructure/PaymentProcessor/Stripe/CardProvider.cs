@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Data.Models;
 using Stripe;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class CardService
+    public class CardProvider : ICardProvider
     {
-        private readonly StripeCardService _cardService;
-        private readonly ICardService _cardDataService;
+        // Data dependencies
+        private readonly ICardDataService _cardDataService;
 
-        public CardService(string apiKey, ICardService cardDataService)
+        // Stripe dependencies
+        private readonly StripeCardService _cardService;
+
+        public CardProvider(string apiKey, ICardDataService cardDataService)
         {
-            this._cardService = new StripeCardService(apiKey);
             this._cardDataService = cardDataService;
+            this._cardService = new StripeCardService(apiKey);
         }
 
         public async Task<IList<CreditCard>> GetAllAsync(string customerId)
@@ -52,17 +56,17 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             creditcard.ApplicationUserId = user.Id;
             await _cardDataService.UpdateAsync(user.Id, creditcard);
         }
-
-        public Task DeleteAsync(string customerId, int cardId)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public async Task<bool> CardBelongToUser(int cardId, string userId)
         {
             return await this._cardDataService.AnyAsync(cardId, userId);
         }
 
+        public Task DeleteAsync(string customerId, int cardId)
+        {
+            throw new NotImplementedException();
+        }
+        
         private StripeCard AddCardToStripe(CreditCard card, string stripeCustomerId)
         {
             var options = new StripeCardCreateOptions

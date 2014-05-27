@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Data.Models;
 using Stripe;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class CustomerService
+    public class CustomerProvider : ICustomerProvider
     {
+        // Data dependencies
+
+        // Stripe Dependencies
         private readonly StripeCustomerService _customerService;
 
-        public CustomerService(string apiKey)
+        public CustomerProvider(string apiKey)
         {
             _customerService = new StripeCustomerService(apiKey);
         }
 
-        public async Task<StripeCustomer> CreateCustomerAsync(ApplicationUser user, string planId = null)
+        public async Task<object> CreateCustomerAsync(ApplicationUser user, string planId = null)
         {
             var customer = new StripeCustomerCreateOptions
             {
@@ -31,7 +35,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             return await Task.Run(() => _customerService.Create(customer));
         }
 
-        public StripeCustomer UpdateCustomer(ApplicationUser user, CreditCard card)
+        public object UpdateCustomer(ApplicationUser user, CreditCard card)
         {
             var customer = new StripeCustomerUpdateOptions
             {

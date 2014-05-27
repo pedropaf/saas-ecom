@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SaasEcom.Data.DataServices.Interfaces
 {
-    public interface ICardService
+    public interface ICardDataService
     {
         Task<IList<CreditCard>> GetAllAsync(string customerId);
         Task<CreditCard> FindAsync(string customerId, int? cardId, bool noTracking = false);

@@ -8,7 +8,7 @@ using SaasEcom.Data.Models;
 
 namespace SaasEcom.Data.DataServices.Storage
 {
-    public class SubscriptionDataService : ISubscriptionService
+    public class SubscriptionDataService : ISubscriptionDataService
     {
         private readonly ApplicationDbContext _dbContext;
 

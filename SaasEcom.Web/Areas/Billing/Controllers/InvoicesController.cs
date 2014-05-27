@@ -14,8 +14,9 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "invoices")]
     public class InvoicesController : Controller
     {
-        private IInvoiceService _invoiceDataService;
-        private IInvoiceService InvoiceDataService
+        // TODO: Refactor
+        private IInvoiceDataService _invoiceDataService;
+        private IInvoiceDataService InvoiceDataService
         {
             get { return _invoiceDataService ??
                     (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }

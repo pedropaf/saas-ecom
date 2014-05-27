@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SaasEcom.Data.DataServices.Interfaces;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
 
 namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
-    public class InvoiceService
+    public class InvoiceProvider : IInvoiceProvider
     {
         public Task<List<Models.Invoice>> UserInvoicesAsync(string id)
         {

@@ -8,7 +8,7 @@ using SaasEcom.Data.Models;
 
 namespace SaasEcom.Data.DataServices.Storage
 {
-    public class CardDataService : ICardService
+    public class CardDataService : ICardDataService
     {
         private readonly ApplicationDbContext _dbContext;
 

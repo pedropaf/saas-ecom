@@ -10,6 +10,7 @@ using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AccountController : Controller
     {
         public AccountController()

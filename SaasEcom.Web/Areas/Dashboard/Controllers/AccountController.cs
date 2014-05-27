@@ -34,6 +34,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             private set { _userManager = value; }
         }
 
+        // TODO: Refactor
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
@@ -41,8 +42,8 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
-        private ICardService _cardDataService;
-        private ICardService CardDataService
+        private ICardDataService _cardDataService;
+        private ICardDataService CardDataService
         {
             get
             {
@@ -51,22 +52,22 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             }
         }
 
-        private CardService _cardService;
-        private CardService CardService
+        private CardProvider _cardProvider;
+        private CardProvider CardProvider
         {
             get
             {
-                return _cardService ??
-                  (_cardService = new CardService(AccountDataService.GetStripeSecretKey(), CardDataService));
+                return _cardProvider ??
+                  (_cardProvider = new CardProvider(AccountDataService.GetStripeSecretKey(), CardDataService));
             }
         }
 
-        private SubscriptionService _subscriptionService;
-        private SubscriptionService SubscriptionService
+        private SubscriptionProvider _subscriptionProvider;
+        private SubscriptionProvider SubscriptionProvider
         {
             get
             {
-                return _subscriptionService ?? (_subscriptionService = new SubscriptionService(
+                return _subscriptionProvider ?? (_subscriptionProvider = new SubscriptionProvider(
                     AccountDataService.GetStripeSecretKey(), CardDataService,
                     new SubscriptionDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>())
                     ));
@@ -105,7 +106,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
 
         public async Task<ActionResult> CancelSubscription(int id)
         {
-            if (await SubscriptionService.EndSubscriptionAsync(id, await AccountDataService.GetUserAsync(User.Identity.GetUserId())))
+            if (await SubscriptionProvider.EndSubscriptionAsync(id, await AccountDataService.GetUserAsync(User.Identity.GetUserId())))
             {
                 TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
             }
@@ -122,7 +123,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             var model = new SubscribeViewModel
             {
                 PlanFriendlyId = plan,
-                CreditCard = (await CardService.GetAllAsync(User.Identity.GetUserId())).FirstOrDefault() ?? new CreditCard()
+                CreditCard = (await CardProvider.GetAllAsync(User.Identity.GetUserId())).FirstOrDefault() ?? new CreditCard()
             };
             model.CreditCard.ClearCreditCardDetails();
 
@@ -141,16 +142,16 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 var user = await AccountDataService.GetUserAsync(userId);
              
                 // Create subscription
-                await SubscriptionService.SubscribeUserAsync(user, details.PlanFriendlyId, 0);
+                await SubscriptionProvider.SubscribeUserAsync(user, details.PlanFriendlyId, 0);
 
                 // Save payment details
                 if (details.CreditCard.Id == 0)
                 {
-                    await CardService.AddAsync(user, details.CreditCard);
+                    await CardProvider.AddAsync(user, details.CreditCard);
                 }
                 else
                 {
-                    await CardService.UpdateAsync(user, details.CreditCard);
+                    await CardProvider.UpdateAsync(user, details.CreditCard);
                 }
             
                 TempData.Add("flash", new FlashSuccessViewModel("Thanks for signing up again."));
@@ -176,9 +177,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         }
 
         #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
-
         private IAuthenticationManager AuthenticationManager
         {
             get
