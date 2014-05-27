@@ -105,6 +105,7 @@
     <Compile Include="DataServices\Interfaces\IAccountDataService.cs" />
     <Compile Include="DataServices\Storage\InvoiceDataService.cs" />
     <Compile Include="DataServices\Storage\SubscriptionPlanDataService.cs" />
+    <Compile Include="Infrastructure\Facades\SubscriptionPlansFacade.cs" />
     <Compile Include="Infrastructure\Helpers\CurrencyHelper.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICardProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICustomerProvider.cs" />
@@ -119,10 +120,6 @@
     <Compile Include="Infrastructure\EmailIdentityService.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationRoleManager.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
-    <Compile Include="Infrastructure\Invoicing\InvoicingProvider.cs" />
-    <Compile Include="Infrastructure\Notifier\EmailNotifier.cs" />
-    <Compile Include="Infrastructure\Notifier\INotifier.cs" />
-    <Compile Include="Infrastructure\Settings.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.cs" />
     <Compile Include="Migrations\201403311508374_IdentityProvider.Designer.cs">
       <DependentUpon>201403311508374_IdentityProvider.cs</DependentUpon>

@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices.Storage;
+using SaasEcom.Data.Infrastructure.Facades;
+using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 
@@ -20,12 +22,16 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                     (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
         }
 
-        // TODO: Refactor
-        private SubscriptionPlanDataService _subscriptionPlanDataService;
-        private SubscriptionPlanDataService SubscriptionPlanDataService
+        private SubscriptionPlansFacade _subscriptionPlansFacade;
+        private SubscriptionPlansFacade SubscriptionPlansFacade
         {
-            get { return _subscriptionPlanDataService ??
-                    (_subscriptionPlanDataService = new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+            get
+            {
+                return _subscriptionPlansFacade ??
+                  (_subscriptionPlansFacade = new SubscriptionPlansFacade(
+                      new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()),
+                      new SubscriptionPlanProvider(AccountDataService.GetStripeSecretKey())));
+            }
         }
 
         public async Task<ViewResult> Index()
@@ -33,7 +39,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             var model = new DashboardViewModel
             {
                 IsStripeSetup = AccountDataService.GetStripeAccount() != null,
-                SubscriptionPlans = await SubscriptionPlanDataService.GetAllAsync()
+                SubscriptionPlans = await SubscriptionPlansFacade.GetAllAsync()
             };
 
             return View(model);

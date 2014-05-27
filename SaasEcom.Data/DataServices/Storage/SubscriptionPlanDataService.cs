@@ -57,7 +57,6 @@ namespace SaasEcom.Data.DataServices.Storage
         public async Task<int> CountUsersAsync(int planId)
         {
             var count = await _dbContext.Subscriptions.CountAsync(s => s.SubscriptionPlanId == planId);
-
             return count;
         }
     }

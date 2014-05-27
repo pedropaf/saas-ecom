@@ -6,6 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SaasEcom.Data.DataServices.Storage;
+using SaasEcom.Data.Infrastructure.Facades;
 using SaasEcom.Data.Infrastructure.Helpers;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Data.Models;
@@ -16,7 +17,6 @@ using SaasEcom.Web.Areas.Billing.ViewModels;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
-    // TODO: Refactor class to use provider
     [Authorize(Roles = "admin")]
     [SectionFilter(Section = "subscription-plans")]
     public class SubscriptionPlansController : Controller
@@ -31,31 +31,21 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             }
         }
 
-        // DB
-        private SubscriptionPlanDataService _subscriptionPlanDataService;
-        private SubscriptionPlanDataService SubscriptionPlanDataService
+        private SubscriptionPlansFacade _subscriptionPlansFacade;
+        private SubscriptionPlansFacade SubscriptionPlansFacade
         {
             get
             {
-                return _subscriptionPlanDataService ??
-                    (_subscriptionPlanDataService = new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
-            }
-        }
-
-        // Stripe
-        private SubscriptionPlanProvider _subscriptionPlanProvider;
-        private SubscriptionPlanProvider StripePlanProvider
-        {
-            get
-            {
-                return _subscriptionPlanProvider ??
-                    (new SubscriptionPlanProvider(AccountDataService.GetStripeSecretKey()));
+                return _subscriptionPlansFacade ??
+                  (_subscriptionPlansFacade = new SubscriptionPlansFacade(
+                      new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()),
+                      new SubscriptionPlanProvider(AccountDataService.GetStripeSecretKey())));
             }
         }
 
         public async Task<ActionResult> Index()
         {
-            return View(await SubscriptionPlanDataService.GetAllAsync());
+            return View(await SubscriptionPlansFacade.GetAllAsync());
         }
 
         public ActionResult Create()
@@ -71,11 +61,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (ModelState.IsValid)
             {
-                // DB
-                await SubscriptionPlanDataService.AddAsync(subscriptionplan);
-
-                // Stripe
-                StripePlanProvider.Add(subscriptionplan);
+                await SubscriptionPlansFacade.AddAsync(subscriptionplan);
 
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been created successfully."));
 
@@ -92,7 +78,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SubscriptionPlan subscriptionplan = await SubscriptionPlanDataService.FindAsync(id.Value);
+            SubscriptionPlan subscriptionplan = await SubscriptionPlansFacade.FindAsync(id.Value);
             if (subscriptionplan == null)
             {
                 return HttpNotFound();
@@ -106,11 +92,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         {
             if (ModelState.IsValid)
             {
-                // DB
-                await SubscriptionPlanDataService.UpdateAsync(subscriptionplan);
-
-                // Stripe
-                StripePlanProvider.Update(subscriptionplan);
+                await SubscriptionPlansFacade.UpdateAsync(subscriptionplan);
 
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been updated successfully."));
 
@@ -122,27 +104,17 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         [HttpGet, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            var plan = await SubscriptionPlanDataService.FindAsync(id);
-
-            if (!plan.Disabled)
+            switch (await SubscriptionPlansFacade.DeleteAsync(id))
             {
-                var countUsersInPlan = await SubscriptionPlanDataService.CountUsersAsync(plan.Id);
-
-                // If plan has users only disable
-                if (countUsersInPlan > 0)
-                {
-                    // DB
-                    await SubscriptionPlanDataService.DisableAsync(id);
-                    TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been disabled successfully."));
-                }
-                else
-                {
-                    await SubscriptionPlanDataService.DeleteAsync(id);
+                case 0:
                     TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been deleted successfully."));
-                }
-
-                // Delete from Stripe
-                StripePlanProvider.Delete(plan.FriendlyId);
+                    break;
+                case 1:
+                    TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been disabled successfully."));
+                    break;
+                default:
+                    TempData.Add("flash", new FlashDangerViewModel("There was a problem deleting the subscription plan. Please try again."));
+                    break;
             }
 
             return RedirectToAction("Index");
