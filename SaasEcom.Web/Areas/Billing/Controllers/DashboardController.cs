@@ -41,7 +41,6 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 IsStripeSetup = AccountDataService.GetStripeAccount() != null,
                 SubscriptionPlans = await SubscriptionPlansFacade.GetAllAsync()
             };
-
             return View(model);
         }
 	}

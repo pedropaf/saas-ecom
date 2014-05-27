@@ -51,7 +51,6 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         public ActionResult Create()
         {
             ViewBag.Currencies = CurrenciesSelect(RegionInfo.CurrentRegion.ISOCurrencySymbol);
-
             return View();
         }
 
@@ -62,12 +61,9 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             if (ModelState.IsValid)
             {
                 await SubscriptionPlansFacade.AddAsync(subscriptionplan);
-
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been created successfully."));
-
                 return RedirectToAction("Index");
             }
-
             return View(subscriptionplan);
         }
 
@@ -93,9 +89,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             if (ModelState.IsValid)
             {
                 await SubscriptionPlansFacade.UpdateAsync(subscriptionplan);
-
                 TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been updated successfully."));
-
                 return RedirectToAction("Index");
             }
             return View(subscriptionplan);
@@ -116,7 +110,6 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                     TempData.Add("flash", new FlashDangerViewModel("There was a problem deleting the subscription plan. Please try again."));
                     break;
             }
-
             return RedirectToAction("Index");
         }
 

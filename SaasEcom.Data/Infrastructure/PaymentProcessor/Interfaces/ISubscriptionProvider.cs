@@ -6,8 +6,8 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces
 {
     public interface ISubscriptionProvider
     {
-        Task SubscribeUserAsync(ApplicationUser user, string planId, int trialInDays = 0);
+        void SubscribeUser(ApplicationUser user, string planId, int trialInDays = 0);
         Task<List<Subscription>> UserSubscriptionsAsync(string userId);
-        Task<bool> EndSubscriptionAsync(int subscriptionId, ApplicationUser user, bool cancelAtPeriodEnd = false);
+        void EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false);
     }
 }

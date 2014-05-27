@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Data.Models;
 using Stripe;
@@ -10,33 +9,21 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
     public class SubscriptionProvider : ISubscriptionProvider
     {
-        private readonly StripeCardService _cardService;
         private readonly StripeCustomerService _customerService;
 
-        private readonly ICardDataService _cardDataService;
-        private readonly ISubscriptionDataService _subscriptionDataService;
-
-        public SubscriptionProvider(string apiKey, ICardDataService cardDataService, ISubscriptionDataService subscriptionService)
+        public SubscriptionProvider(string apiKey)
         {
-            this._cardService = new StripeCardService(apiKey);
             this._customerService = new StripeCustomerService(apiKey);
-            
-            this._cardDataService = cardDataService;
-            this._subscriptionDataService = subscriptionService;
         }
 
-        public async Task SubscribeUserAsync(ApplicationUser user, string planId, int trialInDays = 0)
+        public void SubscribeUser(ApplicationUser user, string planId, int trialInDays = 0)
         {
-            // Subscribe to stripe
             this._customerService.UpdateSubscription(user.StripeCustomerId,
                 new StripeCustomerUpdateSubscriptionOptions
                 {
                     PlanId = planId,
                     TrialEnd = DateTime.UtcNow.AddDays(trialInDays)
                 });
-
-            // Subscribe to DB
-            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays);
         }
 
         public Task<List<Subscription>> UserSubscriptionsAsync(string userId)
@@ -44,28 +31,9 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
             throw new NotImplementedException();
         }
 
-        public async Task<bool> EndSubscriptionAsync(int subscriptionId, ApplicationUser user, bool cancelAtPeriodEnd = false)
+        public void EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false)
         {
-            bool res = true;
-            try
-            {
-                var subscription = await _subscriptionDataService.UserActiveSubscriptionAsync(user.Id);
-                if (subscription != null && subscription.Id == subscriptionId)
-                {
-                    // Cancel in DB
-                    await _subscriptionDataService.EndSubscriptionAsync(subscriptionId);
-
-                    // Cancel subscription in stripe
-                    this._customerService.CancelSubscription(user.StripeCustomerId, /*subscription.StripeId,*/ cancelAtPeriodEnd);
-                }
-            }
-            catch (Exception)
-            {
-                // TODO: Log
-                res = false;
-            }
-
-            return res;
+            this._customerService.CancelSubscription(userStripeId, /*subStripeId,*/ cancelAtPeriodEnd);
         }
 
         public StripeSubscription UpdateSubscriptionAsync(string customerId, CreditCard creditCard, string planId)

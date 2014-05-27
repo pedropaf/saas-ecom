@@ -106,6 +106,7 @@
     <Compile Include="DataServices\Storage\InvoiceDataService.cs" />
     <Compile Include="DataServices\Storage\SubscriptionPlanDataService.cs" />
     <Compile Include="Infrastructure\Facades\SubscriptionPlansFacade.cs" />
+    <Compile Include="Infrastructure\Facades\SubscriptionsFacade.cs" />
     <Compile Include="Infrastructure\Helpers\CurrencyHelper.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICardProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICustomerProvider.cs" />
