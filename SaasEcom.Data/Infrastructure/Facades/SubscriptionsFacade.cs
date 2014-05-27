@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Data.DataServices.Interfaces;
@@ -61,6 +62,11 @@ namespace SaasEcom.Data.Infrastructure.Facades
         public async Task<CreditCard> DefaultCreditCard(string userId)
         {
             return (await _cardProvider.GetAllAsync(userId)).FirstOrDefault() ?? new CreditCard();
+        }
+
+        public async Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId)
+        {
+            return await _subscriptionDataService.UserActiveSubscriptionsAsync(userId);
         }
     }
 }

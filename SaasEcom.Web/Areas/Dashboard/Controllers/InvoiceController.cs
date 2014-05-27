@@ -18,8 +18,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                     (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));}
         }
 
-        // ACTIONS
-
         public async Task<ViewResult> Detail(int id)
         {
             var invoice = await InvoiceDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);

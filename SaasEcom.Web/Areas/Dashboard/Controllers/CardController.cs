@@ -30,9 +30,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()))); }
         }
 
-
-        // ACTIONS
-        
         public ActionResult Create()
         {
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
@@ -82,7 +79,6 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 return HttpNotFound();
             }
             model.CreditCard.ClearCreditCardDetails();
-
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
 
             return View(model);
@@ -98,14 +94,11 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             {
                 var user = await AccountDataService.GetUserAsync(userId);
                 await CardService.UpdateAsync(user, model.CreditCard);
-
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
-
                 return RedirectToAction("Index", "Home");
             }
-
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
-
+            
             return View(model);
         }
     }

@@ -15,6 +15,8 @@ using Stripe;
 
 namespace SaasEcom.Web.Controllers
 {
+    // TODO: Refactor dependencies and abstract behind a Facade
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -49,7 +51,6 @@ namespace SaasEcom.Web.Controllers
         }
 
         private CustomerProvider _customerProvider;
-
         private CustomerProvider CustomerProvider
         {
             get
@@ -58,8 +59,6 @@ namespace SaasEcom.Web.Controllers
                        (_customerProvider = new CustomerProvider(AccountDataService.GetStripeSecretKey()));
             }
         }
-
-        // ACTIONS
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -91,7 +90,6 @@ namespace SaasEcom.Web.Controllers
                     {
                         return RedirectToAction("Index", "Dashboard", new {area = "billing"});
                     }
-
                     return RedirectToAction("Index", "Home", new { area = "dashboard" });
                 }
                 else

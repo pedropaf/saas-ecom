@@ -1,12 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Data;
-using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Data.Infrastructure.Facades;
 using SaasEcom.Data.Infrastructure.Identity;

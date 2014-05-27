@@ -14,7 +14,6 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "invoices")]
     public class InvoicesController : Controller
     {
-        // TODO: Refactor
         private IInvoiceDataService _invoiceDataService;
         private IInvoiceDataService InvoiceDataService
         {
