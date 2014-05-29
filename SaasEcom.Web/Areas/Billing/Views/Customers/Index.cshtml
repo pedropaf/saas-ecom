@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <h1 class="title"><i class="fa fa-users"></i> Customers</h1>
 
-        @if (false && !ViewBag.AnyCustomers)
+        @if (!ViewBag.AnyCustomers)
         {
             <div class="no-customers jumbotron">
                 <h2>No customers yet</h2>
@@ -20,11 +20,11 @@
                 <table ng-table="customersTable" data-template-pagination="custom-pager" data-show-filter="true" class="table" id="customers-table">
                     <tr ng-repeat="user in $data" data-ng-click="open('lg', user)">
                         <td data-title="'Email'" data-sortable="'Email'" filter="{ 'Email': 'text' }"><i class="fa fa-user"></i> {{ user.Email }}</td>
-                        <td data-title="'Plan'" data-sortable="'SubscriptionPlan'" filter="{ 'SubscriptionPlan': 'text' }">{{ user.SubscriptionPlan }} {{ user.SubscriptionPlanPrice | currency : "£" }}</td>
-                        <td data-title="'Total Revenue'" data-sortable="'totalRevenue'">{{ user.TotalRevenue }}</td>
+                        <td data-title="'Plan'" data-sortable="'SubscriptionPlan'" filter="{ 'SubscriptionPlan': 'text' }">{{ user.SubscriptionPlan }} <small>({{ user.SubscriptionPlanPrice | currency: user.SubscriptionPlanCurrency }}/month)</small></td>
+                        <td data-title="'Total Revenue'" data-sortable="'totalRevenue'">{{ user.TotalRevenue | currency: user.SubscriptionPlanCurrency  }}</td>
                     </tr>
                 </table>
-                
+
                 <script type="text/ng-template" id="custom-pager">
                     <ul class="pager ng-cloak">
                         <li ng-repeat="page in pages"
@@ -35,16 +35,44 @@
                         </li>
                     </ul>
                 </script>
-                
+
                 <script type="text/ng-template" id="myModalContent.html">
                     <div class="modal-header">
                         <h3 class="modal-title"><i class="fa fa-user"></i> <a href="mailto:{{ customer.Email }}">{{ customer.Email }}</a></h3>
                     </div>
                     <div class="modal-body">
-                        <ul>
-                            <li>{{ customer.SubscriptionPlan }}</li>
-                            <li>{{ customer.TotalRevenue }}</li>
+                        <ul class="list-unstyled" ng-show="customer.Name">
+                            <li><strong>Name: </strong>{{ customer.Name }}</li>
+                            <li><strong>Address: </strong>{{ customer.Address }}</li>
+                            <li><strong>City: </strong>{{ customer.City }}</li>
                         </ul>
+                        <ul class="list-unstyled">
+                            <li><strong>Subscription Plan: </strong>{{ customer.SubscriptionPlan }} <small>{{ customer.SubscriptionPlanPrice | currency: customer.SubscriptionPlanCurrency }}/month</small></li>
+                            <li><strong>Total Revenue: </strong>{{ customer.TotalRevenue | currency: customer.SubscriptionPlanCurrency }}</li>
+                            <li><strong>Created: </strong>{{ customer.CreatedAt | date : 'medium' }}</li>
+                        </ul>
+
+                        <h3>Invoices</h3>
+                        <table class="table" ng-show="customer.Invoices.length">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Period</th>
+                                    <th>Subtotal</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="invoice in customer.Invoices">
+                                    <td><small>{{ invoice.StripeId }}</small></td>
+                                    <td><small>{{ invoice.InvoicePeriod }} <span class="muted" ng-show="invoice.Paid">(paid)</span></small></td>
+                                    <td><small>{{ invoice.Subtotal | currency: customer.SubscriptionPlanCurrency }}</small></td>
+                                    <td>{{ invoice.Total | currency: customer.SubscriptionPlanCurrency }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p ng-hide="customer.Invoices.length">No Invoices for this customer yet.</p>
+
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary" ng-click="close()">Close</button>
@@ -63,11 +91,11 @@
     <script language="javascript">
         var customersModule = angular.module('customersApp', ['ngTable', 'ui.bootstrap']);
 
-        customersModule.controller('customersController', function($http, $scope, $filter, $modal, ngTableParams) {
+        customersModule.controller('customersController', function ($http, $scope, $filter, $modal, ngTableParams) {
 
-            $http.post('/Billing/Customers/GetCustomers').then(function(res) {
+            $http.post('/Billing/Customers/GetCustomers').then(function (res) {
                 var customers = res.data;
-    
+
                 $scope.customersTable = new ngTableParams({
                     page: 1, // show first page
                     count: 10, // count per page
@@ -91,14 +119,16 @@
                 });
             });
 
-            $scope.open = function(size, $customer) {
+            $scope.open = function (size, $customer) {
                 var modalInstance = $modal.open({
                     templateUrl: 'myModalContent.html',
                     controller: 'ModalInstanceCtrl',
                     size: size,
-                    resolve: { customer: function() {
-                        return angular.copy($customer);
-                    }}
+                    resolve: {
+                        customer: function () {
+                            return angular.copy($customer);
+                        }
+                    }
                 });
             };
         });
