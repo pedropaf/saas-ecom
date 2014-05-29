@@ -36,7 +36,11 @@ namespace SaasEcom.Web
                     viewModel.TotalRevenue = sum != null ? sum.Value : 0;
                 });
 
-            Mapper.CreateMap<Invoice, InvoiceViewModel>();
+            Mapper.CreateMap<Invoice, InvoiceViewModel>()
+                .AfterMap((invoice, model) =>
+                {
+                    model.CurrencySymbol = invoice.CurrencyDetails.CurrencySymbol;
+                });
             Mapper.CreateMap<Invoice.LineItem, InvoiceViewModel.LineItem>();
             Mapper.CreateMap<Invoice.Period, InvoiceViewModel.Period>();
             Mapper.CreateMap<Invoice.Plan, InvoiceViewModel.Plan>();

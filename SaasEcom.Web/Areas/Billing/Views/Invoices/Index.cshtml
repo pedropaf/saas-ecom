@@ -18,8 +18,62 @@
         }
         else
         {
-            // TODO: Table with invoices list
-        }
+            <div ng-app="invoicesApp" ng-controller="invoicesController" class="invoices-container">
+                <table ng-table="invoicesTable" data-template-pagination="custom-pager" class="table" id="invoices-table">
+                    <tr ng-repeat="invoice in $data">
+                        <td data-title="'#'" data-sortable="'StripeId'" >{{ invoice.StripeId }}</td>
+                        <td data-title="'Date'" data-sortable="'Date'">{{ invoice.Date | date: 'medium'}}</td>
+                        <td data-title="'Period'">{{ invoice.InvoicePeriod }}</td>
+                        <td data-title="'Total'">{{ invoice.Total | currency: invoice.CurrencySymbol }}</td>
+                    </tr>
+                </table>
 
+                <script type="text/ng-template" id="custom-pager">
+                    <ul class="pager ng-cloak">
+                        <li ng-repeat="page in pages"
+                            ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+                            ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
+                            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
+                            <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
+                        </li>
+                    </ul>
+                </script>
+            </div>
+        }
     </div>
 </div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/angular-ng-table")
+
+    <script language="javascript">
+        var invoicesModule = angular.module('invoicesApp', ['ngTable']);
+
+        invoicesModule.controller('invoicesController', function ($http, $scope, $filter, ngTableParams) {
+
+            $http.post('/Billing/Invoices/GetInvoices').then(function (res) {
+                var invoices = res.data;
+
+                $scope.invoicesTable = new ngTableParams({
+                    page: 1, // show first page
+                    count: 10, // count per page
+                    sorting: {
+                        name: 'asc' // initial sorting
+                    },
+                    filterDelay: 200
+                }, {
+                    total: invoices.length, // length of data
+                    getData: function ($defer, params) {
+                        // use build-in angular filter
+                        var orderedData = params.sorting() ?
+                            $filter('orderBy')(invoices, params.orderBy()) : invoices;
+
+                        params.total(orderedData.length); // set total for recalc pagination
+                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    }
+                });
+            });
+        });
+    </script>
+}

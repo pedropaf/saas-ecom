@@ -52,8 +52,6 @@ namespace SaasEcom.Data.DataServices.Storage
 
         public async Task<List<ApplicationUser>> GetCustomersAsync()
         {
-            IdentityRole adminRole = await DbContext.Roles.Where(r => r.Name == "admin").FirstOrDefaultAsync();
-
             var customers = await DbContext.Users
                 .Include(u => u.Roles).Include(u => u.Invoices)
                 .Where(u => u.StripeCustomerId != null) // Not admin

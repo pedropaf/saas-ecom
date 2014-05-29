@@ -59,8 +59,9 @@ namespace SaasEcom.Data.DataServices.Storage
 
         public async Task<List<Invoice>> GetInvoicesAsync()
         {
-            // TODO: Implement
-            return new List<Invoice>();
+            var invoices = await _dbContext.Invoices.Include(i => i.Customer).Select(i => i).ToListAsync();
+
+            return invoices;
         }
     }
 }

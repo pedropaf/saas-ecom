@@ -1,12 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using SaasEcom.Data;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
+using SaasEcom.Web.Helpers;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
@@ -29,6 +32,13 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             };
 
             return View(model);
+        }
+
+        public async Task<JsonNetResult> GetInvoices()
+        {
+            var invoices = await InvoiceDataService.GetInvoicesAsync();
+
+            return new JsonNetResult { Data = Mapper.Map<List<InvoiceViewModel>>(invoices), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 	}
 }
