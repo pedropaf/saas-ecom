@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -49,6 +50,18 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                     new SubscriptionDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()), 
                     new SubscriptionProvider(AccountDataService.GetStripeSecretKey()),
                     new CardProvider(AccountDataService.GetStripeSecretKey(), new CardDataService(Request.GetOwinContext().Get<ApplicationDbContext>()))));
+            }
+        }
+
+        private SubscriptionPlansFacade _subscriptionPlansFacade;
+        private SubscriptionPlansFacade SubscriptionPlansFacade
+        {
+            get
+            {
+                return _subscriptionPlansFacade ??
+                  (_subscriptionPlansFacade = new SubscriptionPlansFacade(
+                      new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()),
+                      new SubscriptionPlanProvider(AccountDataService.GetStripeSecretKey())));
             }
         }
 
@@ -129,19 +142,27 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult ChangeSubscription()
+        public async Task<ViewResult> ChangeSubscription()
         {
-            var model = new ChangeSubscriptionViewModel();
+            var currentSubscription = (await SubscriptionsFacade.UserActiveSubscriptionsAsync(User.Identity.GetUserId())).FirstOrDefault();
+
+            var model = new ChangeSubscriptionViewModel
+            {
+                SubscriptionPlans = await SubscriptionPlansFacade.GetAllAsync(),
+                CurrentSubscription = currentSubscription != null ? currentSubscription.SubscriptionPlan.FriendlyId : string.Empty
+            };
             
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangeSubscription(int id)
+        public async Task<ActionResult> ChangeSubscription(ChangeSubscriptionViewModel model)
         {
             if (ModelState.IsValid)
             {
+                // TODO: Update subscription!!
+
                 TempData.Add("flash", new FlashSuccessViewModel("Your plan has been updated."));
             }
             else
