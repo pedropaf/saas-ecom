@@ -235,12 +235,14 @@
     <Compile Include="Areas\Billing\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\FlashViewModels.cs" />
     <Compile Include="Areas\Billing\ViewModels\InvoicesViewModel.cs" />
+    <Compile Include="Areas\Billing\ViewModels\InvoiceViewModel.cs" />
     <Compile Include="Areas\Billing\ViewModels\SettingsViewModel.cs" />
     <Compile Include="Areas\Dashboard\Controllers\CardController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\AccountController.cs" />
     <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\ChangeSubscriptionViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\EditCreditCardViewModel.cs" />
     <Compile Include="Areas\Dashboard\ViewModels\FlashViewModels.cs" />
@@ -253,14 +255,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mappers\InvoiceMappers.cs" />
+    <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\EmailsViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Create.cshtml" />
@@ -398,6 +399,7 @@
     <Content Include="Content\billing\ng-table.less" />
     <Content Include="Areas\Dashboard\Views\Shared\EditorTemplates\CreditCard.cshtml" />
     <Content Include="Areas\Dashboard\Views\Account\Subscribe.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Account\ChangeSubscription.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

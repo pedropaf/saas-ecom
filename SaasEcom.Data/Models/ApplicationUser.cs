@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,9 +14,10 @@ namespace SaasEcom.Data.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public string StripeCustomerId { get; set; }
-
+        
         public virtual StripeAccount StripeAccount { get; set; }
 
         public virtual IList<Subscription> Subscriptions { get; set; }

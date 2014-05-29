@@ -4,8 +4,8 @@
 <div class="col-sm-6 col-md-6">
     <div class="well">
         <h4>You are currently on the <span class="text-primary">@Model.Subscription.SubscriptionPlan.Name</span> plan</h4>
-        <p>Plan price: <strong>£@Model.Subscription.SubscriptionPlan.Price / @Model.Subscription.SubscriptionPlan.Interval</strong>.</p>
-        <p><strong>@Model.Subscription.Status()</strong></p>
+        <p>Price: <strong>£@Model.Subscription.SubscriptionPlan.Price / @Model.Subscription.SubscriptionPlan.Interval</strong>.</p>
+        <p><strong>@Model.Subscription.Status()</strong> <small>(<a href="@Url.Action("ChangeSubscription", "Account")">Change subscription plan</a>)</small></p>
         <br />
 
         <!-- Payment details -->

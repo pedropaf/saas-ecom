@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data.DataServices.Storage;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
+using SaasEcom.Web.Helpers;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {
@@ -30,11 +31,11 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             return View();
         }
 
-        public async Task<JsonResult> GetCustomers()
+        public async Task<JsonNetResult> GetCustomers()
         {
             var customers = await AccountDataService.GetCustomersAsync();
 
-            return Json(Mapper.Map<List<CustomerViewModel>>(customers), JsonRequestBehavior.AllowGet);
+            return new JsonNetResult { Data = Mapper.Map<List<CustomerViewModel>>(customers), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 	}
 }

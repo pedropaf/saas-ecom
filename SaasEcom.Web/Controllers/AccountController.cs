@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -119,7 +120,12 @@ namespace SaasEcom.Web.Controllers
 
                 // Create user and a trial subscription
                 var result = await userManager.CreateAsync(
-                    new ApplicationUser { UserName = model.Email, Email = model.Email }, model.Password);
+                    new ApplicationUser
+                    {
+                        UserName = model.Email, 
+                        Email = model.Email, 
+                        CreatedAt = DateTime.UtcNow
+                    }, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -151,7 +157,7 @@ namespace SaasEcom.Web.Controllers
 
                     await SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "dashboard"});
                 }
                 else
                 {

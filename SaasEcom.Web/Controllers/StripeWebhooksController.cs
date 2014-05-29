@@ -3,10 +3,11 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Data;
 using SaasEcom.Data.DataServices.Storage;
-using SaasEcom.Web.Mappers;
+using SaasEcom.Data.Models;
 using Stripe;
 
 namespace SaasEcom.Web.Controllers
@@ -95,7 +96,8 @@ namespace SaasEcom.Web.Controllers
                 case "invoice.payment_succeeded": // Occurs whenever an invoice attempts to be paid, and the payment succeeds.
                 case "invoice.payment_failed": // Occurs whenever an invoice attempts to be paid, and the payment fails. This can occur either due to a declined payment, or because the customer has no active card. A particular case of note is that if a customer with no active card reaches the end of its free trial, an invoice.payment_failed notification will occur.
                     var stripeInvoice = Stripe.Mapper<StripeInvoice>.MapFromJson(stripeEvent.Data.Object.ToString());
-                    await InvoiceDataService.CreateOrUpdateAsync(InvoiceMappers.MapToInvoice(stripeInvoice));
+                    var invoice = Mapper.Map<Invoice>(stripeInvoice);
+                    await InvoiceDataService.CreateOrUpdateAsync(invoice);
                     // TODO: Send invoice by email
                     break;
                 case "invoice.updated": // Occurs whenever an invoice changes (for example, the amount could change).

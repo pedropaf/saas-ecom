@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using SaasEcom.Data.Models;
 using SaasEcom.Web.Areas.Billing.ViewModels;
+using Stripe;
 
 namespace SaasEcom.Web
 {
@@ -12,6 +14,14 @@ namespace SaasEcom.Web
             Mapper.CreateMap<ApplicationUser, CustomerViewModel>()
                 .AfterMap((user, viewModel) =>
                 {
+                    var creditCard = user.CreditCards.FirstOrDefault();
+                    if (creditCard != null)
+                    {
+                        viewModel.Name = creditCard.Name;
+                        viewModel.Address = string.Format("{0} {1}", creditCard.AddressLine1, creditCard.AddressLine2);
+                        viewModel.City = creditCard.AddressCity;
+                    }
+
                     viewModel.SubscriptionPlan = user.Subscriptions.FirstOrDefault() == null
                         ? "No subscription"
                         : user.Subscriptions.First().SubscriptionPlan.Name;
@@ -20,7 +30,32 @@ namespace SaasEcom.Web
                         : user.Subscriptions.First().SubscriptionPlan.Price.ToString();
                     viewModel.SubscriptionPlanCurrency = user.Subscriptions.FirstOrDefault() == null
                         ? ""
-                        : user.Subscriptions.First().SubscriptionPlan.Currency; // TODO: Fix currency
+                        : user.Subscriptions.First().SubscriptionPlan.CurrencyDetails.CurrencySymbol;
+                });
+
+            Mapper.CreateMap<Invoice, InvoiceViewModel>();
+            Mapper.CreateMap<Invoice.LineItem, InvoiceViewModel.LineItem>();
+            Mapper.CreateMap<Invoice.Period, InvoiceViewModel.Period>();
+            Mapper.CreateMap<Invoice.Plan, InvoiceViewModel.Plan>();
+
+            // Stripe invoice to model
+            Mapper.CreateMap<StripeInvoice, Invoice>()
+                .ForMember(invoice => invoice.Id, opt => opt.Ignore())
+                .AfterMap((stripeInvoice, invoice) =>
+                {
+                    invoice.StripeId = stripeInvoice.Id;
+                    invoice.StripeCustomerId = stripeInvoice.CustomerId;
+                    invoice.LineItems = Mapper.Map<List<StripeInvoiceItem>, List<Invoice.LineItem>>(stripeInvoice.StripeInvoiceLines.StripeInvoiceItems);
+                });
+            Mapper.CreateMap<StripeInvoiceItem, Invoice.LineItem>()
+                .ForMember(item => item.Id, opt => opt.Ignore())
+                .AfterMap((sLine, line) => line.StripeLineItemId = sLine.Id);
+            Mapper.CreateMap<StripePeriod, Invoice.Period>();
+            Mapper.CreateMap<StripePlan, Invoice.Plan>()
+                .AfterMap((sPlan, plan) =>
+                {
+                    plan.AmountInCents = sPlan.Amount;
+                    plan.StripePlanId = sPlan.Id;
                 });
         }
     }

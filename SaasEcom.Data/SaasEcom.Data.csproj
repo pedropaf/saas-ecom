@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201405221530171_StripeSubscriptionIdAdded.Designer.cs">
       <DependentUpon>201405221530171_StripeSubscriptionIdAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405290643599_UserCreatedAt.cs" />
+    <Compile Include="Migrations\201405290643599_UserCreatedAt.Designer.cs">
+      <DependentUpon>201405290643599_UserCreatedAt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
@@ -264,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405221530171_StripeSubscriptionIdAdded.resx">
       <DependentUpon>201405221530171_StripeSubscriptionIdAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405290643599_UserCreatedAt.resx">
+      <DependentUpon>201405290643599_UserCreatedAt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -61,7 +61,7 @@ namespace SaasEcom.Data.Infrastructure.Facades
 
         public async Task<CreditCard> DefaultCreditCard(string userId)
         {
-            return (await _cardProvider.GetAllAsync(userId)).FirstOrDefault() ?? new CreditCard();
+            return (await _cardProvider.GetAllAsync(userId)).FirstOrDefault();
         }
 
         public async Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId)

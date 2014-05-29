@@ -101,7 +101,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             var model = new SubscribeViewModel
             {
                 PlanFriendlyId = plan,
-                CreditCard = await SubscriptionsFacade.DefaultCreditCard(User.Identity.GetUserId())
+                CreditCard = await SubscriptionsFacade.DefaultCreditCard(User.Identity.GetUserId()) ?? new CreditCard()
             };
             model.CreditCard.ClearCreditCardDetails();
             ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
@@ -124,6 +124,29 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
                 TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem creating your subscription. Please try again."));
                 ViewBag.PublishableKey = AccountDataService.GetStripePublicKey();
                 return View(details);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangeSubscription()
+        {
+            var model = new ChangeSubscriptionViewModel();
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeSubscription(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                TempData.Add("flash", new FlashSuccessViewModel("Your plan has been updated."));
+            }
+            else
+            {
+                TempData.Add("flash", new FlashSuccessViewModel("Sorry, there was an error updating your plan, try again or contact support."));
             }
 
             return RedirectToAction("Index", "Home");
