@@ -17,7 +17,7 @@
         else
         {
             <div ng-app="customersApp" ng-controller="customersController" class="customers-container">
-                <table ng-table="customersTable" data-template-pagination="custom-pager" data-show-filter="true" class="table">
+                <table ng-table="customersTable" data-template-pagination="custom-pager" data-show-filter="true" class="table" id="customers-table">
                     <tr ng-repeat="user in $data" data-ng-click="open('lg', user)">
                         <td data-title="'Email'" data-sortable="'Email'" filter="{ 'Email': 'text' }"><i class="fa fa-user"></i> {{ user.Email }}</td>
                         <td data-title="'Plan'" data-sortable="'SubscriptionPlan'" filter="{ 'SubscriptionPlan': 'text' }">{{ user.SubscriptionPlan }} {{ user.SubscriptionPlanPrice | currency : "£" }}</td>
