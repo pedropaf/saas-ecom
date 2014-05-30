@@ -342,14 +342,14 @@ namespace SaasEcom.Web.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
-                return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+                return RedirectToAction("Manage", new { Message = "There was an error" });
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             if (result.Succeeded)
             {
                 return RedirectToAction("Manage");
             }
-            return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+            return RedirectToAction("Manage", new { Message = "There was an error" });
         }
 
         [ChildActionOnly]
@@ -369,15 +369,6 @@ namespace SaasEcom.Web.Controllers
             }
             return false;
         }
-
-        public enum ManageMessageId
-        {
-            ChangePasswordSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            Error
-        }
-
         #endregion
 
         protected override void Dispose(bool disposing)
