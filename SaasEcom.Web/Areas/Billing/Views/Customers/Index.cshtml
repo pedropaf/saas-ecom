@@ -66,8 +66,8 @@
                                 <tr ng-repeat="invoice in customer.Invoices">
                                     <td><small>{{ invoice.StripeId }}</small></td>
                                     <td><small>{{ invoice.InvoicePeriod }} <span class="muted" ng-show="invoice.Paid">(paid)</span></small></td>
-                                    <td><small>{{ invoice.Subtotal | currency: customer.SubscriptionPlanCurrency }}</small></td>
-                                    <td>{{ invoice.Total | currency: customer.SubscriptionPlanCurrency }}</td>
+                                    <td><small>{{ invoice.Subtotal/100 | currency: customer.SubscriptionPlanCurrency }}</small></td>
+                                    <td>{{ invoice.Total/100 | currency: customer.SubscriptionPlanCurrency }}</td>
                                 </tr>
                             </tbody>
                         </table>

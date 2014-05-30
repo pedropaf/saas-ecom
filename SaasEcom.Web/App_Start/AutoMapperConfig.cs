@@ -33,7 +33,7 @@ namespace SaasEcom.Web
                         : user.Subscriptions.First().SubscriptionPlan.CurrencyDetails.CurrencySymbol;
 
                     var sum = user.Invoices.Sum(i => i.Total);
-                    viewModel.TotalRevenue = sum != null ? sum.Value : 0;
+                    viewModel.TotalRevenue = sum != null ? sum.Value / 100 : 0;
                 });
 
             Mapper.CreateMap<Invoice, InvoiceViewModel>()

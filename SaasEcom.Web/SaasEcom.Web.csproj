@@ -281,9 +281,6 @@
     <Content Include="Content\billing\custom-variables.css">
       <DependentUpon>custom-variables.less</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap\variables.css">
-      <DependentUpon>variables.less</DependentUpon>
-    </Content>
     <Content Include="Content\chosen\chosen-sprite%402x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
