@@ -465,6 +465,7 @@
     <Content Include="Views\Emails\Invoice.html.cshtml" />
     <Content Include="Views\Emails\Generic.cshtml" />
     <Content Include="Views\Emails\Generic.html.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

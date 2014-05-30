@@ -1,12 +1,11 @@
 ﻿@model SaasEcom.Web.ViewModels.LoginViewModel
-
 @{
     ViewBag.Title = "Log in";
 }
 
 <h2>@ViewBag.Title.</h2>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -14,7 +13,7 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 @Html.ValidationSummary(true)
-                
+
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
@@ -25,7 +24,7 @@
                         @Html.ValidationMessageFor(m => m.Email)
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
@@ -36,7 +35,7 @@
                         @Html.ValidationMessageFor(m => m.Password)
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="checkbox">
@@ -50,10 +49,17 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
-                <p>@Html.ActionLink("Register a new user?", "Register")</p>
-                <p>@Html.ActionLink("Forget your password?", "ForgotPassword")</p>
             }
+
+            <p>@Html.ActionLink("Register a new user?", "Register")</p>
+            <p>@Html.ActionLink("Forget your password?", "ForgotPassword")</p>
+
         </section>
+    </div>
+    <div class="col-md-4">
+        <h4>Social log in.</h4>
+        <hr />
+        @Html.Partial("_ExternalLoginsListPartial", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
     </div>
 </div>
 @section Scripts {

@@ -16,8 +16,6 @@ using Stripe;
 
 namespace SaasEcom.Web.Controllers
 {
-    // TODO: Refactor dependencies and abstract behind a Facade
-
     [Authorize]
     public class AccountController : Controller
     {
@@ -263,6 +261,125 @@ namespace SaasEcom.Web.Controllers
             return View();
         }
 
+        #region External Login
+        // POST: /Account/ExternalLogin
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            // Request a redirect to the external login provider
+            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+        }
+
+        // GET: /Account/ExternalLoginCallback
+        [AllowAnonymous]
+        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Sign in the user with this external login provider if the user already has a login
+            var user = await UserManager.FindAsync(loginInfo.Login);
+            if (user != null)
+            {
+                await SignInAsync(user, isPersistent: false);
+                return RedirectToLocal(returnUrl);
+            }
+            else
+            {
+                // If the user does not have an account, create it
+                user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, CreatedAt = DateTime.UtcNow };
+                var result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    result = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                    if (result.Succeeded)
+                    {
+                        // Create user in stripe too
+                        var subscriptionPlan = "Premium"; // TODO: Get from the form?
+
+                        // Subscribe the user to the plan
+                        var subscriptionService = new SubscriptionDataService
+                            (Request.GetOwinContext().Get<ApplicationDbContext>());
+                        var subscription = await subscriptionService.SubscribeUserAsync(user, subscriptionPlan);
+
+                        // Create a new customer in Stripe and subscribe him to the plan
+                        var stripeUser = (StripeCustomer)await CustomerProvider.CreateCustomerAsync(user, subscriptionPlan);
+
+                        // Add subscription Id to the user
+                        user.StripeCustomerId = stripeUser.Id;
+                        await UserManager.UpdateAsync(user);
+
+                        subscription.StripeId = GetStripeSubscriptionId(stripeUser);
+                        await subscriptionService.UpdateSubscriptionAsync(subscription);
+
+                        await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home", new { area = "Dashboard" });
+                    }
+                }
+                
+                // TODO: Flash message and redirect to index
+                return RedirectToLocal("/");
+            }
+        }
+
+        // POST: /Account/LinkLogin
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LinkLogin(string provider)
+        {
+            // Request a redirect to the external login provider to link a login for the current user
+            return new ChallengeResult(provider, Url.Action("LinkLoginCallback", "Account"), User.Identity.GetUserId());
+        }
+
+        // GET: /Account/LinkLoginCallback
+        public async Task<ActionResult> LinkLoginCallback()
+        {
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+            }
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Manage");
+            }
+            return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+        }
+
+        [ChildActionOnly]
+        public ActionResult RemoveAccountList()
+        {
+            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
+            ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
+            return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
+        }
+
+        private bool HasPassword()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user != null)
+            {
+                return user.PasswordHash != null;
+            }
+            return false;
+        }
+
+        public enum ManageMessageId
+        {
+            ChangePasswordSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+            Error
+        }
+
+        #endregion
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && UserManager != null)
@@ -317,6 +434,35 @@ namespace SaasEcom.Web.Controllers
             var adminRole = await RoleManager.FindByNameAsync("admin");
 
             return user.Roles.Any(r => r.RoleId == adminRole.Id);
+        }
+
+        private class ChallengeResult : HttpUnauthorizedResult
+        {
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
+            {
+            }
+
+            public ChallengeResult(string provider, string redirectUri, string userId)
+            {
+                LoginProvider = provider;
+                RedirectUri = redirectUri;
+                UserId = userId;
+            }
+
+            public string LoginProvider { get; set; }
+            public string RedirectUri { get; set; }
+            public string UserId { get; set; }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                var properties = new AuthenticationProperties() { RedirectUri = RedirectUri };
+                if (UserId != null)
+                {
+                    properties.Dictionary[XsrfKey] = UserId;
+                }
+                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+            }
         }
         #endregion
     }
