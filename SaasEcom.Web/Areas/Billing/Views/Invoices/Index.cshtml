@@ -24,7 +24,7 @@
                         <td data-title="'#'" data-sortable="'StripeId'" >{{ invoice.StripeId }}</td>
                         <td data-title="'Date'" data-sortable="'Date'">{{ invoice.Date | date: 'medium'}}</td>
                         <td data-title="'Period'">{{ invoice.InvoicePeriod }}</td>
-                        <td data-title="'Total'">{{ invoice.Total | currency: invoice.CurrencySymbol }}</td>
+                        <td data-title="'Total'">{{ invoice.Total/100 | currency: invoice.CurrencySymbol }}</td>
                     </tr>
                 </table>
 
