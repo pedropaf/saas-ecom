@@ -9,17 +9,17 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 {
     public class SubscriptionProvider : ISubscriptionProvider
     {
-        private readonly StripeCustomerService _customerService;
+        private readonly StripeSubscriptionService _subscriptionService;
 
         public SubscriptionProvider(string apiKey)
         {
-            this._customerService = new StripeCustomerService(apiKey);
+            this._subscriptionService = new StripeSubscriptionService(apiKey);
         }
 
         public void SubscribeUser(ApplicationUser user, string planId, int trialInDays = 0)
         {
-            this._customerService.UpdateSubscription(user.StripeCustomerId,
-                new StripeCustomerUpdateSubscriptionOptions
+            this._subscriptionService.Create(user.StripeCustomerId, planId,
+                new StripeSubscriptionUpdateOptions
                 {
                     PlanId = planId,
                     TrialEnd = DateTime.UtcNow.AddDays(trialInDays)
@@ -33,12 +33,12 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
 
         public void EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false)
         {
-            this._customerService.CancelSubscription(userStripeId, /*subStripeId,*/ cancelAtPeriodEnd);
+            this._subscriptionService.Cancel(userStripeId, subStripeId, cancelAtPeriodEnd);
         }
 
-        public StripeSubscription UpdateSubscriptionAsync(string customerId, CreditCard creditCard, string planId)
+        public StripeSubscription UpdateSubscriptionAsync(string customerId, string subStripeId, CreditCard creditCard, string planId)
         {
-            var myUpdatedSubscription = new StripeCustomerUpdateSubscriptionOptions
+            var myUpdatedSubscription = new StripeSubscriptionUpdateOptions
             {
                 CardNumber = creditCard.CardNumber,
                 CardExpirationYear = creditCard.ExpirationYear,
@@ -54,7 +54,7 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe
                 PlanId = planId
             };
 
-            return _customerService.UpdateSubscription(customerId, myUpdatedSubscription);
+            return _subscriptionService.Update(customerId, subStripeId, myUpdatedSubscription);
         }
     }
 }

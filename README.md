@@ -39,10 +39,12 @@ I'm currently working on an update. I'm focused on building an admin panel for t
 5. Run migrations and create an admin user.
 6. Add subscription plans from admin panel (they're created in Stripe too). If you already have your plans / customers in stripe, they'd need to be imported to the DB.
 
+### Google OAuth 2.0 Support
+If you'd like to let the users login using their login account, please check this [explanation](http://blogs.msdn.com/b/webdev/archive/2014/07/02/changes-to-google-oauth-2-0-and-updates-in-google-middleware-for-3-0-0-rc-release.aspx)
+
 ## Testing
 
 There's a project using SpecFlow / Selenium / WebDriver to test the functionality from a UI (user) point of view. It should work as a good integration testing suite. This isn't still completed.
-
 
 ## Libraries used
 
@@ -51,7 +53,7 @@ There's a project using SpecFlow / Selenium / WebDriver to test the functionalit
 * jQuery
 * jQuery Validation
 * jQuery Unobtrusive Validation
-* ASP.NET MVC 5.1
+* ASP.NET MVC 5.2
 * ASP.NET Razor
 * ASP.NET Identity Owin
 * ASP.NET Identity Entity Framework
@@ -61,3 +63,9 @@ There's a project using SpecFlow / Selenium / WebDriver to test the functionalit
 * Postal
 * Stripe.net
 * Specflow / Selenium / WebDriver
+
+## Contribute
+
+I'm open to suggestions and pull requests. 
+
+Get in touch if you'd like to use this project and need help, I also do **contract work**.
