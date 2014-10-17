@@ -1,5 +1,5 @@
 ﻿using Postal;
-using SaasEcom.Data.Models;
+using SaasEcom.Core.Models;
 
 namespace SaasEcom.Web.ViewModels
 {

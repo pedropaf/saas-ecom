@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using SaasEcom.Data.DataServices.Storage;
-using SaasEcom.Data.Infrastructure.Facades;
-using SaasEcom.Data.Infrastructure.Helpers;
-using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
-using SaasEcom.Data.Models;
-using SaasEcom.Data;
+using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Core.Infrastructure.Facades;
+using SaasEcom.Core.Infrastructure.Helpers;
+using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
+using SaasEcom.Core.Models;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
+using SaasEcom.Web.Data;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {

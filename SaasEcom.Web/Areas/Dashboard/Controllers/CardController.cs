@@ -4,12 +4,13 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using SaasEcom.Data;
-using SaasEcom.Data.DataServices.Storage;
-using SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces;
-using SaasEcom.Data.Infrastructure.PaymentProcessor.Stripe;
-using SaasEcom.Data.Models;
+using SaasEcom.Core;
+using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
+using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
+using SaasEcom.Core.Models;
 using SaasEcom.Web.Areas.Dashboard.ViewModels;
+using SaasEcom.Web.Data;
 
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {

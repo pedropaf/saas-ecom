@@ -258,10 +258,18 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StripeWebhooksController.cs" />
+    <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Migrations\201410171025050_initial.cs" />
+    <Compile Include="Migrations\201410171025050_initial.Designer.cs">
+      <DependentUpon>201410171025050_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -482,10 +490,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SaasEcom.Data\SaasEcom.Data.csproj">
-      <Project>{e4a0c4a9-1b0e-41a1-b562-4403df932044}</Project>
-      <Name>SaasEcom.Data</Name>
+    <ProjectReference Include="..\..\SaasEcom.Core\SaasEcom.Core\SaasEcom.Core.csproj">
+      <Project>{a7e635bb-a9e8-4698-af6b-f574e5d087e2}</Project>
+      <Name>SaasEcom.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201410171025050_initial.resx">
+      <DependentUpon>201410171025050_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -2,8 +2,8 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using SaasEcom.Data;
-using SaasEcom.Data.Infrastructure.Identity;
+using SaasEcom.Web.Data;
+using SaasEcom.Web.Identity;
 
 namespace SaasEcom.Web
 {
@@ -21,7 +21,9 @@ namespace SaasEcom.Web
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            app.UseGoogleAuthentication();
+            app.UseGoogleAuthentication("873693220515-v6rf15tmc9rvmm0o1klhiklscmvuna0f.apps.googleusercontent.com", "XBhtXX_AE2YZqK_gx8EuQAoS");
+                //clientId: "204631176008-o8mocg7j5vpc6g9p1c48k87rlgspifl6.apps.googleusercontent.com",
+                //clientSecret: "lH7P7x3Ew53-B8VzlIc4EMem");
 
             // Register these two callback methods to create one instance of each per Request
             app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);

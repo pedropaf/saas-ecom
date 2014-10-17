@@ -4,9 +4,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using SaasEcom.Data.Infrastructure.Identity;
-using SaasEcom.Data.Models;
+using SaasEcom.Core.Models;
 using SaasEcom.Web.Areas.Billing.ViewModels;
+using SaasEcom.Web.Identity;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers
 {

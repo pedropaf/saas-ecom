@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using SaasEcom.Data.Models;
+using SaasEcom.Core.Models;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 using Stripe;
 

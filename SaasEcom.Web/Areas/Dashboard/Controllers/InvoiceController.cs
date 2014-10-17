@@ -3,8 +3,9 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using SaasEcom.Data;
-using SaasEcom.Data.DataServices.Storage;
+using SaasEcom.Core;
+using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Web.Data;
 
 namespace SaasEcom.Web.Areas.Dashboard.Controllers
 {

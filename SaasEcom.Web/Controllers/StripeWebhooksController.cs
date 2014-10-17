@@ -5,9 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity.Owin;
-using SaasEcom.Data;
-using SaasEcom.Data.DataServices.Storage;
-using SaasEcom.Data.Models;
+using SaasEcom.Core;
+using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Core.Models;
+using SaasEcom.Web.Data;
 using Stripe;
 
 namespace SaasEcom.Web.Controllers

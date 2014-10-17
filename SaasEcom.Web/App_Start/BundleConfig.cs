@@ -8,7 +8,7 @@ namespace SaasEcom.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             // TODO: Set to true for production
-            BundleTable.EnableOptimizations = false;
+            BundleTable.EnableOptimizations = true;
             
             bundles.UseCdn = true;
 

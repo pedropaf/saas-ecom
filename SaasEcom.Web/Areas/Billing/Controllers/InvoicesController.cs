@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using SaasEcom.Data;
+using SaasEcom.Core;
 using Microsoft.AspNet.Identity.Owin;
-using SaasEcom.Data.DataServices.Interfaces;
-using SaasEcom.Data.DataServices.Storage;
+using SaasEcom.Core.DataServices.Interfaces;
+using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
+using SaasEcom.Web.Data;
 using SaasEcom.Web.Helpers;
 
 namespace SaasEcom.Web.Areas.Billing.Controllers

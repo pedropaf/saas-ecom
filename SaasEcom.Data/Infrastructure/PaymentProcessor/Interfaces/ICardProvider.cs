@@ -10,7 +10,6 @@ namespace SaasEcom.Data.Infrastructure.PaymentProcessor.Interfaces
         Task UpdateAsync(ApplicationUser user, CreditCard creditcard);
         Task DeleteAsync(string customerId, int cardId);
         Task<IList<CreditCard>> GetAllAsync(string customerId);
-
         Task<CreditCard> FindAsync(string userId, int? cardId);
         Task<bool> CardBelongToUser(int cardId, string userId);
     }

@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
 using SaasEcom.Data.DataServices.Interfaces;
 using SaasEcom.Data.Models;
 

@@ -1,4 +1,4 @@
-﻿using SaasEcom.Data.Models;
+﻿using SaasEcom.Core.Models;
 
 namespace SaasEcom.Web.Areas.Dashboard.ViewModels
 {
