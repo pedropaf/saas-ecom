@@ -490,15 +490,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SaasEcom.Core\SaasEcom.Core\SaasEcom.Core.csproj">
-      <Project>{a7e635bb-a9e8-4698-af6b-f574e5d087e2}</Project>
-      <Name>SaasEcom.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\201410171025050_initial.resx">
       <DependentUpon>201410171025050_initial.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SaasEcom.Core\SaasEcom.Core.csproj">
+      <Project>{a7e635bb-a9e8-4698-af6b-f574e5d087e2}</Project>
+      <Name>SaasEcom.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

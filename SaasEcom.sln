@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{4BA0F8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Web", "SaasEcom.Web\SaasEcom.Web.csproj", "{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Core", "..\SaasEcom.Core\SaasEcom.Core\SaasEcom.Core.csproj", "{A7E635BB-A9E8-4698-AF6B-F574E5D087E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Core", "SaasEcom.Core\SaasEcom.Core.csproj", "{A7E635BB-A9E8-4698-AF6B-F574E5D087E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
