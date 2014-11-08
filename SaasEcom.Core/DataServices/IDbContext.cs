@@ -5,9 +5,9 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices
 {
-    public interface IDbContext
+    public interface IDbContext<TUser> where TUser : class
     {
-        IDbSet<ApplicationUser> Users { get; set; } 
+        IDbSet<TUser> Users { get; set; }
         DbSet<Subscription> Subscriptions { get; set; }
         DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         DbSet<Invoice> Invoices { get; set; }

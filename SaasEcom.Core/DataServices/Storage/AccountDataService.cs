@@ -9,14 +9,14 @@ namespace SaasEcom.Core.DataServices.Storage
 {
     public class AccountDataService : IAccountDataService
     {
-        private IDbContext DbContext { get; set; }
+        private IDbContext<SaasEcomUser> DbContext { get; set; }
 
-        public AccountDataService(IDbContext dbContext)
+        public AccountDataService(IDbContext<SaasEcomUser> dbContext)
         {
             this.DbContext = dbContext;
         }
 
-        public async Task<ApplicationUser> GetUserAsync(string userId)
+        public async Task<SaasEcomUser> GetUserAsync(string userId)
         {
             return await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
@@ -30,11 +30,11 @@ namespace SaasEcom.Core.DataServices.Storage
         public async Task AddOrUpdateStripeAccountAsync(StripeAccount stripeAccount)
         {
             StripeAccount sa = await DbContext.Users.Include(u => u.StripeAccount)
-                .Where(u => u.Id == stripeAccount.ApplicationUser.Id).Select(u => u.StripeAccount).FirstOrDefaultAsync();
+                .Where(u => u.Id == stripeAccount.SaasEcomUser.Id).Select(u => u.StripeAccount).FirstOrDefaultAsync();
 
             if (sa == null)
             {
-                var user = await DbContext.Users.FirstAsync(u => u.Id == stripeAccount.ApplicationUser.Id);
+                var user = await DbContext.Users.FirstAsync(u => u.Id == stripeAccount.SaasEcomUser.Id);
                 user.StripeAccount = stripeAccount;
             }
             else
@@ -49,7 +49,7 @@ namespace SaasEcom.Core.DataServices.Storage
             await DbContext.SaveChangesAsync();
         }
 
-        public async Task<List<ApplicationUser>> GetCustomersAsync()
+        public async Task<List<SaasEcomUser>> GetCustomersAsync()
         {
             var customers = await DbContext.Users
                 .Include(u => u.Roles).Include(u => u.Invoices)

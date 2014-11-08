@@ -18,7 +18,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             _customerService = new StripeCustomerService(apiKey);
         }
 
-        public async Task<object> CreateCustomerAsync(ApplicationUser user, string planId = null)
+        public async Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null)
         {
             var customer = new StripeCustomerCreateOptions
             {
@@ -35,7 +35,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return await Task.Run(() => _customerService.Create(customer));
         }
 
-        public object UpdateCustomer(ApplicationUser user, CreditCard card)
+        public object UpdateCustomer(SaasEcomUser user, CreditCard card)
         {
             var customer = new StripeCustomerUpdateOptions
             {

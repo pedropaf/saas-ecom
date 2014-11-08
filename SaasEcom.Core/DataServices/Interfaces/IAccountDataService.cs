@@ -6,10 +6,10 @@ namespace SaasEcom.Core.DataServices.Interfaces
 {
     public interface IAccountDataService
     {
-        Task<ApplicationUser> GetUserAsync(string userId);
+        Task<SaasEcomUser> GetUserAsync(string userId);
         StripeAccount GetStripeAccount();
         Task AddOrUpdateStripeAccountAsync(StripeAccount stripeAccount);
-        Task<List<ApplicationUser>> GetCustomersAsync();
+        Task<List<SaasEcomUser>> GetCustomersAsync();
         string GetStripeSecretKey();
         string GetStripePublicKey();
     }

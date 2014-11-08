@@ -19,6 +19,6 @@ namespace SaasEcom.Core.Models
         [Display(Name = "Test secret API Key")]
         public string StripeTestSecretApiKey { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual SaasEcomUser SaasEcomUser { get; set; }
     }
 }

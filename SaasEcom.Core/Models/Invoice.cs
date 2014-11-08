@@ -19,7 +19,7 @@ namespace SaasEcom.Core.Models
         [Index]
         public string StripeCustomerId { get; set; }
 
-        public virtual ApplicationUser Customer { get; set; }
+        public virtual SaasEcomUser Customer { get; set; }
 
         public virtual StripeAccount StripeAccount { get; set; }
 

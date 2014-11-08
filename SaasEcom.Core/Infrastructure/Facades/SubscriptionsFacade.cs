@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Core.DataServices.Interfaces;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
+using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Core.Models;
+using Stripe;
 
 namespace SaasEcom.Core.Infrastructure.Facades
 {
@@ -13,15 +15,39 @@ namespace SaasEcom.Core.Infrastructure.Facades
         private readonly ISubscriptionDataService _subscriptionDataService;
         private readonly ISubscriptionProvider _subscriptionProvider;
         private readonly ICardProvider _cardProvider;
+        private readonly ICustomerProvider _customerProvider;
 
-        public SubscriptionsFacade(ISubscriptionDataService data, ISubscriptionProvider subscriptionProvider, ICardProvider cardProvider)
+        public SubscriptionsFacade(ISubscriptionDataService data, ISubscriptionProvider subscriptionProvider, ICardProvider cardProvider, ICustomerProvider customerProvider)
         {
             _subscriptionDataService = data;
             _subscriptionProvider = subscriptionProvider;
             _cardProvider = cardProvider;
+            _customerProvider = customerProvider;
         }
 
-        public async Task SubscribeUserAsync(ApplicationUser user, string planId, CreditCard creditCard, int trialInDays = 0)
+        public async Task<SaasEcomUser> SubscribeNewUserAsync(SaasEcomUser user, string planId)
+        {
+            // Subscribe the user to the plan
+            var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId);
+
+            // Create a new customer in Stripe and subscribe him to the plan
+            var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(user, planId);
+
+            // Add subscription Id to the user
+            user.StripeCustomerId = stripeUser.Id;
+
+            subscription.StripeId = GetStripeSubscriptionId(stripeUser);
+            await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
+
+            return user;
+        }
+        
+        private string GetStripeSubscriptionId(Stripe.StripeCustomer stripeUser)
+        {
+            return stripeUser.StripeSubscriptionList.TotalCount > 0 ? stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
+        }
+
+        public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0)
         {
             // Save subscription details
             _subscriptionProvider.SubscribeUser(user, planId, trialInDays);
@@ -38,7 +64,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
             }
         }
 
-        public async Task<bool> EndSubscriptionAsync(int subscriptionId, ApplicationUser user, bool cancelAtPeriodEnd = false)
+        public async Task<bool> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false)
         {
             bool res = true;
             try

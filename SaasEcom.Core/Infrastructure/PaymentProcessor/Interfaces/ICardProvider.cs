@@ -6,8 +6,8 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
 {
     public interface ICardProvider
     {
-        Task AddAsync(ApplicationUser user, CreditCard card);
-        Task UpdateAsync(ApplicationUser user, CreditCard creditcard);
+        Task AddAsync(SaasEcomUser user, CreditCard card);
+        Task UpdateAsync(SaasEcomUser user, CreditCard creditcard);
         Task DeleteAsync(string customerId, int cardId);
         Task<IList<CreditCard>> GetAllAsync(string customerId);
         Task<CreditCard> FindAsync(string userId, int? cardId);

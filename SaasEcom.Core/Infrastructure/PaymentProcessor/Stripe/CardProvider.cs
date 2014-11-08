@@ -32,7 +32,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return await _cardDataService.FindAsync(customerId, cardId);
         }
 
-        public async Task AddAsync(ApplicationUser user, CreditCard card)
+        public async Task AddAsync(SaasEcomUser user, CreditCard card)
         {
             // Save to Stripe
             var stripeCustomerId = user.StripeCustomerId;
@@ -43,7 +43,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             await _cardDataService.AddAsync(card);
         }
 
-        public async Task UpdateAsync(ApplicationUser user, CreditCard creditcard)
+        public async Task UpdateAsync(SaasEcomUser user, CreditCard creditcard)
         {
             // Remove current card from stripe
             var currentCard = await _cardDataService.FindAsync(user.Id, creditcard.Id, true);

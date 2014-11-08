@@ -9,9 +9,9 @@ namespace SaasEcom.Core.DataServices.Storage
 {
     public class InvoiceDataService : IInvoiceDataService
     {
-        private readonly IDbContext _dbContext;
+        private readonly IDbContext<SaasEcomUser> _dbContext;
 
-        public InvoiceDataService(IDbContext context)
+        public InvoiceDataService(IDbContext<SaasEcomUser> context)
         {
             this._dbContext = context;
         }

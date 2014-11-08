@@ -16,7 +16,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             this._subscriptionService = new StripeSubscriptionService(apiKey);
         }
 
-        public void SubscribeUser(ApplicationUser user, string planId, int trialInDays = 0)
+        public void SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0)
         {
             this._subscriptionService.Create(user.StripeCustomerId, planId,
                 new StripeSubscriptionUpdateOptions

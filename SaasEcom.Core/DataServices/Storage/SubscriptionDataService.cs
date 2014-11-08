@@ -8,16 +8,18 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
-    public class SubscriptionDataService : ISubscriptionDataService
+    public class SubscriptionDataService<TContext, TUser> : ISubscriptionDataService 
+        where TContext : IDbContext<TUser> 
+        where TUser : class
     {
-        private readonly IDbContext _dbContext;
+        private readonly TContext _dbContext;
 
-        public SubscriptionDataService(IDbContext context)
+        public SubscriptionDataService(TContext context)
         {
             this._dbContext = context;
         }
 
-        public async Task<Subscription> SubscribeUserAsync(ApplicationUser user, string planId, int? trialPeriodInDays = null)
+        public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null)
         {
             var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.FriendlyId == planId);
 

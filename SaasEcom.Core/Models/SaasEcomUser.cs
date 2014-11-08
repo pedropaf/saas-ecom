@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SaasEcom.Core.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class SaasEcomUser : IdentityUser
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -26,7 +26,7 @@ namespace SaasEcom.Core.Models
 
         public virtual IList<CreditCard> CreditCards { get; set; } // The actual credit card number is not stored! 
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<SaasEcomUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

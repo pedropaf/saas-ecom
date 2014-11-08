@@ -8,11 +8,13 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
-    public class CardDataService : ICardDataService
+    public class CardDataService<TContext, TUser> : ICardDataService
+        where TContext : IDbContext<TUser>
+        where TUser : SaasEcomUser
     {
-        private readonly IDbContext _dbContext;
+        private readonly TContext _dbContext;
 
-        public CardDataService(IDbContext context)
+        public CardDataService(TContext context)
         {
             this._dbContext = context;
         }

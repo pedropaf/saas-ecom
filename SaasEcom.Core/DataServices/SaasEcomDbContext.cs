@@ -1,19 +1,26 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices
 {
-    public class SaasEcomDbContext : Microsoft.AspNet.Identity.EntityFramework.IdentityDbContext<ApplicationUser>, IDbContext
+    public class SaasEcomDbContext<TUser> : 
+        IdentityDbContext<TUser>, IDbContext<TUser> where TUser : IdentityUser
     {
         public SaasEcomDbContext()
-            : base()
         {
         }
 
-        public SaasEcomDbContext(string connectionString) : base(connectionString)
+        public SaasEcomDbContext(string connectionString) : base(connectionString, throwIfV1Schema: false)
         {
+        }
+
+        IDbSet<TUser> IDbContext<TUser>.Users
+        {
+            get { return base.Users; }
+            set { base.Users = value; }
         }
 
         public DbSet<Subscription> Subscriptions { get; set; }
@@ -35,9 +42,9 @@ namespace SaasEcom.Core.DataServices
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ApplicationUser>()
+            modelBuilder.Entity<SaasEcomUser>()
                 .HasOptional(u => u.StripeAccount)
-                .WithRequired(sa => sa.ApplicationUser);
+                .WithRequired(sa => sa.SaasEcomUser);
         }
     }
 }

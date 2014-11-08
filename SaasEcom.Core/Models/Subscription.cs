@@ -16,7 +16,7 @@ namespace SaasEcom.Core.Models
         public virtual SubscriptionPlan SubscriptionPlan { get; set; }
 
         public int ApplicationUserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        public virtual SaasEcomUser User { get; set; }
 
         [Index]
         [MaxLength(50)]

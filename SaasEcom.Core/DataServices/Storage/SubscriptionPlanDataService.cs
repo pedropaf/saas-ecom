@@ -8,9 +8,9 @@ namespace SaasEcom.Core.DataServices.Storage
 {
     public class SubscriptionPlanDataService : ISubscriptionPlanDataService
     {
-        private readonly IDbContext _dbContext;
+        private readonly IDbContext<SaasEcomUser> _dbContext;
 
-        public SubscriptionPlanDataService(IDbContext context)
+        public SubscriptionPlanDataService(IDbContext<SaasEcomUser> context)
         {
             this._dbContext = context;
         }
