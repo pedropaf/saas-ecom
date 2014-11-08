@@ -9,16 +9,16 @@ using SaasEcom.Web.Data;
 
 namespace SaasEcom.Web.Identity
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : UserManager<SaasEcomUser>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store)
+        public ApplicationUserManager(IUserStore<SaasEcomUser> store)
             : base(store)
         {
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()))
+            var manager = new ApplicationUserManager(new UserStore<SaasEcomUser>(context.Get<ApplicationDbContext>()))
             {
                 PasswordValidator = new PasswordValidator
                 {
@@ -37,7 +37,7 @@ namespace SaasEcom.Web.Identity
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                manager.UserTokenProvider = new DataProtectorTokenProvider<SaasEcomUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
 
             return manager;

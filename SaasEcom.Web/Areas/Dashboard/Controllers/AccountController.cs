@@ -47,9 +47,10 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             get
             {
                 return _subscriptionsFacade ?? (_subscriptionsFacade = new SubscriptionsFacade(
-                    new SubscriptionDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()), 
+                    new SubscriptionDataService<ApplicationDbContext, SaasEcomUser>(HttpContext.GetOwinContext().Get<ApplicationDbContext>()), 
                     new SubscriptionProvider(AccountDataService.GetStripeSecretKey()),
-                    new CardProvider(AccountDataService.GetStripeSecretKey(), new CardDataService(Request.GetOwinContext().Get<ApplicationDbContext>()))));
+                    new CardProvider(AccountDataService.GetStripeSecretKey(), new CardDataService<ApplicationDbContext, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>())),
+                    new CustomerProvider("stripe_api_key")));
             }
         }
 
@@ -192,7 +193,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             }
         }
 
-        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        private async Task SignInAsync(SaasEcomUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));

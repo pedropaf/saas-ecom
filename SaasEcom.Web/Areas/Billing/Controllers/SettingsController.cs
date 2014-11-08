@@ -40,7 +40,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             ModelState.Remove("StripeAccount.LiveMode"); // boolean field makes validation fail.
             if (ModelState.IsValid)
             {
-                model.StripeAccount.ApplicationUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
+                model.StripeAccount.SaasEcomUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
 
                 var action = model.StripeAccount.Id == 0 ? "saved" : "updated";
                 await AccountDataService.AddOrUpdateStripeAccountAsync(model.StripeAccount);

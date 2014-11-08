@@ -28,7 +28,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         private ICardProvider CardService
         {
             get { return _cardService ?? (_cardService = new CardProvider(AccountDataService.GetStripeSecretKey(), 
-                new CardDataService(HttpContext.GetOwinContext().Get<ApplicationDbContext>()))); }
+                new CardDataService<ApplicationDbContext, SaasEcomUser>(HttpContext.GetOwinContext().Get<ApplicationDbContext>()))); }
         }
 
         public ActionResult Create()

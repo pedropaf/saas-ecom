@@ -11,7 +11,7 @@ namespace SaasEcom.Web
     {
         public static void RegisterMappings()
         {
-            Mapper.CreateMap<ApplicationUser, CustomerViewModel>()
+            Mapper.CreateMap<SaasEcomUser, CustomerViewModel>()
                 .AfterMap((user, viewModel) =>
                 {
                     var creditCard = user.CreditCards.FirstOrDefault();

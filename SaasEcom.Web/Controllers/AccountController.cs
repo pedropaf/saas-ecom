@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Core.Infrastructure.Facades;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Core.Models;
 using SaasEcom.Web.Data;
@@ -45,8 +46,11 @@ namespace SaasEcom.Web.Controllers
         private AccountDataService _accountDataService;
         private AccountDataService AccountDataService
         {
-            get { return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+            get
+            {
+                return _accountDataService ??
+                  (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
         }
 
         private CustomerProvider _customerProvider;
@@ -58,6 +62,20 @@ namespace SaasEcom.Web.Controllers
                        (_customerProvider = new CustomerProvider(AccountDataService.GetStripeSecretKey()));
             }
         }
+
+        private SubscriptionsFacade _subscriptionsFacade;
+        private SubscriptionsFacade SubscriptionsFacade
+        {
+            get
+            {
+                return _subscriptionsFacade ?? (_subscriptionsFacade = new SubscriptionsFacade(
+                    new SubscriptionDataService<ApplicationDbContext, SaasEcomUser>(HttpContext.GetOwinContext().Get<ApplicationDbContext>()),
+                    new SubscriptionProvider(AccountDataService.GetStripeSecretKey()),
+                    new CardProvider(AccountDataService.GetStripeSecretKey(), new CardDataService<ApplicationDbContext, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>())),
+                    CustomerProvider));
+            }
+        }
+
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -118,7 +136,7 @@ namespace SaasEcom.Web.Controllers
 
                 // Create user and a trial subscription
                 var result = await userManager.CreateAsync(
-                    new ApplicationUser
+                    new SaasEcomUser
                     {
                         UserName = model.Email, 
                         Email = model.Email, 
@@ -127,22 +145,11 @@ namespace SaasEcom.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    // TODO: Refactor
                     var user = await userManager.FindByEmailAsync(model.Email);
-                    
-                    // Subscribe the user to the plan
-                    var subscriptionService = new SubscriptionDataService
-                        (Request.GetOwinContext().Get<ApplicationDbContext>());
-                    var subscription = await subscriptionService.SubscribeUserAsync(user, model.SubscriptionPlan);
-                    
-                    // Create a new customer in Stripe and subscribe him to the plan
-                    var stripeUser = (StripeCustomer) await CustomerProvider.CreateCustomerAsync(user, model.SubscriptionPlan);
-                    
-                    // Add subscription Id to the user
-                    user.StripeCustomerId = stripeUser.Id;
+                    user = await SubscriptionsFacade.SubscribeNewUserAsync(user, model.SubscriptionPlan);                    
                     await userManager.UpdateAsync(user);
-
-                    subscription.StripeId = GetStripeSubscriptionId(stripeUser);
-                    await subscriptionService.UpdateSubscriptionAsync(subscription);
+                    // TODO: End refactor
 
                     // Send Welcome Email
                     var email = new WelcomeEmail
@@ -165,11 +172,6 @@ namespace SaasEcom.Web.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        private string GetStripeSubscriptionId(Stripe.StripeCustomer stripeUser)
-        {
-            return stripeUser.StripeSubscriptionList.TotalCount > 0 ? stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
         }
 
         [HttpPost]
@@ -292,7 +294,7 @@ namespace SaasEcom.Web.Controllers
             else
             {
                 // If the user does not have an account, create it
-                user = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email, CreatedAt = DateTime.UtcNow };
+                user = new SaasEcomUser { UserName = loginInfo.Email, Email = loginInfo.Email, CreatedAt = DateTime.UtcNow };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -301,21 +303,8 @@ namespace SaasEcom.Web.Controllers
                     {
                         // Create user in stripe too
                         var subscriptionPlan = "Premium"; // TODO: Get from the form?
-
-                        // Subscribe the user to the plan
-                        var subscriptionService = new SubscriptionDataService
-                            (Request.GetOwinContext().Get<ApplicationDbContext>());
-                        var subscription = await subscriptionService.SubscribeUserAsync(user, subscriptionPlan);
-
-                        // Create a new customer in Stripe and subscribe him to the plan
-                        var stripeUser = (StripeCustomer)await CustomerProvider.CreateCustomerAsync(user, subscriptionPlan);
-
-                        // Add subscription Id to the user
-                        user.StripeCustomerId = stripeUser.Id;
+                        user = await SubscriptionsFacade.SubscribeNewUserAsync(user, subscriptionPlan);
                         await UserManager.UpdateAsync(user);
-
-                        subscription.StripeId = GetStripeSubscriptionId(stripeUser);
-                        await subscriptionService.UpdateSubscriptionAsync(subscription);
 
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", "Home", new { area = "Dashboard" });
@@ -393,7 +382,7 @@ namespace SaasEcom.Web.Controllers
             }
         }
 
-        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        private async Task SignInAsync(SaasEcomUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
@@ -420,7 +409,7 @@ namespace SaasEcom.Web.Controllers
             }
         }
 
-        private async Task<bool> UserIsAdmin(ApplicationUser user)
+        private async Task<bool> UserIsAdmin(SaasEcomUser user)
         {
             var adminRole = await RoleManager.FindByNameAsync("admin");
 
