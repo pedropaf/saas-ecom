@@ -7,11 +7,13 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
-    public class InvoiceDataService : IInvoiceDataService
+    public class InvoiceDataService<TContext, TUser> : IInvoiceDataService
+        where TContext : IDbContext<TUser>
+        where TUser : SaasEcomUser
     {
-        private readonly IDbContext<SaasEcomUser> _dbContext;
+        private readonly TContext _dbContext;
 
-        public InvoiceDataService(IDbContext<SaasEcomUser> context)
+        public InvoiceDataService(TContext context)
         {
             this._dbContext = context;
         }

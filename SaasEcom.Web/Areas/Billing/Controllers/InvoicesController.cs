@@ -5,8 +5,10 @@ using System.Web.Mvc;
 using AutoMapper;
 using SaasEcom.Core;
 using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Interfaces;
 using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Core.Models;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 using SaasEcom.Web.Data;
@@ -22,7 +24,9 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         private IInvoiceDataService InvoiceDataService
         {
             get { return _invoiceDataService ??
-                    (_invoiceDataService = new InvoiceDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+                    (_invoiceDataService = new InvoiceDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>
+                        (Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
         }
 
         public async Task<ViewResult> Index()

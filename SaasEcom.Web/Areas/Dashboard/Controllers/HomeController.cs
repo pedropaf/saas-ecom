@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Core;
+using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Infrastructure.Facades;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
@@ -44,7 +45,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
         public async Task<ViewResult> Index()
         {
             var context = Request.GetOwinContext().Get<ApplicationDbContext>();
-            var invService = new InvoiceDataService(context);
+            var invService = new InvoiceDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>(context);
 
             var defaultCard = await SubscriptionsFacade.DefaultCreditCard(User.Identity.GetUserId());
 
