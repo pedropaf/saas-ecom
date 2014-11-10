@@ -18,13 +18,13 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private AccountDataService _accountDataService;
-        private AccountDataService AccountDataService
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> _accountDataService;
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> AccountDataService
         {
             get
             {
                 return _accountDataService ??
-                  (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+                  (_accountDataService = new AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>()));
             }
         }
 

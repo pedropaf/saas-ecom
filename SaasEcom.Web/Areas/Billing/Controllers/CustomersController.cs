@@ -6,7 +6,9 @@ using System.Web.Mvc;
 using AutoMapper;
 using SaasEcom.Core;
 using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Storage;
+using SaasEcom.Core.Models;
 using SaasEcom.Web.Areas.Billing.Filters;
 using SaasEcom.Web.Areas.Billing.ViewModels;
 using SaasEcom.Web.Data;
@@ -18,11 +20,12 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "customers")]
     public class CustomersController : Controller
     {
-        private AccountDataService _accountDataService;
-        private AccountDataService AccountDataService
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> _accountDataService;
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> AccountDataService
         {
             get { return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+                    (_accountDataService = new AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
         }
 
         public async Task<ViewResult> Index()

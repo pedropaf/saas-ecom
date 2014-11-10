@@ -4,12 +4,12 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Interfaces
 {
-    public interface IAccountDataService
+    public interface IAccountDataService<TUser> where TUser : SaasEcomUser
     {
-        Task<SaasEcomUser> GetUserAsync(string userId);
+        Task<TUser> GetUserAsync(string userId);
         StripeAccount GetStripeAccount();
         Task AddOrUpdateStripeAccountAsync(StripeAccount stripeAccount);
-        Task<List<SaasEcomUser>> GetCustomersAsync();
+        Task<List<TUser>> GetCustomersAsync();
         string GetStripeSecretKey();
         string GetStripePublicKey();
     }

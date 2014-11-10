@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Infrastructure.Facades;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
@@ -34,11 +35,12 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             private set { _userManager = value; }
         }
 
-        private AccountDataService _accountDataService;
-        private AccountDataService AccountDataService
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> _accountDataService;
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> AccountDataService
         {
             get { return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+                    (_accountDataService = new AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
         }
 
         private SubscriptionsFacade _subscriptionsFacade;

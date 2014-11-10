@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Models;
 using SaasEcom.Web.Areas.Billing.Filters;
@@ -15,11 +16,12 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "settings")]
     public class SettingsController : Controller
     {
-        private AccountDataService _accountDataService;
-        private AccountDataService AccountDataService
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>  _accountDataService;
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> AccountDataService
         {
             get { return _accountDataService ??
-                    (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>())); }
+                    (_accountDataService = new AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>()));
+            }
         }
 
         public ViewResult Index()

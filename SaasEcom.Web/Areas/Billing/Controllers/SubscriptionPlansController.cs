@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Infrastructure.Facades;
 using SaasEcom.Core.Infrastructure.Helpers;
@@ -21,13 +22,13 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
     [SectionFilter(Section = "subscription-plans")]
     public class SubscriptionPlansController : Controller
     {
-        private AccountDataService _accountDataService;
-        private AccountDataService AccountDataService
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> _accountDataService;
+        private AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser> AccountDataService
         {
             get
             {
                 return _accountDataService ??
-                  (_accountDataService = new AccountDataService(Request.GetOwinContext().Get<ApplicationDbContext>()));
+                  (_accountDataService = new AccountDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>(Request.GetOwinContext().Get<ApplicationDbContext>()));
             }
         }
 

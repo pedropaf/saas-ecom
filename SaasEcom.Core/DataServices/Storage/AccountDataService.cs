@@ -7,16 +7,18 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
-    public class AccountDataService : IAccountDataService
+    public class AccountDataService<TContext, TUser> : IAccountDataService<TUser>
+        where TContext : IDbContext<TUser>
+        where TUser : SaasEcomUser
     {
-        private IDbContext<SaasEcomUser> DbContext { get; set; }
+        private TContext DbContext { get; set; }
 
-        public AccountDataService(IDbContext<SaasEcomUser> dbContext)
+        public AccountDataService(TContext dbContext)
         {
             this.DbContext = dbContext;
         }
 
-        public async Task<SaasEcomUser> GetUserAsync(string userId)
+        public async Task<TUser> GetUserAsync(string userId)
         {
             return await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
@@ -49,7 +51,7 @@ namespace SaasEcom.Core.DataServices.Storage
             await DbContext.SaveChangesAsync();
         }
 
-        public async Task<List<SaasEcomUser>> GetCustomersAsync()
+        public async Task<List<TUser>> GetCustomersAsync()
         {
             var customers = await DbContext.Users
                 .Include(u => u.Roles).Include(u => u.Invoices)
