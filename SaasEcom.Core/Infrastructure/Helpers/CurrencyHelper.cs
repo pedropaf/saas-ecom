@@ -48,7 +48,10 @@ namespace SaasEcom.Core.Infrastructure.Helpers
                 Cache.Add("regions", regions, new CacheItemPolicy {SlidingExpiration = TimeSpan.FromDays(30)});
             }
 
-            regions.Add(isoCurrency, c);
+            if (!regions.ContainsKey(isoCurrency))
+            {
+                regions.Add(isoCurrency, c);
+            }
         }
 
         private static Currency GetRegionFromCache(string isoCurrency)

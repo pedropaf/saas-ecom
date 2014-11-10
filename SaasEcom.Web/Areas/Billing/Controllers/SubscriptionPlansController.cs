@@ -39,7 +39,8 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
             {
                 return _subscriptionPlansFacade ??
                   (_subscriptionPlansFacade = new SubscriptionPlansFacade(
-                      new SubscriptionPlanDataService(Request.GetOwinContext().Get<ApplicationDbContext>()),
+                      new SubscriptionPlanDataService<SaasEcomDbContext<SaasEcomUser>, SaasEcomUser>
+                          (Request.GetOwinContext().Get<ApplicationDbContext>()),
                       new SubscriptionPlanProvider(AccountDataService.GetStripeSecretKey())));
             }
         }

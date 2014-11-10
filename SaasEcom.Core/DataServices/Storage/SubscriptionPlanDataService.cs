@@ -6,11 +6,13 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
-    public class SubscriptionPlanDataService : ISubscriptionPlanDataService
+    public class SubscriptionPlanDataService<TContext, TUser> : ISubscriptionPlanDataService
+        where TContext : IDbContext<TUser>
+        where TUser : class
     {
-        private readonly IDbContext<SaasEcomUser> _dbContext;
+        private readonly TContext _dbContext;
 
-        public SubscriptionPlanDataService(IDbContext<SaasEcomUser> context)
+        public SubscriptionPlanDataService(TContext context)
         {
             this._dbContext = context;
         }
