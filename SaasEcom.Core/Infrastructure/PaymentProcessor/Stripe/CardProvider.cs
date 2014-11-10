@@ -39,7 +39,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             AddCardToStripe(card, stripeCustomerId);
 
             // Save to storage
-            card.ApplicationUserId = user.Id;
+            card.SaasEcomUserId = user.Id;
             await _cardDataService.AddAsync(card);
         }
 
@@ -53,7 +53,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             this.AddCardToStripe(creditcard, stripeCustomerId);
 
             // Update card in the DB
-            creditcard.ApplicationUserId = user.Id;
+            creditcard.SaasEcomUserId = user.Id;
             await _cardDataService.UpdateAsync(user.Id, creditcard);
         }
         

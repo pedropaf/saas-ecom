@@ -15,14 +15,12 @@ namespace SaasEcom.Core.Models
         public int SubscriptionPlanId { get; set; }
         public virtual SubscriptionPlan SubscriptionPlan { get; set; }
 
-        public int ApplicationUserId { get; set; }
+        public int UserId { get; set; }
         public virtual SaasEcomUser User { get; set; }
 
         [Index]
         [MaxLength(50)]
         public string StripeId { get; set; }
-
-        public virtual StripeAccount StripeAccount { get; set; }
 
         public string Status()
         {

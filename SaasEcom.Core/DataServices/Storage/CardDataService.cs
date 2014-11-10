@@ -37,17 +37,17 @@ namespace SaasEcom.Core.DataServices.Storage
             if (noTracking)
             {
                 return await this._dbContext.CreditCards.AsNoTracking()
-                    .FirstOrDefaultAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
+                    .FirstOrDefaultAsync(c => c.SaasEcomUserId == customerId && c.Id == cardId);
             }
 
             return await this._dbContext.CreditCards
-                .FirstOrDefaultAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
+                .FirstOrDefaultAsync(c => c.SaasEcomUserId == customerId && c.Id == cardId);
         }
 
         public async Task<bool> AnyAsync(int? cardId, string customerId)
         {
             return await this._dbContext.CreditCards
-                .AnyAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
+                .AnyAsync(c => c.SaasEcomUserId == customerId && c.Id == cardId);
         }
 
         public async Task AddAsync(CreditCard creditcard)
@@ -58,7 +58,7 @@ namespace SaasEcom.Core.DataServices.Storage
 
         public async Task UpdateAsync(string customerId, CreditCard creditcard)
         {
-            if (!this._dbContext.CreditCards.Any(c => c.ApplicationUserId == customerId && c.Id == creditcard.Id))
+            if (!this._dbContext.CreditCards.Any(c => c.SaasEcomUserId == customerId && c.Id == creditcard.Id))
             {
                 throw new ArgumentException("cardId");
             }
@@ -70,7 +70,7 @@ namespace SaasEcom.Core.DataServices.Storage
         public async Task DeleteAsync(string customerId, int cardId)
         {
             CreditCard creditcard = await this._dbContext.CreditCards
-                .FirstOrDefaultAsync(c => c.ApplicationUserId == customerId && c.Id == cardId);
+                .FirstOrDefaultAsync(c => c.SaasEcomUserId == customerId && c.Id == cardId);
 
             if (creditcard == null)
             {

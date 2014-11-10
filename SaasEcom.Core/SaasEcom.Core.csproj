@@ -70,6 +70,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
@@ -108,7 +109,6 @@
     <Compile Include="Models\SaasEcomUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\StripeAccount.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\SubscriptionPlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

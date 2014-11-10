@@ -18,8 +18,6 @@ namespace SaasEcom.Core.Models
 
         public string StripeCustomerId { get; set; }
         
-        public virtual StripeAccount StripeAccount { get; set; }
-
         public virtual IList<Subscription> Subscriptions { get; set; }
 
         public virtual IList<Invoice> Invoices { get; set; }

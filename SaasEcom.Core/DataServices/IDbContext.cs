@@ -12,7 +12,6 @@ namespace SaasEcom.Core.DataServices
         DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         DbSet<Invoice> Invoices { get; set; }
         DbSet<CreditCard> CreditCards { get; set; }
-        DbSet<StripeAccount> StripeAccounts { get; set; }
 
         Task<int> SaveChangesAsync();
         DbEntityEntry<T> Entry<T>(T entity) where T : class;

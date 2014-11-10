@@ -21,8 +21,6 @@ namespace SaasEcom.Core.Models
 
         public virtual SaasEcomUser Customer { get; set; }
 
-        public virtual StripeAccount StripeAccount { get; set; }
-
         public DateTime? Date { get; set; }
         public DateTime? PeriodStart { get; set; }
         public DateTime? PeriodEnd { get; set; }

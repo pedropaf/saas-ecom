@@ -77,7 +77,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             };
 
             // If the card doesn't exist or doesn't belong the logged in user
-            if (model.CreditCard == null || model.CreditCard.ApplicationUserId != User.Identity.GetUserId())
+            if (model.CreditCard == null || model.CreditCard.SaasEcomUserId != User.Identity.GetUserId())
             {
                 return HttpNotFound();
             }

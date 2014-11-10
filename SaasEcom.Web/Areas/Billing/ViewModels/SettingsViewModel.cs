@@ -8,6 +8,6 @@ namespace SaasEcom.Web.Areas.Billing.ViewModels
 {
     public class SettingsViewModel
     {
-        public StripeAccount StripeAccount { get; set; }
+        public Object StripeAccount { get; set; }
     }
 }

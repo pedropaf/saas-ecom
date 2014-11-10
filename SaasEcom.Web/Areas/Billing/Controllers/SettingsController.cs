@@ -26,33 +26,33 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
 
         public ViewResult Index()
         {
-            var sa = AccountDataService.GetStripeAccount();
-            var model = new SettingsViewModel
-            {
-                StripeAccount = sa ?? new StripeAccount()
-            };
+            //StripeAccount sa = null; //AccountDataService.GetStripeAccount();
+            //var model = new SettingsViewModel
+            //{
+            //    StripeAccount = sa ?? new StripeAccount()
+            //};
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ViewResult> EditStripeAccount(SettingsViewModel model)
         {
-            ModelState.Remove("StripeAccount.LiveMode"); // boolean field makes validation fail.
-            if (ModelState.IsValid)
-            {
-                model.StripeAccount.SaasEcomUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
+            //ModelState.Remove("StripeAccount.LiveMode"); // boolean field makes validation fail.
+            //if (ModelState.IsValid)
+            //{
+            //    model.StripeAccount.SaasEcomUser = await AccountDataService.GetUserAsync(User.Identity.GetUserId());
 
-                var action = model.StripeAccount.Id == 0 ? "saved" : "updated";
-                await AccountDataService.AddOrUpdateStripeAccountAsync(model.StripeAccount);
+            //    var action = model.StripeAccount.Id == 0 ? "saved" : "updated";
+            //    await AccountDataService.AddOrUpdateStripeAccountAsync(model.StripeAccount);
 
-                TempData.Add("flash", new FlashSuccessViewModel("Your stripe details have been " + action + " successfully."));
-            }
-            else
-            {
-                TempData.Add("flash", new FlashDangerViewModel("There was an error saving your stripe details"));
-            }
+            //    TempData.Add("flash", new FlashSuccessViewModel("Your stripe details have been " + action + " successfully."));
+            //}
+            //else
+            //{
+            //    TempData.Add("flash", new FlashDangerViewModel("There was an error saving your stripe details"));
+            //}
 
             return View("Index", model);
         }

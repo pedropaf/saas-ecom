@@ -27,7 +27,6 @@ namespace SaasEcom.Core.DataServices
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
-        public DbSet<StripeAccount> StripeAccounts { get; set; }
         public new Task SaveChangesAsync()
         {
             return base.SaveChangesAsync();
@@ -36,15 +35,6 @@ namespace SaasEcom.Core.DataServices
         public new DbEntityEntry<T> Entry<T>(T entity) where T : class
         {
             return base.Entry(entity);
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<SaasEcomUser>()
-                .HasOptional(u => u.StripeAccount)
-                .WithRequired(sa => sa.SaasEcomUser);
         }
     }
 }

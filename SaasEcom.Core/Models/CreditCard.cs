@@ -59,9 +59,7 @@ namespace SaasEcom.Core.Models
         [Range(2014, 2030, ErrorMessage = "Invalid")]
         public string ExpirationYear { get; set; }
 
-        public string ApplicationUserId { get; set; }
-
-        public virtual StripeAccount StripeAccount { get; set; }
+        public string SaasEcomUserId { get; set; }
 
         public void ClearCreditCardDetails()
         {
