@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SaasEcom.Core.Models.Invoice>
+
+<h3><i class="fa fa-file-o"></i> Invoices</h3>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td><strong>Invoice #</strong></td>
+                <td><strong>Period</strong></td>
+                <td><strong>Date</strong></td>
+                <td><strong>Subtotal</strong></td>
+                <td><strong>Total</strong></td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in Model)
+            {
+                <tr>
+                    <td>@invoice.Id</td>
+                    <td>@invoice.InvoicePeriod</td>
+                    <td>@invoice.Date.Value.ToString("d MMM yyyy")</td>
+                    <td>@invoice.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
+                    <td>@invoice.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
+                    <td>
+                        <a href="@Url.Action("Invoice", "SaasEcom", new {id = @invoice.Id})">
+                            <i class="fa fa-file-text-o"></i> Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No invoices available yet.</p>
+}

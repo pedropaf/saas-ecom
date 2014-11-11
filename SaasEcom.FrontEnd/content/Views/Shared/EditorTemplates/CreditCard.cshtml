@@ -1,0 +1,115 @@
+﻿
+@model SaasEcom.Core.Models.CreditCard
+
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+<input type="hidden" value="@ViewBag.PublishableKey" id="stripe-publishable-key" />
+
+<br />
+<fieldset>
+    <legend><i class="fa fa-angle-right"></i> Personal details</legend>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Name on card" })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressLine1, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control", placeholder = "Address" })
+                @Html.ValidationMessageFor(model => model.AddressLine1)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressLine2, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control", placeholder = "Address - line 2" })
+                @Html.ValidationMessageFor(model => model.AddressLine2)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressCity, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.AddressCity, new { @class = "form-control", placeholder = "City" })
+                @Html.ValidationMessageFor(model => model.AddressCity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressCountry, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.AddressCountry, new { @class = "form-control", placeholder = "Country" })
+                @Html.ValidationMessageFor(model => model.AddressCountry)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddressZip, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AddressZip, new { @class = "form-control col-md-4", placeholder = "Post code" })
+                @Html.ValidationMessageFor(model => model.AddressZip)
+            </div>
+
+            @Html.LabelFor(model => model.AddressState, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.AddressState, new { @class = "form-control col-md-4", placeholder = "State / Province" })
+                @Html.ValidationMessageFor(model => model.AddressState)
+            </div>
+        </div>
+    </div>
+</fieldset>
+<br />
+<br />
+<fieldset>
+    <legend><i class="fa fa-angle-right"></i> Credit card details</legend>
+
+    <div class="form-horizontal">
+
+        <span class='payment-errors field-validation-error'></span>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CardNumber, new { @class = "control-label col-md-2" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.CardNumber, new { @class = "form-control", placeholder = "Card Number", data_stripe = "number" })
+                @Html.ValidationMessageFor(model => model.CardNumber)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="ExpirationMonth">Expiration Date</label>
+
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.ExpirationMonth, new { @class = "form-control", placeholder = "MM", data_stripe = "exp-month" })
+                @Html.ValidationMessageFor(model => model.ExpirationMonth)
+            </div>
+
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.ExpirationYear, new { @class = "form-control", placeholder = "YYYY", data_stripe = "exp-year" })
+                @Html.ValidationMessageFor(model => model.ExpirationYear)
+            </div>
+
+            @Html.LabelFor(model => model.Cvc, new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(model => model.Cvc, new { @class = "form-control", placeholder = "ex. 123", data_stripe = "cvc" })
+                @Html.ValidationMessageFor(model => model.Cvc)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a href="@Url.Action("Index", "Home")" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </div>
+</fieldset>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SaasEcom.Core</id>
+    <version>1.0.0-alpha1</version>
+    <title>SaasEcom.Core</title>
+    <authors>Pedro Alonso</authors>
+    <owners>Comyoucom Ltd</owners>
+    <licenseUrl>https://github.com/pedropaf/saas-ecom/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://www.saasecom.org</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Billing software for your SAAS business. Core library.</description>
+    <releaseNotes>Initial Release, for testing purposes.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>SAAS Software-as-a-service SaasEcom</tags>
+  </metadata>
+</package>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SaasEcom.Core.Models.Subscription>
+
+<h3>Subscriptions</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SubscriptionPlan.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.End)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrialStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrialEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StripeId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubscriptionPlan.Name) - @item.SubscriptionPlan.CurrencyDetails.CurrencySymbol@item.SubscriptionPlan.Price / @item.SubscriptionPlan.Interval
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Start)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.End)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrialStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TrialEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StripeId)
+        </td>
+        <td>
+            <a href="@Url.Action("CancelSubscription", "SaasEcom", new { id = item.Id })">Cancel</a> | @Html.ActionLink("Change", "")
+        </td>
+    </tr>
+}
+
+</table>

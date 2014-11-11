@@ -1,0 +1,99 @@
+﻿@model SaasEcom.Core.Models.Invoice
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><i class="fa fa-file-o"></i> Invoice</h2>
+<h3><small>@Model.StripeId</small></h3>
+<hr />
+
+<!-- Client details -->
+<div class="row">
+    <div class="col-xs-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>@(Model.Paid.HasValue && Model.Paid.Value ? "PAID" : "UNPAID")</h4>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <strong>Date:</strong> @Model.Date.Value.ToShortDateString()<br>
+                    <strong>Period:</strong> @Model.PeriodStart.Value.ToShortDateString() - @Model.PeriodEnd.Value.ToShortDateString()<br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div> <!-- / end client details section -->
+<!-- Line items -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th><h4>Service</h4></th>
+            <th><h4>Period</h4></th>
+            <th><h4>Sub Total</h4></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LineItems)
+        {
+            <tr>
+                <td>@item.Plan.Name subscription <small>@Model.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", item.Plan.AmountInCents / 100) / monthly</small></td>
+                <td>@item.Period.Start.Value.ToString("d MMM yyyy") - @item.Period.End.Value.ToString("d MMM yyyy")</td>
+                <td class="text-right">@Model.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", item.Amount / 100)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Total amount -->
+<div class="row text-right">
+    <div class="col-xs-2 col-xs-offset-8">
+        <p>
+            <strong>
+                Sub Total: <br>
+                TAX: <br>
+                Total: <br>
+            </strong>
+        </p>
+    </div>
+    <div class="col-xs-2">
+        <strong>
+            @Model.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", Model.Subtotal)<br>
+            N/A <br>
+            @Model.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", Model.Total)<br>
+        </strong>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-xs-5">
+        <!-- Card details -->
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4>Questions?</h4>
+            </div>
+            <div class="panel-body">
+                <p>Contact us at: billing@SaasEcom.com</p>
+                <p>Telf: +44 207 123 1234</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-7">
+        <!-- contact details -->
+        <div class="span7">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4>SAAS Ecom</h4>
+                </div>
+                <div class="panel-body">
+                    <p>VAT Nubmer: 123456789</p>
+                    <p>Address</p>
+                    <p>Company registered at Companies House, registration Number 1234556</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

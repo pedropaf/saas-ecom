@@ -1,0 +1,14 @@
+﻿@using SaasEcom.Core.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SAAS Ecom</h2>
+<br />
+@Html.Partial("_Subscriptions", (List<Subscription>)ViewBag.Subscriptions)
+<br/>
+@Html.Partial("_PaymentDetails", (CreditCard)ViewBag.PaymentDetails)
+<br />
+@Html.Partial("_Invoices", (List<Invoice>)ViewBag.Invoices)
+

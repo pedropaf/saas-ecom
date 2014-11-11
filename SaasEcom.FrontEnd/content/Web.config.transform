@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<configuration>
+    <appSettings>
+      <add key="StripeApiSecretKey" value="TODO: Add your stripe secret key here" />
+      <add key="StripeApiPublishableKey" value="TODO: Add your stripe publishable key here" />
+    </appSettings>
+</configuration>
