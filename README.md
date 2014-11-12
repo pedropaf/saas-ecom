@@ -22,29 +22,39 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 *  **Business owner admin panel:** Admin panel for the business owner to manage plans, customers, invoices, sign-ups, etc. 
 *  **Only SSL needed:** Your customers' credit card number don't hit your server (stripe.js). You only need SSL to deploy this app.
 
-## Installation
+## NuGet
+
+This project is available in NuGet, the recommended way to install it is:
+
+1. Create a new MVC 5 project that uses Individual accounts.
+2. Install this NuGet Package
+
+    PM> Install-Package SaasEcom.FrontEnd -Pre
+
+After installing the package, edit the file "IdentityModels.cs":
+
+    public class ApplicationUser : SaasEcomUser
+    {
+        // default code ...
+    }
+
+    public class ApplicationDbContext : SaasEcomDbContext<ApplicationUser>
+    {
+        // default code ...
+    }
+
+Now the solution should compile successfully, but you should complete the following additional steps.
+
+### Additional Steps
 
 1. Register in Stripe.com, and get your API Keys.
 2. Add your API Keys to Web.config.
-3. Add your email server details to Web.config. Recommended to use [Mandrill](http://www.mandrill.com) / [Sendgrid](http://www.sendgrid.com).
-4. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
-5. Create your database, and add the connection string to Web.config. By default is using SQL Compact.
-
-I'm currently working on an update. I'm focused on building an admin panel for this. The new setup workflow will be:
-
-1. Register in Stripe.com, and get your API Keys.
-2. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
-3. Add your email server details to Web.config. Recommended to use [Mandrill](http://www.mandrill.com) / [Sendgrid](http://www.sendgrid.com).
-4. Create your database, and add the connection string to Web.config. By default is using SQL Compact.
-5. Run migrations and create an admin user.
-6. Add subscription plans from admin panel (they're created in Stripe too). If you already have your plans / customers in stripe, they'd need to be imported to the DB.
+3. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
+4. Enable Entity Framework Migrations, add the first migration and update your database.
 
 ### Google OAuth 2.0 Support
 If you'd like to let the users login using their login account, please check this [explanation](http://blogs.msdn.com/b/webdev/archive/2014/07/02/changes-to-google-oauth-2-0-and-updates-in-google-middleware-for-3-0-0-rc-release.aspx)
 
-## Testing
-
-There's a project using SpecFlow / Selenium / WebDriver to test the functionality from a UI (user) point of view. It should work as a good integration testing suite. This isn't still completed.
 
 ## Libraries used
 
@@ -60,9 +70,9 @@ There's a project using SpecFlow / Selenium / WebDriver to test the functionalit
 * Owin
 * Twitter Bootstrap Less
 * Font Awesome
-* Postal
 * Stripe.net
 * Specflow / Selenium / WebDriver
+* Automapper
 
 ## Contribute
 
