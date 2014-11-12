@@ -1,7 +1,7 @@
 SAAS Ecommerce
 ==============
 
-Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe.com), including out-of-the-box pricing pages, payment pages, and  subscription management for your customers. Also makes it easy to manage logic related to new subscriptions, cancellations, payment failures, and streamlines hooking up notifications, etc.
+Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe.com), including out-of-the-box pricing pages, payment pages, and  subscription management for your customers. Also makes it easy to manage logic related to new subscriptions, cancellations, payment failures, and streamlines hooking up notifications, etc. [**Available on NuGet**](https://www.nuget.org/packages/SaasEcom.FrontEnd)
 
 You can see [more information about the project in this blog post](http://www.pedroalonso.net/blog/2014/04/28/saas-ecom-open-source-for-net-mvc-5-stripe/)
 
@@ -26,12 +26,11 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 
 This project is available in NuGet, the recommended way to install it is:
 
-1. Create a new MVC 5 project that uses Individual accounts.
-2. Install this NuGet Package
+Create a new MVC 5 project that uses Individual accounts. Then install this NuGet Package:
 
     PM> Install-Package SaasEcom.FrontEnd -Pre
 
-After installing the package, edit the file "IdentityModels.cs":
+After installing the package, edit the file "IdentityModels.cs"
 
     public class ApplicationUser : SaasEcomUser
     {
