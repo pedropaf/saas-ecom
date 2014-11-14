@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.FrontEnd</id>
-    <version>1.0.0-alpha1</version>
+    <version>1.0.0-alpha3</version>
     <title>SaasEcom.FrontEnd</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -13,5 +13,9 @@
     <releaseNotes>Initial Release, for testing purposes.</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>SAAS Software-as-a-service SaasEcom</tags>
+    <dependencies>
+  	  <dependency id="SaasEcom.Core" version="1.0.0-alpha2" />
+	  <dependency id="AutoMapper" version="3.2.0" />
+    </dependencies>
   </metadata>
 </package>
