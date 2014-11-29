@@ -1,4 +1,5 @@
-﻿@model $rootnamespace$.Controllers.CreditCardViewModel
+﻿@using System.Configuration
+@model $rootnamespace$.Controllers.CreditCardViewModel
 
 @{
     ViewBag.Title = "Add credit card";
@@ -17,6 +18,8 @@
         }
     </div>
 </div>
+
+<input type="hidden" id="stripe-publishable-key" name="stripe-publishable-key" value="@ConfigurationManager.AppSettings["StripeApiPublicKey"]" />
 
 @section Scripts {
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
