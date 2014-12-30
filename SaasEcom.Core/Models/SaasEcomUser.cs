@@ -24,6 +24,10 @@ namespace SaasEcom.Core.Models
 
         public virtual IList<CreditCard> CreditCards { get; set; } // The actual credit card number is not stored! 
 
+        public string IPAddress { get; set; }
+
+        public string IPAddressCountry { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<SaasEcomUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -139,14 +139,14 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Postal">
       <HintPath>..\packages\Postal.0.9.2\lib\net40\Postal.dll</HintPath>
     </Reference>
-    <Reference Include="Stripe.net, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Stripe.net, Version=2.3.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Stripe.net.2.3.0\lib\net40\Stripe.net.dll</HintPath>
+      <HintPath>..\packages\Stripe.net.2.3.4\lib\net40\Stripe.net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -269,6 +269,10 @@
     <Compile Include="Migrations\201410171025050_initial.Designer.cs">
       <DependentUpon>201410171025050_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412182320368_Update.cs" />
+    <Compile Include="Migrations\201412182320368_Update.Designer.cs">
+      <DependentUpon>201412182320368_Update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,6 +280,10 @@
     <Compile Include="ViewModels\EmailsViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Saas.mdf" />
+    <Content Include="App_Data\Saas_log.ldf">
+      <DependentUpon>Saas.mdf</DependentUpon>
+    </Content>
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Areas\Billing\Views\SubscriptionPlans\Create.cshtml" />
@@ -414,15 +422,13 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\saas-ecom %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\saas-ecom-aws.pubxml" />
-    <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\dashboard\card-form.js" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\saas-ecom.pubxml" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.0.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
@@ -481,9 +487,7 @@
     <Content Include="Views\Emails\Generic.html.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -492,6 +496,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201410171025050_initial.resx">
       <DependentUpon>201410171025050_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412182320368_Update.resx">
+      <DependentUpon>201412182320368_Update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
