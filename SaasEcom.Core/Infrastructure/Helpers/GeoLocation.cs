@@ -5,12 +5,12 @@ namespace SaasEcom.Core.Infrastructure.Helpers
 {
     public static class GeoLocation
     {
-        public static string GetUserIP(HttpContextBase context)
+        public static string GetUserIP(HttpRequestBase request)
         {
-            var ip = (context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null
-                      && context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] != "")
-                     ? context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]
-                     : context.Request.ServerVariables["REMOTE_ADDR"];
+            var ip = (request.ServerVariables["HTTP_X_FORWARDED_FOR"] != null
+                      && request.ServerVariables["HTTP_X_FORWARDED_FOR"] != "")
+                     ? request.ServerVariables["HTTP_X_FORWARDED_FOR"]
+                     : request.ServerVariables["REMOTE_ADDR"];
             if (ip.Contains(","))
             {
                 ip = ip.Split(',').First().Trim();

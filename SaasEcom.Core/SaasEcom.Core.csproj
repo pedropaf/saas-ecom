@@ -122,6 +122,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Models\ModelDiagram.cd" />
+    <None Include="NuGet\SaasEcom.Core.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

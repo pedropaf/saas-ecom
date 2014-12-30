@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using SaasEcom.Core.DataServices;
 using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Infrastructure.Facades;
+using SaasEcom.Core.Infrastructure.Helpers;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Core.Models;
 using SaasEcom.Web.Data;
@@ -141,7 +142,8 @@ namespace SaasEcom.Web.Controllers
                     {
                         UserName = model.Email, 
                         Email = model.Email, 
-                        CreatedAt = DateTime.UtcNow
+                        CreatedAt = DateTime.UtcNow,
+                        IPAddress = GeoLocation.GetUserIP(HttpContext.Request)
                     }, model.Password);
 
                 if (result.Succeeded)
