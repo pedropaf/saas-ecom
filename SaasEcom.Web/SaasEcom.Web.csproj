@@ -273,6 +273,10 @@
     <Compile Include="Migrations\201412182320368_Update.Designer.cs">
       <DependentUpon>201412182320368_Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412302320420_UserIpAddressAdded.cs" />
+    <Compile Include="Migrations\201412302320420_UserIpAddressAdded.Designer.cs">
+      <DependentUpon>201412302320420_UserIpAddressAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -499,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412182320368_Update.resx">
       <DependentUpon>201412182320368_Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412302320420_UserIpAddressAdded.resx">
+      <DependentUpon>201412302320420_UserIpAddressAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
