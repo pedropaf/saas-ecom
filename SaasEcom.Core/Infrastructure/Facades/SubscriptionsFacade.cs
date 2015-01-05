@@ -159,5 +159,30 @@ namespace SaasEcom.Core.Infrastructure.Facades
         {
             return await _subscriptionDataService.UserActiveSubscriptionsAsync(userId);
         }
+
+        /// <summary>
+        /// Days of trial left.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task<int> DaysTrialLeftAsync(string userId)
+        {
+            var currentSubscription = (await this.UserActiveSubscriptionsAsync(userId)).FirstOrDefault();
+
+            if (currentSubscription == null)
+            {
+                return 0;
+            }
+            else if (currentSubscription.IsTrialing())
+            {
+                var currentDate = DateTime.UtcNow;
+                TimeSpan? timeSpan = currentSubscription.TrialEnd - currentDate;
+
+                return timeSpan.Value.Days;
+            }
+
+            return 0;
+        }
     }
 }
