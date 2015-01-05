@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.FrontEnd</id>
-    <version>1.0.0-alpha3</version>
+    <version>1.0.0-beta</version>
     <title>SaasEcom.FrontEnd</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>

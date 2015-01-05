@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{2D7AF7A6-9488-407C-8B9F-1E75C3A1681C}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{4BA0F8
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Web", "SaasEcom.Web\SaasEcom.Web.csproj", "{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaasEcom.Core", "SaasEcom.Core\SaasEcom.Core.csproj", "{A7E635BB-A9E8-4698-AF6B-F574E5D087E2}"
 EndProject
@@ -47,10 +45,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15E0277E-6ADE-4368-AEA9-F6CB745CC85D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A7E635BB-A9E8-4698-AF6B-F574E5D087E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A7E635BB-A9E8-4698-AF6B-F574E5D087E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7E635BB-A9E8-4698-AF6B-F574E5D087E2}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.Core</id>
-    <version>1.0.0-alpha3</version>
+    <version>1.0.0-beta</version>
     <title>SaasEcom.Core</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>

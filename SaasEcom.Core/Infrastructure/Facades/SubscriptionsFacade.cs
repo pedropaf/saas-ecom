@@ -9,6 +9,9 @@ using Stripe;
 
 namespace SaasEcom.Core.Infrastructure.Facades
 {
+    /// <summary>
+    /// Subscriptions Facade to manage the subscription for your application's users.
+    /// </summary>
     public class SubscriptionsFacade
     {
         private readonly ISubscriptionDataService _subscriptionDataService;
@@ -16,6 +19,13 @@ namespace SaasEcom.Core.Infrastructure.Facades
         private readonly ICardProvider _cardProvider;
         private readonly ICustomerProvider _customerProvider;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionsFacade"/> class.
+        /// </summary>
+        /// <param name="data">The subscription data service.</param>
+        /// <param name="subscriptionProvider">The subscription provider.</param>
+        /// <param name="cardProvider">The card provider.</param>
+        /// <param name="customerProvider">The customer provider.</param>
         public SubscriptionsFacade(ISubscriptionDataService data, ISubscriptionProvider subscriptionProvider, ICardProvider cardProvider, ICustomerProvider customerProvider)
         {
             _subscriptionDataService = data;
@@ -24,6 +34,12 @@ namespace SaasEcom.Core.Infrastructure.Facades
             _customerProvider = customerProvider;
         }
 
+        /// <summary>
+        /// Creates a new user in Stripe and database.
+        /// </summary>
+        /// <param name="user">Application User</param>
+        /// <param name="planId">Plan Id to subscribe the user to</param>
+        /// <returns>Task</returns>
         public async Task SubscribeNewUserAsync(SaasEcomUser user, string planId)
         {
             // Subscribe the user to the plan
@@ -39,11 +55,19 @@ namespace SaasEcom.Core.Infrastructure.Facades
             await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
         }
         
-        private string GetStripeSubscriptionId(Stripe.StripeCustomer stripeUser)
+        private string GetStripeSubscriptionId(StripeCustomer stripeUser)
         {
             return stripeUser.StripeSubscriptionList.TotalCount > 0 ? stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
         }
 
+        /// <summary>
+        /// Subscribe an existing user to a plan.
+        /// </summary>
+        /// <param name="user">Application User</param>
+        /// <param name="planId">Stripe plan Id</param>
+        /// <param name="creditCard">Credit card to pay this subscription.</param>
+        /// <param name="trialInDays"></param>
+        /// <returns></returns>
         public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0)
         {
             // Save subscription details
@@ -61,6 +85,13 @@ namespace SaasEcom.Core.Infrastructure.Facades
             }
         }
 
+        /// <summary>
+        /// Cancel subscription from Stripe
+        /// </summary>
+        /// <param name="subscriptionId">Stripe subscription Id</param>
+        /// <param name="user">Application user</param>
+        /// <param name="cancelAtPeriodEnd">Cancel immediately or when the paid period ends (default immediately)</param>
+        /// <returns></returns>
         public async Task<bool> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false)
         {
             bool res = true;
@@ -82,6 +113,13 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return res;
         }
 
+        /// <summary>
+        /// Change Subscription Plan (Upgrade / Downgrade)
+        /// </summary>
+        /// <param name="userId">Application User Id</param>
+        /// <param name="stripeUserId">Stripe User Id</param>
+        /// <param name="newPlanId">New Subscription Plan Id</param>
+        /// <returns></returns>
         public async Task<bool> UpdateSubscriptionAsync(string userId, string stripeUserId, string newPlanId)
         {
             var activeSubscription = await _subscriptionDataService.UserActiveSubscriptionAsync(userId);
@@ -102,11 +140,21 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return false;
         }
 
+        /// <summary>
+        /// Get the default payment credit card for a user.
+        /// </summary>
+        /// <param name="userId">Application User Id</param>
+        /// <returns>Credit Card or Null</returns>
         public async Task<CreditCard> DefaultCreditCard(string userId)
         {
             return (await _cardProvider.GetAllAsync(userId)).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Get a list of active subscriptions for the User
+        /// </summary>
+        /// <param name="userId">Application User Id</param>
+        /// <returns>List of Active Subscriptions</returns>
         public async Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId)
         {
             return await _subscriptionDataService.UserActiveSubscriptionsAsync(userId);

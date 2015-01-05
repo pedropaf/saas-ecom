@@ -6,21 +6,37 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
+    /// <summary>
+    /// Implementation for CRUD related to subscription plans in the database.
+    /// </summary>
+    /// <typeparam name="TContext">The type of the context.</typeparam>
+    /// <typeparam name="TUser">The type of the user.</typeparam>
     public class SubscriptionPlanDataService<TContext, TUser> : ISubscriptionPlanDataService
         where TContext : IDbContext<TUser>
         where TUser : class
     {
         private readonly TContext _dbContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionPlanDataService{TContext, TUser}"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public SubscriptionPlanDataService(TContext context)
         {
             this._dbContext = context;
         }
 
+        /// <summary>
+        /// Gets all subscription plans asynchronous.
+        /// </summary>
+        /// <returns>
+        /// List of Subscription Plans
+        /// </returns>
         public Task<List<SubscriptionPlan>> GetAllAsync()
         {
             return _dbContext.SubscriptionPlans.ToListAsync();
         }
+
 
         public Task<SubscriptionPlan> FindAsync(string planId)
         {

@@ -51,8 +51,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
                 CardCvc = card.Cvc,
                 CardExpirationMonth = card.ExpirationMonth,
                 CardExpirationYear = card.ExpirationYear,
-                CardName = card.Name,
-                CardNumber = card.CardNumber
+                CardName = card.Name
             };
 
             return _customerService.Update(user.StripeCustomerId, customer);

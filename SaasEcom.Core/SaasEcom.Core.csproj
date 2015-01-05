@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\SaasEcom.Core.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -85,19 +86,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataServices\Interfaces\IAccountDataService.cs" />
     <Compile Include="DataServices\Interfaces\ICardDataService.cs" />
     <Compile Include="DataServices\Interfaces\IInvoiceDataService.cs" />
     <Compile Include="DataServices\Interfaces\ISubscriptionDataService.cs" />
     <Compile Include="DataServices\Interfaces\ISubscriptionPlanDataService.cs" />
     <Compile Include="DataServices\SaasEcomDbContext.cs" />
-    <Compile Include="DataServices\Storage\AccountDataService.cs" />
     <Compile Include="DataServices\Storage\CardDataService.cs" />
     <Compile Include="DataServices\Storage\InvoiceDataService.cs" />
     <Compile Include="DataServices\Storage\SubscriptionDataService.cs" />
     <Compile Include="DataServices\Storage\SubscriptionPlanDataService.cs" />
     <Compile Include="DataServices\IDbContext.cs" />
-    <Compile Include="Infrastructure\EmailIdentityService.cs" />
     <Compile Include="Infrastructure\Facades\SubscriptionPlansFacade.cs" />
     <Compile Include="Infrastructure\Facades\SubscriptionsFacade.cs" />
     <Compile Include="Infrastructure\Helpers\CurrencyHelper.cs" />

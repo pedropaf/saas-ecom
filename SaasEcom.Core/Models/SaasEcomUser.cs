@@ -8,26 +8,104 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SaasEcom.Core.Models
 {
+    /// <summary>
+    /// Saas Ecom User, used as base class for your Application User
+    /// </summary>
     public class SaasEcomUser : IdentityUser
     {
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        /// <value>
+        /// The first name.
+        /// </value>
         public string FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last name.
+        /// </summary>
+        /// <value>
+        /// The last name.
+        /// </value>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address.
+        /// </summary>
+        /// <value>
+        /// The address.
+        /// </value>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the city.
+        /// </summary>
+        /// <value>
+        /// The city.
+        /// </value>
         public string City { get; set; }
+
+        /// <summary>
+        /// Gets or sets the created at.
+        /// </summary>
+        /// <value>
+        /// The created at.
+        /// </value>
         public DateTime CreatedAt { get; set; }
 
+        /// <summary>
+        /// Gets or sets the stripe customer identifier.
+        /// </summary>
+        /// <value>
+        /// The stripe customer identifier.
+        /// </value>
         public string StripeCustomerId { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the subscriptions.
+        /// </summary>
+        /// <value>
+        /// The subscriptions.
+        /// </value>
         public virtual IList<Subscription> Subscriptions { get; set; }
 
+        /// <summary>
+        /// Gets or sets the invoices.
+        /// </summary>
+        /// <value>
+        /// The invoices.
+        /// </value>
         public virtual IList<Invoice> Invoices { get; set; }
 
+        /// <summary>
+        /// Gets or sets the credit cards.
+        /// </summary>
+        /// <value>
+        /// The credit cards.
+        /// </value>
         public virtual IList<CreditCard> CreditCards { get; set; } // The actual credit card number is not stored! 
 
+        /// <summary>
+        /// Gets or sets the ip address.
+        /// </summary>
+        /// <value>
+        /// The ip address.
+        /// </value>
         public string IPAddress { get; set; }
 
+        /// <summary>
+        /// Gets or sets the ip address country.
+        /// </summary>
+        /// <value>
+        /// The ip address country.
+        /// </value>
         public string IPAddressCountry { get; set; }
 
+        /// <summary>
+        /// Generates the user identity asynchronous.
+        /// </summary>
+        /// <param name="manager">The manager.</param>
+        /// <returns></returns>
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<SaasEcomUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -36,6 +114,10 @@ namespace SaasEcom.Core.Models
             return userIdentity;
         }
 
+        /// <summary>
+        /// Determines whether [has user details].
+        /// </summary>
+        /// <returns></returns>
         public bool HasUserDetails()
         {
             if (string.IsNullOrEmpty(FirstName) ||
@@ -47,6 +129,10 @@ namespace SaasEcom.Core.Models
             return true;
         }
 
+        /// <summary>
+        /// Determines whether [has payment details].
+        /// </summary>
+        /// <returns></returns>
         public bool HasPaymentDetails()
         {
             return CreditCards != null && CreditCards.Any();
