@@ -28,6 +28,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 
         public Task<List<Subscription>> UserSubscriptionsAsync(string userId)
         {
+            // TODO: Implement
             throw new NotImplementedException();
         }
 
@@ -36,25 +37,28 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             this._subscriptionService.Cancel(userStripeId, subStripeId, cancelAtPeriodEnd);
         }
 
-        public StripeSubscription UpdateSubscriptionAsync(string customerId, string subStripeId, CreditCard creditCard, string planId)
+        public bool UpdateSubscription(string customerId, string subStripeId, string newPlanId)
         {
-            var myUpdatedSubscription = new StripeSubscriptionUpdateOptions
+            var result = true;
+            try
             {
-                CardNumber = creditCard.CardNumber,
-                CardExpirationYear = creditCard.ExpirationYear,
-                CardExpirationMonth = creditCard.ExpirationMonth,
-                CardAddressCountry = creditCard.AddressCountry,
-                CardAddressLine1 = creditCard.AddressLine1,
-                CardAddressLine2 = creditCard.AddressLine2,
-                CardAddressState = creditCard.AddressState,
-                CardAddressZip = creditCard.AddressZip,
-                CardName = creditCard.Name,
-                CardCvc = creditCard.Cvc,
-                CardAddressCity = creditCard.AddressCity,
-                PlanId = planId
-            };
+                var currentSubscription = this._subscriptionService.Get(customerId, subStripeId);
 
-            return _subscriptionService.Update(customerId, subStripeId, myUpdatedSubscription);
+                var myUpdatedSubscription = new StripeSubscriptionUpdateOptions
+                {
+                    PlanId = newPlanId,
+                    TrialEnd = currentSubscription.TrialEnd // Keep the same trial window as initially created.
+                };
+
+                _subscriptionService.Update(customerId, subStripeId, myUpdatedSubscription);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log
+                result = false;
+            }
+
+            return result;
         }
     }
 }

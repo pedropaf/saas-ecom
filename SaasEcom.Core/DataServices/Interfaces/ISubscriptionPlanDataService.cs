@@ -7,11 +7,11 @@ namespace SaasEcom.Core.DataServices.Interfaces
     public interface ISubscriptionPlanDataService
     {
         Task<List<SubscriptionPlan>> GetAllAsync();
-        Task<SubscriptionPlan> FindAsync(int planId);
+        Task<SubscriptionPlan> FindAsync(string planId);
         Task AddAsync(SubscriptionPlan plan);
         Task<int> UpdateAsync(SubscriptionPlan plan);
-        Task<int> DeleteAsync(int planId);
-        Task<int> DisableAsync(int planId);
-        Task<int> CountUsersAsync(int planId);
+        Task<int> DeleteAsync(string planId);
+        Task<int> DisableAsync(string planId);
+        Task<int> CountUsersAsync(string planId);
     }
 }

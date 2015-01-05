@@ -37,7 +37,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return res;
         }
 
-        public async Task<int> DeleteAsync(int planId)
+        public async Task<int> DeleteAsync(string planId)
         {
             int result = -1;
 
@@ -65,13 +65,13 @@ namespace SaasEcom.Core.Infrastructure.Facades
                 }
 
                 // Delete from Stripe
-                _subscriptionPlanProvider.Delete(plan.FriendlyId);
+                _subscriptionPlanProvider.Delete(plan.Id);
             }
 
             return result;
         }
 
-        public async Task<SubscriptionPlan> FindAsync(int planId)
+        public async Task<SubscriptionPlan> FindAsync(string planId)
         {
             return await _subscriptionDataService.FindAsync(planId);
         }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Core.DataServices.Interfaces;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
-using SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe;
 using SaasEcom.Core.Models;
 using Stripe;
 
@@ -25,7 +24,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
             _customerProvider = customerProvider;
         }
 
-        public async Task<SaasEcomUser> SubscribeNewUserAsync(SaasEcomUser user, string planId)
+        public async Task SubscribeNewUserAsync(SaasEcomUser user, string planId)
         {
             // Subscribe the user to the plan
             var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId);
@@ -38,8 +37,6 @@ namespace SaasEcom.Core.Infrastructure.Facades
 
             subscription.StripeId = GetStripeSubscriptionId(stripeUser);
             await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
-
-            return user;
         }
         
         private string GetStripeSubscriptionId(Stripe.StripeCustomer stripeUser)
@@ -50,8 +47,8 @@ namespace SaasEcom.Core.Infrastructure.Facades
         public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0)
         {
             // Save subscription details
-            _subscriptionProvider.SubscribeUser(user, planId, trialInDays);
-            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays);
+            _subscriptionProvider.SubscribeUser(user, planId, trialInDays); // Stripe
+            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays); // DB
 
             // Save payment details
             if (creditCard.Id == 0)
@@ -83,6 +80,26 @@ namespace SaasEcom.Core.Infrastructure.Facades
             }
 
             return res;
+        }
+
+        public async Task<bool> UpdateSubscriptionAsync(string userId, string stripeUserId, string newPlanId)
+        {
+            var activeSubscription = await _subscriptionDataService.UserActiveSubscriptionAsync(userId);
+
+            if (activeSubscription != null && activeSubscription.SubscriptionPlan.Id != newPlanId)
+            {
+                // Update Stripe
+                if (_subscriptionProvider.UpdateSubscription(stripeUserId, activeSubscription.StripeId, newPlanId))
+                {
+                    // Update DB
+                    activeSubscription.SubscriptionPlan = null;
+                    activeSubscription.SubscriptionPlanId = newPlanId;
+                    await _subscriptionDataService.UpdateSubscriptionAsync(activeSubscription);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public async Task<CreditCard> DefaultCreditCard(string userId)

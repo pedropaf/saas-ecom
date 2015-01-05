@@ -6,11 +6,9 @@ namespace SaasEcom.Core.Models
 {
     public class SubscriptionPlan
     {
-        public int Id { get; set; }
-
         [Display(Name = "Plan Identifier")]
         [Required(ErrorMessage = "Please set a plan identifier.")]
-        public string FriendlyId { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public string Name { get; set; }

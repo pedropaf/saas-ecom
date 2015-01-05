@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Core.DataServices.Interfaces;
@@ -8,8 +9,8 @@ using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.DataServices.Storage
 {
-    public class SubscriptionDataService<TContext, TUser> : ISubscriptionDataService 
-        where TContext : IDbContext<TUser> 
+    public class SubscriptionDataService<TContext, TUser> : ISubscriptionDataService
+        where TContext : IDbContext<TUser>
         where TUser : class
     {
         private readonly TContext _dbContext;
@@ -21,7 +22,7 @@ namespace SaasEcom.Core.DataServices.Storage
 
         public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null)
         {
-            var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.FriendlyId == planId);
+            var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.Id == planId);
 
             var s = new Subscription
             {
@@ -29,7 +30,7 @@ namespace SaasEcom.Core.DataServices.Storage
                 End = null,
                 TrialEnd = DateTime.UtcNow.AddDays(trialPeriodInDays ?? plan.TrialPeriodInDays),
                 TrialStart = DateTime.UtcNow,
-                User = user,
+                UserId = user.Id,
                 SubscriptionPlan = plan
             };
 
@@ -41,7 +42,11 @@ namespace SaasEcom.Core.DataServices.Storage
 
         public async Task<Subscription> UserActiveSubscriptionAsync(string userId)
         {
-            return await _dbContext.Subscriptions.Where(s => s.User.Id == userId && s.End == null).FirstOrDefaultAsync();
+            return await
+                _dbContext.Subscriptions
+                    .Include(s => s.SubscriptionPlan)
+                    .Where(s => s.User.Id == userId && s.End == null)
+                    .FirstOrDefaultAsync();
         }
 
         public async Task<List<Subscription>> UserSubscriptionsAsync(string userId)
@@ -66,8 +71,5 @@ namespace SaasEcom.Core.DataServices.Storage
             _dbContext.Entry(subscription).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
-        
-        // TODO: Implement Upgrade and downgrade!!
-        
     }
 }

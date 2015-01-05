@@ -43,7 +43,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         {
             var result = PlanService.Create(new StripePlanCreateOptions
             {
-                Id = plan.FriendlyId,
+                Id = plan.Id,
                 Name = plan.Name,
                 Amount = (int)Math.Round(plan.Price * 100),
                 Currency = plan.Currency,
@@ -57,7 +57,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 
         public object Update(SubscriptionPlan plan)
         {
-            var res = PlanService.Update(plan.FriendlyId, new StripePlanUpdateOptions
+            var res = PlanService.Update(plan.Id, new StripePlanUpdateOptions
             {
                 Name = plan.Name
             });

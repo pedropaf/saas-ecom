@@ -9,5 +9,6 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         void SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0);
         Task<List<Subscription>> UserSubscriptionsAsync(string userId);
         void EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false);
+        bool UpdateSubscription(string customerId, string subStripeId, string newPlanId);
     }
 }

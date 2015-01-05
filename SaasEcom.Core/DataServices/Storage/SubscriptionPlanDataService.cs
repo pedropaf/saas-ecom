@@ -22,7 +22,7 @@ namespace SaasEcom.Core.DataServices.Storage
             return _dbContext.SubscriptionPlans.ToListAsync();
         }
 
-        public Task<SubscriptionPlan> FindAsync(int planId)
+        public Task<SubscriptionPlan> FindAsync(string planId)
         {
             return _dbContext.SubscriptionPlans.FirstOrDefaultAsync(x => x.Id == planId);
         }
@@ -41,14 +41,14 @@ namespace SaasEcom.Core.DataServices.Storage
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteAsync(int planId)
+        public async Task<int> DeleteAsync(string planId)
         {
             var dbPlan = await FindAsync(planId);
             _dbContext.SubscriptionPlans.Remove(dbPlan);
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<int> DisableAsync(int id)
+        public async Task<int> DisableAsync(string id)
         {
             var dbPlan = await FindAsync(id);
             dbPlan.Disabled = true;
@@ -56,7 +56,7 @@ namespace SaasEcom.Core.DataServices.Storage
         }
 
         // Move to Subscription service?
-        public async Task<int> CountUsersAsync(int planId)
+        public async Task<int> CountUsersAsync(string planId)
         {
             var count = await _dbContext.Subscriptions.CountAsync(s => s.SubscriptionPlanId == planId);
             return count;

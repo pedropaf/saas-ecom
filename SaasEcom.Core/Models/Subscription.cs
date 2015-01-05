@@ -12,10 +12,12 @@ namespace SaasEcom.Core.Models
         public DateTime? TrialStart { get; set; }
         public DateTime? TrialEnd { get; set; }
 
-        public int SubscriptionPlanId { get; set; }
+        public string SubscriptionPlanId { get; set; }
         public virtual SubscriptionPlan SubscriptionPlan { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        
+        [ForeignKey("UserId")]
         public virtual SaasEcomUser User { get; set; }
 
         [Index]
