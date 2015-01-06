@@ -1,44 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
 
 namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SubscriptionPlanProvider : ISubscriptionPlanProvider
     {
         private readonly string _apiKey;
 
         private StripePlanService _planService;
-
-        public SubscriptionPlanProvider(string apiKey)
-        {
-            _apiKey = apiKey;
-        }
-
         private StripePlanService PlanService
         {
             get { return _planService ?? (_planService = new StripePlanService(_apiKey)); }
         }
 
-        public IEnumerable<StripePlan> GetAllAsync(StripeListOptions options)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionPlanProvider"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
+        public SubscriptionPlanProvider(string apiKey)
         {
-            return PlanService.List(options);
+            _apiKey = apiKey;
         }
 
-        public StripePlan FindAsync(string planId)
-        {
-            try
-            {
-                return PlanService.Get(planId);
-            }
-            catch (StripeException ex)
-            {
-                return null;
-            }
-        }
-
+        /// <summary>
+        /// Adds the specified plan.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        /// <returns></returns>
         public object Add(SubscriptionPlan plan)
         {
             var result = PlanService.Create(new StripePlanCreateOptions
@@ -55,6 +50,11 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return result;
         }
 
+        /// <summary>
+        /// Updates the specified plan.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        /// <returns></returns>
         public object Update(SubscriptionPlan plan)
         {
             var res = PlanService.Update(plan.Id, new StripePlanUpdateOptions
@@ -65,16 +65,27 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return res;
         }
 
+        /// <summary>
+        /// Deletes the specified plan identifier.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
         public void Delete(string planId)
         {
             PlanService.Delete(planId);
         }
 
-        public StripePlan GetSubscriptionPlan(string planId)
+        /// <summary>
+        /// Finds the subscription plan by Id asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns>Stripe plan</returns>
+        public SubscriptionPlan FindAsync(string planId)
         {
             try
             {
-                return PlanService.Get(planId);
+                var stripePlan = PlanService.Get(planId);
+
+                return SubscriptionPlanMapper(stripePlan);
             }
             catch (StripeException ex)
             {
@@ -82,11 +93,18 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             }
         }
 
-        public IEnumerable<StripePlan> GetAllPlans(StripeListOptions options)
+        /// <summary>
+        /// Gets all subscription plans asynchronous.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <returns></returns>
+        public IEnumerable<SubscriptionPlan> GetAllAsync(object options)
         {
-            return PlanService.List(options);
-        }
+            var result = PlanService.List((StripeListOptions)options);
 
+            return result.Select(SubscriptionPlanMapper);
+        }
+        
         private static string GetInterval(SubscriptionPlan.SubscriptionInterval interval)
         {
             string result = null;
@@ -111,6 +129,39 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             }
 
             return result;
+        }
+
+        private static SubscriptionPlan.SubscriptionInterval GetInterval(string interval)
+        {
+            switch (interval)
+            {
+                case ("month"):
+                    return SubscriptionPlan.SubscriptionInterval.Monthly;
+                case ("year"):
+                    return SubscriptionPlan.SubscriptionInterval.Yearly;
+                case ("week"):
+                    return SubscriptionPlan.SubscriptionInterval.Weekly;
+                case ("3-month"):
+                    return SubscriptionPlan.SubscriptionInterval.EveryThreeMonths;
+                case ("6-month"):
+                    return SubscriptionPlan.SubscriptionInterval.EverySixMonths;
+            }
+
+            return 0;
+        }
+
+        private static SubscriptionPlan SubscriptionPlanMapper(StripePlan stripePlan)
+        {
+            return new SubscriptionPlan
+            {
+                Id = stripePlan.Id,
+                Name = stripePlan.Name,
+                Currency = stripePlan.Currency,
+                Interval = GetInterval(stripePlan.Interval),
+                Price = stripePlan.Amount,
+                TrialPeriodInDays = stripePlan.TrialPeriodDays ?? 0,
+
+            };
         }
     }
 }

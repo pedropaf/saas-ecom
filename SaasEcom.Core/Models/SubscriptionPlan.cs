@@ -92,30 +92,29 @@ namespace SaasEcom.Core.Models
             /// <summary>
             /// Monthly
             /// </summary>
-            Monthly,
+            Monthly = 1,
 
             /// <summary>
             /// Yearly
             /// </summary>
-            Yearly,
+            Yearly = 2,
 
             /// <summary>
             /// Weekly
             /// </summary>
-            Weekly,
+            Weekly = 3,
 
             /// <summary>
             /// Every 6 months
             /// </summary>
             [Display(Name="Every 6 months")]
-            EverySixMonths,
+            EverySixMonths = 4,
 
             /// <summary>
             /// Every 3 months
             /// </summary>
             [Display(Name="Every 3 months")]
-            EveryThreeMonths
+            EveryThreeMonths = 5
         }
     }
 }
-

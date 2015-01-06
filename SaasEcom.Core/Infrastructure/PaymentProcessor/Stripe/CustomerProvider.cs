@@ -1,23 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
 
 namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 {
+    /// <summary>
+    /// Interface for CRUD related to customers with Stripe
+    /// </summary>
     public class CustomerProvider : ICustomerProvider
     {
-        // Data dependencies
-
         // Stripe Dependencies
         private readonly StripeCustomerService _customerService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomerProvider"/> class.
+        /// </summary>
+        /// <param name="apiKey">The API key.</param>
         public CustomerProvider(string apiKey)
         {
             _customerService = new StripeCustomerService(apiKey);
         }
 
+        /// <summary>
+        /// Creates the customer asynchronous.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <returns></returns>
         public async Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null)
         {
             var customer = new StripeCustomerCreateOptions
@@ -35,6 +45,12 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return await Task.Run(() => _customerService.Create(customer));
         }
 
+        /// <summary>
+        /// Updates the customer.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="card">The card.</param>
+        /// <returns></returns>
         public object UpdateCustomer(SaasEcomUser user, CreditCard card)
         {
             var customer = new StripeCustomerUpdateOptions
@@ -57,19 +73,15 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return _customerService.Update(user.StripeCustomerId, customer);
         }
 
-        public StripeCustomer GetCustomer(string customerId)
+        /// <summary>
+        /// Deletes the customer.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public object DeleteCustomer(SaasEcomUser user)
         {
-            return _customerService.Get(customerId);
-        }
-
-        public void DeleteCustomer(string customerId)
-        {
-            _customerService.Delete(customerId);
-        }
-
-        public IEnumerable<StripeCustomer> GetAllCustomers(int limit = 100)
-        {
-            return _customerService.List(new StripeCustomerListOptions() { Limit = limit });
+            throw new System.NotImplementedException();
         }
     }
 }

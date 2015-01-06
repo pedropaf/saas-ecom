@@ -5,10 +5,19 @@ using System.Runtime.Caching;
 
 namespace SaasEcom.Core.Infrastructure.Helpers
 {
+    /// <summary>
+    /// Helper class to get details about the different currencies.
+    /// </summary>
     public static class CurrencyHelper
     {
         private static readonly ObjectCache Cache = MemoryCache.Default;
 
+        /// <summary>
+        /// Gets the currency information.
+        /// </summary>
+        /// <param name="isoCurrency">The iso currency.</param>
+        /// <returns>The currency</returns>
+        /// <exception cref="System.ArgumentException"></exception>
         public static Currency GetCurrencyInfo(string isoCurrency)
         {
             var r = GetRegionFromCache(isoCurrency);
@@ -61,6 +70,9 @@ namespace SaasEcom.Core.Infrastructure.Helpers
             return regions != null && regions.ContainsKey(isoCurrency) ? regions[isoCurrency] : null;
         }
 
+        /// <summary>
+        /// List of currencies
+        /// </summary>
         public static Dictionary<string, string> Currencies = new Dictionary<string, string>
         {
             { "United Arab Emirates Dirham", "AED" },
@@ -204,11 +216,41 @@ namespace SaasEcom.Core.Infrastructure.Helpers
         };
     }
 
+    /// <summary>
+    /// Currency
+    /// </summary>
     public class Currency
     {
+        /// <summary>
+        /// Gets or sets the name of the currency english.
+        /// </summary>
+        /// <value>
+        /// The name of the currency english.
+        /// </value>
         public string CurrencyEnglishName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the currency native.
+        /// </summary>
+        /// <value>
+        /// The name of the currency native.
+        /// </value>
         public string CurrencyNativeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the currency symbol.
+        /// </summary>
+        /// <value>
+        /// The currency symbol.
+        /// </value>
         public string CurrencySymbol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the iso currency symbol.
+        /// </summary>
+        /// <value>
+        /// The iso currency symbol.
+        /// </value>
         public string IsoCurrencySymbol { get; set; }
     }
 }
