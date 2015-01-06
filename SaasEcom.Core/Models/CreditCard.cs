@@ -59,7 +59,7 @@ namespace SaasEcom.Core.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the fingerprint.
+        /// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example.
         /// </summary>
         /// <value>
         /// The fingerprint.
@@ -130,7 +130,6 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The card number.
         /// </value>
-        [Required]
         [MaxLength(16)]
         [NotMapped]
         [DisplayName("Card Number")]

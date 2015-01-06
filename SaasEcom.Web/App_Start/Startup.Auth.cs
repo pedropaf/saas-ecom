@@ -21,9 +21,9 @@ namespace SaasEcom.Web
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            app.UseGoogleAuthentication("873693220515-v6rf15tmc9rvmm0o1klhiklscmvuna0f.apps.googleusercontent.com", "XBhtXX_AE2YZqK_gx8EuQAoS");
-                //clientId: "204631176008-o8mocg7j5vpc6g9p1c48k87rlgspifl6.apps.googleusercontent.com",
-                //clientSecret: "lH7P7x3Ew53-B8VzlIc4EMem");
+            app.UseGoogleAuthentication(
+                "204631176008-8hgmttll6m4bqh8si6bs7i0d1a4ea976.apps.googleusercontent.com",
+                "P-bDc_7yZqvotihRvi_OLXHA");
 
             // Register these two callback methods to create one instance of each per Request
             app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);

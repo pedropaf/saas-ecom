@@ -150,7 +150,7 @@ namespace SaasEcom.Web.Controllers
                 {
                     // TODO: Refactor
                     var user = await userManager.FindByEmailAsync(model.Email);
-                    user = await SubscriptionsFacade.SubscribeNewUserAsync(user, model.SubscriptionPlan);                    
+                    await SubscriptionsFacade.SubscribeNewUserAsync(user, model.SubscriptionPlan);                    
                     await userManager.UpdateAsync(user);
                     // TODO: End refactor
 
@@ -306,7 +306,7 @@ namespace SaasEcom.Web.Controllers
                     {
                         // Create user in stripe too
                         var subscriptionPlan = "Premium"; // TODO: Get from the form?
-                        user = await SubscriptionsFacade.SubscribeNewUserAsync(user, subscriptionPlan);
+                        await SubscriptionsFacade.SubscribeNewUserAsync(user, subscriptionPlan);
                         await UserManager.UpdateAsync(user);
 
                         await SignInAsync(user, isPersistent: false);

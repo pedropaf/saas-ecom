@@ -153,7 +153,7 @@ namespace SaasEcom.Web.Areas.Dashboard.Controllers
             var model = new ChangeSubscriptionViewModel
             {
                 SubscriptionPlans = await SubscriptionPlansFacade.GetAllAsync(),
-                CurrentSubscription = currentSubscription != null ? currentSubscription.SubscriptionPlan.FriendlyId : string.Empty
+                CurrentSubscription = currentSubscription != null ? currentSubscription.SubscriptionPlan.Id : string.Empty
             };
             
             return View(model);

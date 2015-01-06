@@ -120,7 +120,7 @@ namespace $rootnamespace$.Controllers
                 TempData.Add("flash", new FlashSuccessViewModel("Sorry, there was an error updating your plan, try again or contact support."));
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
 
@@ -135,7 +135,7 @@ namespace $rootnamespace$.Controllers
                 TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem cancelling your subscription."));
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
 
 
@@ -160,7 +160,7 @@ namespace $rootnamespace$.Controllers
 
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
 
             ViewBag.PublishableKey = this.GetStripePublishableKey();
@@ -202,7 +202,7 @@ namespace $rootnamespace$.Controllers
                 var user = await _userManager.FindByIdAsync(userId);
                 await CardService.UpdateAsync(user, model.CreditCard);
                 TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             ViewBag.PublishableKey = this.GetStripePublishableKey();
 

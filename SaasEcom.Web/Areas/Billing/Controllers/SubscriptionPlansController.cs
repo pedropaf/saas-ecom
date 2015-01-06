@@ -76,7 +76,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            SubscriptionPlan subscriptionplan = await SubscriptionPlansFacade.FindAsync(id.Value);
+            SubscriptionPlan subscriptionplan = await SubscriptionPlansFacade.FindAsync(id.ToString());
             if (subscriptionplan == null)
             {
                 return HttpNotFound();
@@ -100,7 +100,7 @@ namespace SaasEcom.Web.Areas.Billing.Controllers
         [HttpGet, ActionName("Delete")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            switch (await SubscriptionPlansFacade.DeleteAsync(id))
+            switch (await SubscriptionPlansFacade.DeleteAsync(id.ToString()))
             {
                 case 0:
                     TempData.Add("flash", new FlashSuccessViewModel("The subscription plan has been deleted successfully."));

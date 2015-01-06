@@ -21,7 +21,7 @@ var stripeResponseHandler = function (status, response) {
         $form.append($('<input type="hidden" name="CreditCard.StripeToken" />').val(token));
 
         if (typeof response.card !== 'undefined') {
-            $form.append($('<input type="hidden" name="CreditCard.Type" />').val(response.card.type));
+            $form.append($('<input type="hidden" name="CreditCard.Type" />').val(response.card.brand));
             $form.append($('<input type="hidden" name="CreditCard.Last4" />').val(response.card.last4));
             $form.append($('<input type="hidden" name="CreditCard.StripeId" />').val(response.card.id));
             $form.append($('<input type="hidden" name="CreditCard.Fingerprint" />').val(response.card.fingerprint));
