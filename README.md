@@ -5,6 +5,8 @@ Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe
 
 You can see [more information about the project in this blog post](http://www.pedroalonso.net/blog/2014/04/28/saas-ecom-open-source-for-net-mvc-5-stripe/)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/qt875ktp3lsv89pg?svg=true)](https://ci.appveyor.com/project/pedropaf/saas-ecom)
+
 ![Web](http://www.pedroalonso.net/images/posts/2014/04/01-SAAS-Ecom.png)
 
 See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's connected to Stripe test gateway, so you can add one of their [test credit cards](https://stripe.com/docs/testing).
