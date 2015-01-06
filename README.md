@@ -20,8 +20,7 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 *  **Integrated with Stripe:** Use stripe as your gateway. This billing application is nicely integrated.
 *  **Trials supported:** You have the option to let your customers to try your application first. Don't even ask them for a credit card to register.
 *  **Invoicing:** The invoices are created automatically, and Stripe will try to get them paid.
-*  **Customers dashboard:** Dashboard area for your customers, where they can manage their subscription / password / credit card.
-*  **Business owner admin panel:** Admin panel for the business owner to manage plans, customers, invoices, sign-ups, etc. 
+*  **Billing view helpers:** View helpers for your application, to let your customers manage their subscription / password / credit card.
 *  **Only SSL needed:** Your customers' credit card number don't hit your server (stripe.js). You only need SSL to deploy this app.
 
 ## NuGet
