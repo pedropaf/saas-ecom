@@ -53,28 +53,6 @@ Now the solution should compile successfully, but you should complete the follow
 3. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
 4. Enable Entity Framework Migrations, add the first migration and update your database.
 
-### Google OAuth 2.0 Support
-If you'd like to let the users login using their login account, please check this [explanation](http://blogs.msdn.com/b/webdev/archive/2014/07/02/changes-to-google-oauth-2-0-and-updates-in-google-middleware-for-3-0-0-rc-release.aspx)
-
-
-## Libraries used
-
-* Entity Framework 6.1
-* Json.NET
-* jQuery
-* jQuery Validation
-* jQuery Unobtrusive Validation
-* ASP.NET MVC 5.2
-* ASP.NET Razor
-* ASP.NET Identity Owin
-* ASP.NET Identity Entity Framework
-* Owin
-* Twitter Bootstrap Less
-* Font Awesome
-* Stripe.net
-* Specflow / Selenium / WebDriver
-* Automapper
-
 ## Contribute
 
 I'm open to suggestions and pull requests. 
