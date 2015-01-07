@@ -19,7 +19,7 @@ using $rootnamespace$.Views.SaasEcom.ViewModels;
 namespace $rootnamespace$.Controllers
 {
     [Authorize]
-    public class SaasEcomController : Controller
+    public class BillingController : Controller
     {
 		private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
