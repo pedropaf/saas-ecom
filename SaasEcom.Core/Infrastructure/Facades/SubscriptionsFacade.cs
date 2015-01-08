@@ -12,6 +12,11 @@ namespace SaasEcom.Core.Infrastructure.Facades
     /// <summary>
     /// Subscriptions Facade to manage the subscription for your application's users.
     /// </summary>
+    /// <remarks>
+    /// 	<para>This is one of the main classes that you will instantiate from your application to interact with SaasEcom.Core. This class is using internally the data
+    /// services to store all the billing related data in the database, as well as the Payment Provider to inegrate all the billing data with Stripe and keep it in
+    /// sync.</para>
+    /// </remarks>
     public class SubscriptionsFacade
     {
         private readonly ISubscriptionDataService _subscriptionDataService;
@@ -160,12 +165,10 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return await _subscriptionDataService.UserActiveSubscriptionsAsync(userId);
         }
 
-        /// <summary>
-        /// Days of trial left.
-        /// </summary>
+        /// <summary>This method returns the number of days of trial left for a given user. It will return 0 if there aren't any days left or no active subscriptions for the user.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <exception caption="" cref="System.NotImplementedException"></exception>
         public async Task<int> DaysTrialLeftAsync(string userId)
         {
             var currentSubscription = (await this.UserActiveSubscriptionsAsync(userId)).FirstOrDefault();

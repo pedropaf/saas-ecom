@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="documentation\documentation.dxp" />
     <None Include="Models\ModelDiagram.cd" />
     <None Include="NuGet\SaasEcom.Core.nuspec" />
     <None Include="packages.config" />
@@ -130,6 +131,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties DocumentXCommentEditorState="&lt;HtmlEditState&gt;&#xA;  &lt;Attributes&gt;&#xA;    &lt;Attribute key=&quot;scrollPosition&quot; valuetype=&quot;integer&quot;&gt;0&lt;/Attribute&gt;&#xA;    &lt;Attribute key=&quot;TabContainerSelectedTabIndex&quot; valuetype=&quot;integer&quot;&gt;1&lt;/Attribute&gt;&#xA;    &lt;Attribute key=&quot;SectionHeadingCollapsedsyntaxSectionHeading&quot; valuetype=&quot;string&quot;&gt;true&lt;/Attribute&gt;&#xA;  &lt;/Attributes&gt;&#xA;&lt;/HtmlEditState&gt;" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

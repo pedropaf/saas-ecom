@@ -9,7 +9,7 @@ using Stripe;
 namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 {
     /// <summary>
-    /// Implementation for CRUD related to credit cards with Stripe
+    /// Implementation for CRUD related to credit cards with Stripe and also saves the details in the database. 
     /// </summary>
     public class CardProvider : ICardProvider
     {
