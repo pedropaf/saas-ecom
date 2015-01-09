@@ -34,13 +34,13 @@ namespace SaasEcom.Core.DataServices.Storage
         /// </returns>
         public Task<List<SubscriptionPlan>> GetAllAsync()
         {
-            return _dbContext.SubscriptionPlans.ToListAsync();
+            return _dbContext.SubscriptionPlans.Include(sp => sp.Properties).ToListAsync();
         }
 
 
         public Task<SubscriptionPlan> FindAsync(string planId)
         {
-            return _dbContext.SubscriptionPlans.FirstOrDefaultAsync(x => x.Id == planId);
+            return _dbContext.SubscriptionPlans.Include(sp => sp.Properties).FirstOrDefaultAsync(x => x.Id == planId);
         }
 
         public Task AddAsync(SubscriptionPlan plan)

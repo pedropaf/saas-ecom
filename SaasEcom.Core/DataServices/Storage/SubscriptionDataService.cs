@@ -48,7 +48,8 @@ namespace SaasEcom.Core.DataServices.Storage
                 TrialEnd = DateTime.UtcNow.AddDays(trialPeriodInDays ?? plan.TrialPeriodInDays),
                 TrialStart = DateTime.UtcNow,
                 UserId = user.Id,
-                SubscriptionPlan = plan
+                SubscriptionPlan = plan,
+                Status = trialPeriodInDays == null ? "active" : "trialing"
             };
 
             _dbContext.Subscriptions.Add(s);
@@ -92,7 +93,9 @@ namespace SaasEcom.Core.DataServices.Storage
         /// </returns>
         public async Task<List<Subscription>> UserActiveSubscriptionsAsync(string userId)
         {
-            return await _dbContext.Subscriptions.Where(s => s.User.Id == userId && s.End == null).Select(s => s).ToListAsync();
+            return await _dbContext.Subscriptions
+                .Where(s => s.User.Id == userId && s.Status != "canceled" && s.Status != "unpaid")
+                .Select(s => s).ToListAsync();
         }
 
         /// <summary>

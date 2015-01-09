@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using SaasEcom.Core.Infrastructure.Helpers;
 
@@ -9,6 +10,14 @@ namespace SaasEcom.Core.Models
     /// </summary>
     public class SubscriptionPlan
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionPlan"/> class.
+        /// </summary>
+        public SubscriptionPlan()
+        {
+            this.Properties = new List<SubscriptionPlanProperty>();
+        }
+
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -83,6 +92,11 @@ namespace SaasEcom.Core.Models
         ///   <c>true</c> if disabled; otherwise, <c>false</c>.
         /// </value>
         public bool Disabled { get; set; }
+
+        /// <summary>
+        /// Collection of properties related to this plan (Maximum users, storage, etc)
+        /// </summary>
+        public virtual ICollection<SubscriptionPlanProperty> Properties { get; set; }
 
         /// <summary>
         /// Subscription Interval

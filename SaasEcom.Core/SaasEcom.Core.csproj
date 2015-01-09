@@ -113,6 +113,7 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\SubscriptionPlan.cs" />
+    <Compile Include="Models\SubscriptionPlanProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

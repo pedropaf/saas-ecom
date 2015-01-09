@@ -57,6 +57,14 @@ namespace SaasEcom.Core.DataServices
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
 
         /// <summary>
+        /// Gets or sets the subscription plan properties.
+        /// </summary>
+        /// <value>
+        /// The subscription plan properties.
+        /// </value>
+        public DbSet<SubscriptionPlanProperty> SubscriptionPlanProperties { get; set; }
+
+        /// <summary>
         /// Gets or sets the invoices.
         /// </summary>
         /// <value>

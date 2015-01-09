@@ -93,28 +93,10 @@ namespace SaasEcom.Core.Models
         public string StripeId { get; set; }
 
         /// <summary>
-        /// Subscription status.
+        /// Subscription status: Possible values are trialing, active, past_due, canceled, or unpaid. A subscription still in its trial period is trialing and moves to active when the trial period is over. When payment to renew the subscription fails, the subscription becomes past_due. After Stripe has exhausted all payment retry attempts, the subscription ends up with a status of either canceled or unpaid depending on your retry settings. 
         /// </summary>
         /// <returns></returns>
-        public string Status()
-        {
-            string result = null;
-
-            if (IsTrialing())
-            {
-                result = string.Format("Trial until {0}", TrialEnd.Value.ToShortDateString());
-
-            }
-            else if (IsTerminated())
-            {
-                result = string.Format("Terminated since {0}", End.Value.ToShortDateString());
-            }
-            else
-            {
-                result = "Subscription Active";
-            }
-            return result;
-        }
+        public string Status { get; set; }
 
         /// <summary>
         /// Determines whether this instance is trialing.
