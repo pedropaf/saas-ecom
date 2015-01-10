@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using SaasEcom.Core.Infrastructure.Helpers;
 
 namespace SaasEcom.Core.Models
@@ -97,6 +99,52 @@ namespace SaasEcom.Core.Models
         /// Collection of properties related to this plan (Maximum users, storage, etc)
         /// </summary>
         public virtual ICollection<SubscriptionPlanProperty> Properties { get; set; }
+
+        /// <summary>
+        /// Gets the property.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public string GetProperty(string key)
+        {
+            return this.Properties.Where(i => key != null && i.Key == key).Select(i => i.Value).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Gets the property int.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception">Property for key:  + key + does not exist.</exception>
+        public int GetPropertyInt(string key)
+        {
+            var property = this.Properties.Where(i => key != null && i.Key == key).Select(i => i.Value).FirstOrDefault();
+
+            if (property != null)
+            {
+                return int.Parse(property);
+            }
+             
+            throw new Exception("Property for key: " + key + "does not exist.");
+        }
+
+        /// <summary>
+        /// Gets the property long.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception">Property for key:  + key + does not exist.</exception>
+        public long GetPropertyLong(string key)
+        {
+            var property = this.Properties.Where(i => key != null && i.Key == key).Select(i => i.Value).FirstOrDefault();
+
+            if (property != null)
+            {
+                return long.Parse(property);
+            }
+
+            throw new Exception("Property for key: " + key + "does not exist.");
+        }
 
         /// <summary>
         /// Subscription Interval

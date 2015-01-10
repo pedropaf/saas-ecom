@@ -95,6 +95,7 @@ namespace SaasEcom.Core.DataServices.Storage
         {
             return await _dbContext.Subscriptions
                 .Where(s => s.User.Id == userId && s.Status != "canceled" && s.Status != "unpaid")
+                .Include(s => s.SubscriptionPlan.Properties)
                 .Select(s => s).ToListAsync();
         }
 

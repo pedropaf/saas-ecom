@@ -11,7 +11,7 @@ namespace SaasEcom.Core.Models
     /// <summary>
     /// Saas Ecom User, used as base class for your Application User
     /// </summary>
-    public class SaasEcomUser : IdentityUser
+    public abstract class SaasEcomUser : IdentityUser
     {
         /// <summary>
         /// Gets or sets the first name.
