@@ -26,6 +26,7 @@ var stripeResponseHandler = function (status, response) {
             $form.append($('<input type="hidden" name="CreditCard.StripeId" />').val(response.card.id));
             $form.append($('<input type="hidden" name="CreditCard.Fingerprint" />').val(response.card.fingerprint));
             $form.append($('<input type="hidden" name="CreditCard.CardNumber" />').val(response.card.fingerprint));
+            $form.append($('<input type="hidden" name="CreditCard.CardCountry" />').val(response.card.country));
         }
 
         // Remove CardNumber field from form

@@ -167,6 +167,14 @@ namespace SaasEcom.Core.Models
         public string ExpirationYear { get; set; }
 
         /// <summary>
+        /// Gets or sets the Two-letter ISO code representing the country of the card.  (This is returned by Stripe)
+        /// </summary>
+        /// <value>
+        /// The card country.
+        /// </value>
+        public string CardCountry { get; set; }
+
+        /// <summary>
         /// Gets or sets the saas ecom user identifier.
         /// </summary>
         /// <value>
