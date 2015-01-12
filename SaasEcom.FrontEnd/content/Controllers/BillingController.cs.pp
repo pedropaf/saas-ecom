@@ -219,6 +219,11 @@ namespace $rootnamespace$.Controllers
         {
             return ConfigurationManager.AppSettings["StripeApiSecretKey"];
         }
+
+		private string GetStripePublishableKey()
+        {
+            return ConfigurationManager.AppSettings["StripePublishableKey"];
+        }
     }
 
     #region ViewModels
