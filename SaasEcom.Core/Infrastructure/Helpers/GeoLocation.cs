@@ -26,7 +26,5 @@ namespace SaasEcom.Core.Infrastructure.Helpers
 
             return ip;
         }
-
-        // TODO: Add Maxmind GeoIP Service
     }
 }
