@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.Core</id>
-    <version>1.0.0-beta</version>
+    <version>1.0.0-beta2</version>
     <title>SaasEcom.Core</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,9 +10,9 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Initial Release, for testing purposes.</releaseNotes>
-    <copyright>Copyright 2014</copyright>
-    <tags>SAAS Software-as-a-service SaasEcom</tags>
+    <releaseNotes>Beta release, almost ready for production use.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>SAAS Software-as-a-service SaasEcom Billing</tags>
     <dependencies>
 	  <dependency id="Stripe.net" version="2.3.4" />
 	  <dependency id="EntityFramework" version="6.1.0" />

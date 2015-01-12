@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.FrontEnd</id>
-    <version>1.0.0-beta</version>
+    <version>1.0.0-beta2</version>
     <title>SaasEcom.FrontEnd</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,11 +10,11 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Front-end view helpers.</description>
-    <releaseNotes>Initial Release, for testing purposes.</releaseNotes>
-    <copyright>Copyright 2014</copyright>
-    <tags>SAAS Software-as-a-service SaasEcom</tags>
+    <releaseNotes>Beta Release, almost ready for production use.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>SAAS Software-as-a-service SaasEcom Billing</tags>
     <dependencies>
-  	  <dependency id="SaasEcom.Core" version="1.0.0-alpha2" />
+  	  <dependency id="SaasEcom.Core" version="1.0.0-beta2" />
 	  <dependency id="AutoMapper" version="3.2.0" />
     </dependencies>
   </metadata>
