@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        @using (Html.BeginForm("AddCreditCard", "SaasEcom", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
+        @using (Html.BeginForm("AddCreditCard", "Billing", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "card-form" }))
         {
             @Html.EditorFor(m => m.CreditCard)
         }

@@ -9,7 +9,7 @@
 <div class="row">
     <div class="container">
         <div class="change-subscription">
-            @using (Html.BeginForm("ChangeSubscription", "SaasEcom", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("ChangeSubscription", "Billing", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary("", new { @class = "text-danger" })
