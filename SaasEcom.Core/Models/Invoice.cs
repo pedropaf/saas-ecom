@@ -193,6 +193,8 @@ namespace SaasEcom.Core.Models
         /// </value>
         public string Currency { get; set; }
 
+        public virtual BillingAddress BillingAddress { get; set; }
+
         /// <summary>
         /// Gets the currency details.
         /// </summary>
