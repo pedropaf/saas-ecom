@@ -109,6 +109,7 @@
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\CustomerProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\SubscriptionPlanProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\SubscriptionProvider.cs" />
+    <Compile Include="Models\BillingAddress.cs" />
     <Compile Include="Models\SaasEcomUser.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Invoice.cs" />

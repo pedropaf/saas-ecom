@@ -30,28 +30,20 @@ namespace SaasEcom.Core.Models
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets the address.
+        /// Gets or sets the registration date for the user.
         /// </summary>
         /// <value>
-        /// The address.
+        /// The registration date.
         /// </value>
-        public string Address { get; set; }
+        public virtual DateTime RegistrationDate { get; set; }
 
         /// <summary>
-        /// Gets or sets the city.
+        /// Gets or sets the last login time.
         /// </summary>
         /// <value>
-        /// The city.
+        /// The last login time.
         /// </value>
-        public string City { get; set; }
-
-        /// <summary>
-        /// Gets or sets the created at.
-        /// </summary>
-        /// <value>
-        /// The created at.
-        /// </value>
-        public DateTime CreatedAt { get; set; }
+        public virtual DateTime LastLoginTime { get; set; }
 
         /// <summary>
         /// Gets or sets the stripe customer identifier.
