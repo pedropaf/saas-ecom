@@ -29,12 +29,14 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialInDays">The trial in days.</param>
-        public void SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0)
+        /// <param name="taxPercent">The tax percent.</param>
+        public void SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0, decimal taxPercent = 0)
         {
             this._subscriptionService.Create(user.StripeCustomerId, planId,
                 new StripeSubscriptionUpdateOptions
                 {
                     PlanId = planId,
+                    TaxPercent = taxPercent,
                     TrialEnd = DateTime.UtcNow.AddDays(trialInDays)
                 });
         }
@@ -86,6 +88,34 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             catch (Exception ex)
             {
                 // TODO: Log
+                result = false;
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Updates the subscription tax.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="subStripeId">The sub stripe identifier.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        public bool UpdateSubscriptionTax(string customerId, string subStripeId, decimal taxPercent = 0)
+        {
+            var result = true;
+            try
+            {
+                var myUpdatedSubscription = new StripeSubscriptionUpdateOptions
+                {
+                    TaxPercent = taxPercent
+                };
+                _subscriptionService.Update(customerId, subStripeId, myUpdatedSubscription);
+            }
+            catch (Exception ex)
+            {
+                // TODO: log
                 result = false;
             }
 

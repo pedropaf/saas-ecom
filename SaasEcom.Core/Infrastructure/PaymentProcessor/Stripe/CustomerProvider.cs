@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
@@ -42,7 +43,8 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
                 customer.PlanId = planId;
             }
 
-            return await Task.Run(() => _customerService.Create(customer));
+            var stripeUser = await Task.Run(() => _customerService.Create(customer));
+            return stripeUser;
         }
 
         /// <summary>

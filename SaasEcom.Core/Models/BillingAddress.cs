@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SaasEcom.Core.Models
 {
     /// <summary>
     /// Class that represents a billing Address for a customer
     /// </summary>
+    [ComplexType]
     public class BillingAddress
     {
         /// <summary>
@@ -13,8 +15,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The name.
         /// </value>
-        [Required]
-        [Display(Name = "Name or Company Name")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -23,7 +24,6 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address line1.
         /// </value>
-        [Required]
         [Display(Name="Address 1")]
         public string AddressLine1 { get; set; }
 
@@ -42,7 +42,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The city.
         /// </value>
-        [Required]
+        [Display(Name = "City")]
         public string City { get; set; }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The state.
         /// </value>
-        [Required]
+        [Display(Name = "State")]
         public string State { get; set; }
 
         /// <summary>
@@ -60,7 +60,6 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The zip code.
         /// </value>
-        [Required]
         [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
 
@@ -70,7 +69,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The country.
         /// </value>
-        [Required]
+        [Display(Name = "Country")]
         public string Country { get; set; }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The vat.
         /// </value>
-        [Display(Name = "VAT")]
+        [Display(Name = "VAT Number")]
         public string Vat { get; set; }
     }
 }

@@ -34,10 +34,11 @@ namespace SaasEcom.Core.DataServices.Storage
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialPeriodInDays">The trial period in days.</param>
+        /// <param name="taxPercent">The tax percent.</param>
         /// <returns>
         /// The subscription
         /// </returns>
-        public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null)
+        public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null, decimal taxPercent = 0)
         {
             var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.Id == planId);
 
@@ -49,7 +50,8 @@ namespace SaasEcom.Core.DataServices.Storage
                 TrialStart = DateTime.UtcNow,
                 UserId = user.Id,
                 SubscriptionPlan = plan,
-                Status = trialPeriodInDays == null ? "active" : "trialing"
+                Status = trialPeriodInDays == null ? "active" : "trialing",
+                TaxPercent = taxPercent
             };
 
             _dbContext.Subscriptions.Add(s);
@@ -119,6 +121,21 @@ namespace SaasEcom.Core.DataServices.Storage
         public async Task UpdateSubscriptionAsync(Subscription subscription)
         {
             _dbContext.Entry(subscription).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+        /// <summary>
+        /// Updates the subscription tax.
+        /// </summary>
+        /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task UpdateSubscriptionTax(string subscriptionId, decimal taxPercent)
+        {
+            var subscription = await _dbContext.Subscriptions.Where(s => s.StripeId == subscriptionId).FirstOrDefaultAsync();
+            subscription.TaxPercent = taxPercent;
             await _dbContext.SaveChangesAsync();
         }
     }

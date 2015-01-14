@@ -31,7 +31,8 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// <param name="subscriptionProvider">The subscription provider.</param>
         /// <param name="cardProvider">The card provider.</param>
         /// <param name="customerProvider">The customer provider.</param>
-        public SubscriptionsFacade(ISubscriptionDataService data, ISubscriptionProvider subscriptionProvider, ICardProvider cardProvider, ICustomerProvider customerProvider)
+        public SubscriptionsFacade(ISubscriptionDataService data, 
+            ISubscriptionProvider subscriptionProvider, ICardProvider cardProvider, ICustomerProvider customerProvider)
         {
             _subscriptionDataService = data;
             _subscriptionProvider = subscriptionProvider;
@@ -44,11 +45,14 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// </summary>
         /// <param name="user">Application User</param>
         /// <param name="planId">Plan Id to subscribe the user to</param>
-        /// <returns>Task</returns>
-        public async Task SubscribeNewUserAsync(SaasEcomUser user, string planId)
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns>
+        /// Task
+        /// </returns>
+        public async Task SubscribeNewUserAsync(SaasEcomUser user, string planId, decimal taxPercent = 0)
         {
             // Subscribe the user to the plan
-            var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId);
+            var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId, taxPercent: taxPercent);
 
             // Create a new customer in Stripe and subscribe him to the plan
             var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(user, planId);
@@ -56,8 +60,31 @@ namespace SaasEcom.Core.Infrastructure.Facades
             // Add subscription Id to the user
             user.StripeCustomerId = stripeUser.Id;
 
+            // Save subscription Id
             subscription.StripeId = GetStripeSubscriptionId(stripeUser);
             await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
+        
+            // Update tax percent on stripe
+            if (taxPercent > 0)
+            {
+                await this.UpdateSubscriptionTax(user, subscription.StripeId, taxPercent);
+            }
+        }
+
+        /// <summary>
+        /// Updates the subscription tax.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="subscriptionId">The subscription stripe identifier.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns>boolean</returns>
+        public async Task<bool> UpdateSubscriptionTax(SaasEcomUser user, string subscriptionId, decimal taxPercent)
+        {
+            // DB
+            await _subscriptionDataService.UpdateSubscriptionTax(subscriptionId, taxPercent);
+
+            // Stripe
+            return _subscriptionProvider.UpdateSubscriptionTax(user.StripeCustomerId, subscriptionId, taxPercent);
         }
         
         private string GetStripeSubscriptionId(StripeCustomer stripeUser)
@@ -71,13 +98,14 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// <param name="user">Application User</param>
         /// <param name="planId">Stripe plan Id</param>
         /// <param name="creditCard">Credit card to pay this subscription.</param>
-        /// <param name="trialInDays"></param>
+        /// <param name="trialInDays">The trial in days.</param>
+        /// <param name="taxPercent">The tax percent.</param>
         /// <returns></returns>
-        public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0)
+        public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0, decimal taxPercent = 0)
         {
             // Save subscription details
-            _subscriptionProvider.SubscribeUser(user, planId, trialInDays); // Stripe
-            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays); // DB
+            _subscriptionProvider.SubscribeUser(user, planId, trialInDays, taxPercent); // Stripe
+            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays, taxPercent); // DB
 
             // Save payment details
             if (creditCard.Id == 0)

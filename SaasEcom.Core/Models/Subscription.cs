@@ -99,6 +99,14 @@ namespace SaasEcom.Core.Models
         public string Status { get; set; }
 
         /// <summary>
+        /// Update the amount of tax applied to this subscription. Changing the tax_percent of a subscription will only affect future invoices.
+        /// </summary>
+        /// <value>
+        /// The tax percent.
+        /// </value>
+        public decimal TaxPercent { get; set; }
+
+        /// <summary>
         /// Determines whether this instance is trialing.
         /// </summary>
         /// <returns></returns>

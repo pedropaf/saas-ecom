@@ -15,8 +15,11 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialPeriodInDays">The trial period in days.</param>
-        /// <returns>The subscription</returns>
-        Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null);
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns>
+        /// The subscription
+        /// </returns>
+        Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null, decimal taxPercent = 0);
 
         /// <summary>
         /// Gets the User's subscriptions asynchronous.
@@ -52,5 +55,13 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// <param name="subscription">The subscription.</param>
         /// <returns></returns>
         Task UpdateSubscriptionAsync(Subscription subscription);
+
+        /// <summary>
+        /// Updates the subscription tax.
+        /// </summary>
+        /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        Task UpdateSubscriptionTax(string subscriptionId, decimal taxPercent);
     }
 }

@@ -38,7 +38,7 @@ namespace SaasEcom.Core.Infrastructure.Helpers
             { "SK", 20 }, // Slovakia
             { "FI", 24 }, // Finland
             { "SE", 25 }, // Sweden
-            { "UK", 20 }, // United Kingdom
+            { "GB", 20 }, // United Kingdom
         };
 
         public static Dictionary<string, int> Countries
