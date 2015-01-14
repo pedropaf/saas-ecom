@@ -209,6 +209,28 @@ namespace $rootnamespace$.Controllers
             return View(model);
         }
 
+		public async Task<ViewResult> BillingAddress()
+        {
+			// TODO: Get Billing address from your model
+			var model = new BillingAddress();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> BillingAddress(BillingAddress model)
+        {
+            if (ModelState.IsValid)
+            {
+                // TODO: Call your service to save the billing address
+
+                TempData.Add("flash", new FlashSuccessViewModel(Resources.Resources.BillingController_BillingAddress_Your_billing_address_has_been_saved_));
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
         public async Task<ViewResult> Invoice(int id)
         {
             var invoice = await InvoiceDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);

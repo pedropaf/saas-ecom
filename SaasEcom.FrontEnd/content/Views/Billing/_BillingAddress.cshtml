@@ -1,0 +1,42 @@
+﻿@using SaasEcom.Core.Infrastructure.Helpers
+@model SaasEcom.Core.Models.BillingAddress
+
+<h3>Billing Address</h3>
+<hr />
+@if (Model != null && 
+    !string.IsNullOrEmpty(Model.Name) &&
+    !string.IsNullOrEmpty(Model.AddressLine1) &&
+    !string.IsNullOrEmpty(Model.ZipCode) &&
+    !string.IsNullOrEmpty(Model.City) &&
+    !string.IsNullOrEmpty(Model.Country))
+{
+    <p>
+        @Model.Name<br />
+        @Model.AddressLine1 @Model.AddressLine2<br />
+        @Model.ZipCode @Model.City<br />
+        @Model.State @Model.Country
+    </p>
+    <p><a href="@Url.Action("BillingAddress")">Edit billing address</a></p>
+}
+else
+{
+    <p><a href="@Url.Action("BillingAddress")" class="btn btn-primary">Add your billing address</a></p>
+}
+
+@if (Model != null && string.IsNullOrEmpty(Model.Vat) &&
+        EuropeanVat.Countries.ContainsKey(Model.Country) &&
+        Model.BillingAddress.Country != "GB")
+{
+    <br />
+    <p>
+        <strong>VAT: </strong>If you don't provide a valid VAT number, we will charge @(EuropeanVat.Countries[Model.Country])% VAT.@Html.Raw("&nbsp;&nbsp;")
+        <a href="@Url.Action("BillingAddress")">Add VAT Number</a>
+    </p>
+}
+
+@if (Model != null && Model.BillingAddress.Country == "GB")
+{
+    <p>
+        <strong>@(EuropeanVat.Countries[Model.Country])% VAT</strong> is not included in the monthly price.
+    </p>
+}
