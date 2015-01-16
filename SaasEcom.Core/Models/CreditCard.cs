@@ -34,12 +34,13 @@ namespace SaasEcom.Core.Models
         public string StripeToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the name on the card.
         /// </summary>
         /// <value>
-        /// The name.
+        /// The name on the card.
         /// </value>
-        [Required]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_Name_Please_enter_the_name_on_the_card_")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_Name_Name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -72,8 +73,8 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address city.
         /// </value>
-        [Required]
-        [DisplayName("City")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_AddressCity_Please_enter_your_City_")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_AddressCity_City")]
         public string AddressCity { get; set; }
 
         /// <summary>
@@ -82,8 +83,8 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address country.
         /// </value>
-        [Required]
-        [DisplayName("Country")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_AddressCountry_Please_enter_your_Country")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_AddressCountry_Country")]
         public string AddressCountry { get; set; }
 
         /// <summary>
@@ -92,8 +93,8 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address line1.
         /// </value>
-        [Required]
-        [DisplayName("Address")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_AddressLine1_Please_enter_your_address_")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_AddressLine1_Address")]
         public string AddressLine1 { get; set; }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address line2.
         /// </value>
-        [DisplayName("Address")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_AddressLine2_Address")]
         public string AddressLine2 { get; set; }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The state of the address.
         /// </value>
-        [DisplayName("State")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_AddressState_State")]
         public string AddressState { get; set; }
 
         /// <summary>
@@ -120,8 +121,8 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address zip.
         /// </value>
-        [Required]
-        [DisplayName("Post code")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_AddressZip_Please_enter_your_Post_Code_")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_AddressZip_Post_code")]
         public string AddressZip { get; set; }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace SaasEcom.Core.Models
         /// </value>
         [MaxLength(16)]
         [NotMapped]
-        [DisplayName("Card Number")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_CardNumber_Card_Number")]
         public string CardNumber { get; set; }
 
         /// <summary>
@@ -141,9 +142,9 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The CVC.
         /// </value>
-        [Required(ErrorMessage = "Required")]
-        [MaxLength(4, ErrorMessage = "Too long")]
-        [DisplayName("CVC")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_Cvc_Required")]
+        [MaxLength(4, ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_Cvc__3_digits_only")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "CreditCard_Cvc_CVC")]
         public string Cvc { get; set; }
 
         /// <summary>
@@ -152,8 +153,8 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The expiration month.
         /// </value>
-        [Required(ErrorMessage = "Required")]
-        [Range(1, 12, ErrorMessage = "Invalid")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_Cvc_Required")]
+        [Range(1, 12, ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_ExpirationMonth_Invalid")]
         public string ExpirationMonth { get; set; }
 
         /// <summary>
@@ -162,8 +163,8 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The expiration year.
         /// </value>
-        [Required(ErrorMessage = "Required")]
-        [Range(2015, 2030, ErrorMessage = "Invalid")]
+        [Required(ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_Cvc_Required")]
+        [Range(2015, 2030, ErrorMessageResourceType = typeof (Resources.SaasEcom), ErrorMessageResourceName = "CreditCard_ExpirationMonth_Invalid")]
         public string ExpirationYear { get; set; }
 
         /// <summary>

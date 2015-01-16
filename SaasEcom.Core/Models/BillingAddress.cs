@@ -15,7 +15,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The name.
         /// </value>
-        [Display(Name = "Name")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_Name_Name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address line1.
         /// </value>
-        [Display(Name="Address 1")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_AddressLine1_Address_1")]
         public string AddressLine1 { get; set; }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The address line2.
         /// </value>
-        [Display(Name = "Address 2")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_AddressLine2_Address_2")]
         public string AddressLine2 { get; set; }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The city.
         /// </value>
-        [Display(Name = "City")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_City_City")]
         public string City { get; set; }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The state.
         /// </value>
-        [Display(Name = "State")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_State_State")]
         public string State { get; set; }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The zip code.
         /// </value>
-        [Display(Name = "Zip Code")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_ZipCode_Zip_Code")]
         public string ZipCode { get; set; }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The country.
         /// </value>
-        [Display(Name = "Country")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_Country_Country")]
         public string Country { get; set; }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The vat.
         /// </value>
-        [Display(Name = "VAT Number")]
+        [Display(ResourceType = typeof (Resources.SaasEcom), Name = "BillingAddress_Vat_VAT_Number")]
         public string Vat { get; set; }
     }
 }
