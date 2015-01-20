@@ -192,4 +192,22 @@
   <data name="CreditCard_Name_Please_enter_the_name_on_the_card_" xml:space="preserve">
     <value>El nombre en la tarjeta de crédito es obligatorio.</value>
   </data>
+  <data name="CreditCard_Name_Please_enter_the_name_on_the_card_1" xml:space="preserve">
+    <value>Please enter the name on the card.</value>
+  </data>
+  <data name="SubscriptionInterval_EverySixMonths_Every_6_months" xml:space="preserve">
+    <value>Cada 6 meses</value>
+  </data>
+  <data name="SubscriptionInterval_EveryThreeMonths_Every_3_months" xml:space="preserve">
+    <value>Cada 3 meses</value>
+  </data>
+  <data name="SubscriptionInterval_Monthly_Monthly" xml:space="preserve">
+    <value>Mensualmente</value>
+  </data>
+  <data name="SubscriptionInterval_Weekly_Weekly" xml:space="preserve">
+    <value>Semanalmente</value>
+  </data>
+  <data name="SubscriptionInterval_Yearly_Yearly" xml:space="preserve">
+    <value>Anualmente</value>
+  </data>
 </root>
