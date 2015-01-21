@@ -14,7 +14,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing</tags>
     <dependencies>
-	  <dependency id="Stripe.net" version="2.3.4" />
+	  <dependency id="Stripe.net" version="2.3.5" />
 	  <dependency id="EntityFramework" version="6.1.2" />
 	  <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.1.0" />
     </dependencies>
