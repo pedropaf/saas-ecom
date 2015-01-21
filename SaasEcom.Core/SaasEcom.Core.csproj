@@ -62,6 +62,7 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -134,12 +135,6 @@
     <None Include="_CreateNewNuGetPackage\DoNotModify\New-NuGetPackage.ps1" />
     <None Include="_CreateNewNuGetPackage\DoNotModify\UploadNuGetPackage.ps1" />
     <None Include="_CreateNewNuGetPackage\RunMeToUploadNuGetPackage.cmd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\stripe.net\src\Stripe\Stripe.csproj">
-      <Project>{e48e9ac1-3a88-406b-82ff-166b1e3c7a48}</Project>
-      <Name>Stripe</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />

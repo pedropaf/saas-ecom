@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>SaasEcom.Core</id>
     <version>1.0.0-beta3</version>
@@ -10,13 +10,13 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Beta release, almost ready for production use.</releaseNotes>
+    <releaseNotes>Added support to add Tax to subscriptions on Stripe.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing</tags>
     <dependencies>
-	  <dependency id="Stripe.net" version="2.3.5" />
-	  <dependency id="EntityFramework" version="6.1.2" />
-	  <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.1.0" />
+      <dependency id="Stripe.net" version="2.3.5" />
+      <dependency id="EntityFramework" version="6.1.2" />
+      <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.1.0" />
     </dependencies>
   </metadata>
 </package>
