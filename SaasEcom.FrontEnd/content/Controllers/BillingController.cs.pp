@@ -126,16 +126,26 @@ namespace $rootnamespace$.Controllers
 
         public async Task<ActionResult> CancelSubscription(int id)
         {
-            if (await SubscriptionsFacade.EndSubscriptionAsync(id, await UserManager.FindByIdAsync(User.Identity.GetUserId())))
-            {
-                TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
-            }
-            else
-            {
-                TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem cancelling your subscription."));
-            }
+			return View(new CancelSubscriptionViewModel { Id = id });
+        }
 
-            return RedirectToAction("Index");
+		public async Task<ActionResult> CancelSubscription(CancelSubscriptionViewModel model)
+        {
+			if (ModelState.IsValid)
+            {
+				var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+				if (await SubscriptionsFacade.EndSubscriptionAsync(model.Id, user, true, model.Reason))
+				{
+					TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
+				}
+				else
+				{
+					TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem cancelling your subscription."));
+				}
+				return RedirectToAction("Index");
+			}
+			
+			return View(model);
         }
 
 
@@ -249,6 +259,15 @@ namespace $rootnamespace$.Controllers
     }
 
     #region ViewModels
+
+	public class CancelSubscriptionViewModel
+    {
+		public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Reason why you want to cancel")]
+        public string Reason { get; set; }
+    }
 
     public class CreditCardViewModel
     {
