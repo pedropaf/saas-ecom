@@ -46,8 +46,9 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// Ends the subscription asynchronous.
         /// </summary>
         /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="reasonToCancel">The reason to cancel.</param>
         /// <returns></returns>
-        Task EndSubscriptionAsync(int subscriptionId);
+        Task EndSubscriptionAsync(int subscriptionId, string reasonToCancel);
 
         /// <summary>
         /// Updates the subscription asynchronous.

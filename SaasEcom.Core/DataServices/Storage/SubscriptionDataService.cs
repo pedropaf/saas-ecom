@@ -105,11 +105,13 @@ namespace SaasEcom.Core.DataServices.Storage
         /// Ends the subscription asynchronous.
         /// </summary>
         /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="reasonToCancel">The reason to cancel.</param>
         /// <returns></returns>
-        public async Task EndSubscriptionAsync(int subscriptionId)
+        public async Task EndSubscriptionAsync(int subscriptionId, string reasonToCancel)
         {
             var dbSub = await _dbContext.Subscriptions.FindAsync(subscriptionId);
             dbSub.End = DateTime.UtcNow;
+            dbSub.ReasonToCancel = reasonToCancel;
             await _dbContext.SaveChangesAsync();
         }
 

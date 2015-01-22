@@ -12,7 +12,7 @@
     <description>Billing software for your SAAS business. Front-end view helpers.</description>
     <releaseNotes>Beta Release, almost ready for production use.</releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>SAAS Software-as-a-service SaasEcom Billing</tags>
+    <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
   	  <dependency id="SaasEcom.Core" version="1.0.0-beta3" />
 	  <dependency id="AutoMapper" version="3.2.0" />

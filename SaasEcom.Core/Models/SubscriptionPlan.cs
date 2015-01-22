@@ -101,6 +101,14 @@ namespace SaasEcom.Core.Models
         public virtual ICollection<SubscriptionPlanProperty> Properties { get; set; }
 
         /// <summary>
+        /// Gets or sets the reason to cancel.
+        /// </summary>
+        /// <value>
+        /// The reason to cancel.
+        /// </value>
+        public string ReasonToCancel { get; set; }
+
+        /// <summary>
         /// Gets the property.
         /// </summary>
         /// <param name="key">The key.</param>

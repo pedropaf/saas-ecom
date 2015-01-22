@@ -124,8 +124,9 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// <param name="subscriptionId">Stripe subscription Id</param>
         /// <param name="user">Application user</param>
         /// <param name="cancelAtPeriodEnd">Cancel immediately or when the paid period ends (default immediately)</param>
+        /// <param name="reasonToCancel">The reason to cancel.</param>
         /// <returns></returns>
-        public async Task<bool> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false)
+        public async Task<bool> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false, string reasonToCancel = null)
         {
             bool res = true;
             try
@@ -133,7 +134,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
                 var subscription = await _subscriptionDataService.UserActiveSubscriptionAsync(user.Id);
                 if (subscription != null && subscription.Id == subscriptionId)
                 {
-                    await _subscriptionDataService.EndSubscriptionAsync(subscriptionId);
+                    await _subscriptionDataService.EndSubscriptionAsync(subscriptionId, reasonToCancel);
                     _subscriptionProvider.EndSubscription(user.StripeCustomerId, subscription.StripeId, cancelAtPeriodEnd);
                 }
             }

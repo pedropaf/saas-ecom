@@ -107,6 +107,14 @@ namespace SaasEcom.Core.Models
         public decimal TaxPercent { get; set; }
 
         /// <summary>
+        /// Gets or sets the reason to cancel.
+        /// </summary>
+        /// <value>
+        /// The reason to cancel.
+        /// </value>
+        public string ReasonToCancel { get; set; }
+
+        /// <summary>
         /// Determines whether this instance is trialing.
         /// </summary>
         /// <returns></returns>
