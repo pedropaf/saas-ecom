@@ -59,7 +59,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The subscriptions.
         /// </value>
-        public virtual IList<Subscription> Subscriptions { get; set; }
+        public virtual ICollection<Subscription> Subscriptions { get; set; }
 
         /// <summary>
         /// Gets or sets the invoices.
@@ -92,6 +92,14 @@ namespace SaasEcom.Core.Models
         /// The ip address country.
         /// </value>
         public string IPAddressCountry { get; set; }
+
+        /// <summary>
+        /// Gets or sets the lifetime value for the customer (total spent in the app)
+        /// </summary>
+        /// <value>
+        /// The lifetime value.
+        /// </value>
+        public decimal LifetimeValue { get; set; }
 
         /// <summary>
         /// Generates the user identity asynchronous.

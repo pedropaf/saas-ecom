@@ -69,11 +69,7 @@ namespace SaasEcom.Core.DataServices.Storage
         /// </returns>
         public async Task<Subscription> UserActiveSubscriptionAsync(string userId)
         {
-            return await
-                _dbContext.Subscriptions
-                    .Include(s => s.SubscriptionPlan)
-                    .Where(s => s.User.Id == userId && s.End == null)
-                    .FirstOrDefaultAsync();
+            return (await UserActiveSubscriptionsAsync(userId)).FirstOrDefault();
         }
 
         /// <summary>
@@ -97,6 +93,7 @@ namespace SaasEcom.Core.DataServices.Storage
         {
             return await _dbContext.Subscriptions
                 .Where(s => s.User.Id == userId && s.Status != "canceled" && s.Status != "unpaid")
+                .Where(s => s.End == null || s.End > DateTime.UtcNow)
                 .Include(s => s.SubscriptionPlan.Properties)
                 .Select(s => s).ToListAsync();
         }
@@ -105,12 +102,13 @@ namespace SaasEcom.Core.DataServices.Storage
         /// Ends the subscription asynchronous.
         /// </summary>
         /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="subscriptionEnDateTime">The subscription en date time.</param>
         /// <param name="reasonToCancel">The reason to cancel.</param>
         /// <returns></returns>
-        public async Task EndSubscriptionAsync(int subscriptionId, string reasonToCancel)
+        public async Task EndSubscriptionAsync(int subscriptionId, DateTime subscriptionEnDateTime, string reasonToCancel)
         {
             var dbSub = await _dbContext.Subscriptions.FindAsync(subscriptionId);
-            dbSub.End = DateTime.UtcNow;
+            dbSub.End = subscriptionEnDateTime;
             dbSub.ReasonToCancel = reasonToCancel;
             await _dbContext.SaveChangesAsync();
         }
@@ -138,6 +136,23 @@ namespace SaasEcom.Core.DataServices.Storage
         {
             var subscription = await _dbContext.Subscriptions.Where(s => s.StripeId == subscriptionId).FirstOrDefaultAsync();
             subscription.TaxPercent = taxPercent;
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+        /// <summary>
+        /// Deletes the subscriptions asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task DeleteSubscriptionsAsync(string userId)
+        {
+            foreach (var subscription in _dbContext.Subscriptions.Where(s => s.UserId == userId).Select(s =>s))
+            {
+                _dbContext.Subscriptions.Remove(subscription);
+            }
+
             await _dbContext.SaveChangesAsync();
         }
     }

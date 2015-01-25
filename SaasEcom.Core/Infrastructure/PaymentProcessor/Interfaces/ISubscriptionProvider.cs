@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SaasEcom.Core.Models;
 
@@ -31,7 +32,8 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// <param name="userStripeId">The user stripe identifier.</param>
         /// <param name="subStripeId">The sub stripe identifier.</param>
         /// <param name="cancelAtPeriodEnd">if set to <c>true</c> [cancel at period end].</param>
-        void EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false);
+        /// <returns>The date when the subscription will be cancelled</returns>
+        DateTime EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false);
 
         /// <summary>
         /// Updates the subscription. (Change subscription plan)

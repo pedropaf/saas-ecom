@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SaasEcom.Core.Models;
 
@@ -46,9 +47,10 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// Ends the subscription asynchronous.
         /// </summary>
         /// <param name="subscriptionId">The subscription identifier.</param>
+        /// <param name="subscriptionEnDateTime">The subscription en date time.</param>
         /// <param name="reasonToCancel">The reason to cancel.</param>
         /// <returns></returns>
-        Task EndSubscriptionAsync(int subscriptionId, string reasonToCancel);
+        Task EndSubscriptionAsync(int subscriptionId, DateTime subscriptionEnDateTime, string reasonToCancel);
 
         /// <summary>
         /// Updates the subscription asynchronous.
@@ -64,5 +66,12 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// <param name="taxPercent">The tax percent.</param>
         /// <returns></returns>
         Task UpdateSubscriptionTax(string subscriptionId, decimal taxPercent);
+
+        /// <summary>
+        /// Deletes the subscriptions asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        Task DeleteSubscriptionsAsync(string userId);
     }
 }

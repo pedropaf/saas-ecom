@@ -58,9 +58,14 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="userStripeId">The user stripe identifier.</param>
         /// <param name="subStripeId">The sub stripe identifier.</param>
         /// <param name="cancelAtPeriodEnd">if set to <c>true</c> [cancel at period end].</param>
-        public void EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false)
+        /// <returns>
+        /// The date when the subscription will be cancelled
+        /// </returns>
+        public DateTime EndSubscription(string userStripeId, string subStripeId, bool cancelAtPeriodEnd = false)
         {
-            this._subscriptionService.Cancel(userStripeId, subStripeId, cancelAtPeriodEnd);
+            var subscription = this._subscriptionService.Cancel(userStripeId, subStripeId, cancelAtPeriodEnd);
+
+            return cancelAtPeriodEnd ? subscription.PeriodEnd.Value : DateTime.UtcNow;
         }
 
         /// <summary>

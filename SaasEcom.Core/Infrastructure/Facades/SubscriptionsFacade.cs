@@ -125,26 +125,27 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// <param name="user">Application user</param>
         /// <param name="cancelAtPeriodEnd">Cancel immediately or when the paid period ends (default immediately)</param>
         /// <param name="reasonToCancel">The reason to cancel.</param>
-        /// <returns></returns>
-        public async Task<bool> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false, string reasonToCancel = null)
+        /// <returns>The Date when the subscription ends (it can be future if cancelAtPeriodEnd is true)</returns>
+        public async Task<DateTime?> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false, string reasonToCancel = null)
         {
-            bool res = true;
+            DateTime? subscriptionEnd = null;
             try
             {
                 var subscription = await _subscriptionDataService.UserActiveSubscriptionAsync(user.Id);
                 if (subscription != null && subscription.Id == subscriptionId)
                 {
-                    await _subscriptionDataService.EndSubscriptionAsync(subscriptionId, reasonToCancel);
-                    _subscriptionProvider.EndSubscription(user.StripeCustomerId, subscription.StripeId, cancelAtPeriodEnd);
+                    subscriptionEnd = _subscriptionProvider.EndSubscription(user.StripeCustomerId, subscription.StripeId, cancelAtPeriodEnd);
+
+                    await _subscriptionDataService.EndSubscriptionAsync(subscriptionId, subscriptionEnd.Value, reasonToCancel);
                 }
             }
             catch (Exception)
             {
                 // TODO: Log
-                res = false;
+                subscriptionEnd = null;
             }
 
-            return res;
+            return subscriptionEnd;
         }
 
         /// <summary>
@@ -158,14 +159,15 @@ namespace SaasEcom.Core.Infrastructure.Facades
         {
             var activeSubscription = await _subscriptionDataService.UserActiveSubscriptionAsync(userId);
 
-            if (activeSubscription != null && activeSubscription.SubscriptionPlan.Id != newPlanId)
+            if (activeSubscription != null && 
+                (activeSubscription.SubscriptionPlan.Id != newPlanId || activeSubscription.End != null)) // Check end date in case that we are re-activating
             {
                 // Update Stripe
                 if (_subscriptionProvider.UpdateSubscription(stripeUserId, activeSubscription.StripeId, newPlanId))
                 {
                     // Update DB
-                    activeSubscription.SubscriptionPlan = null;
                     activeSubscription.SubscriptionPlanId = newPlanId;
+                    activeSubscription.End = null; // In case that we are reactivating
                     await _subscriptionDataService.UpdateSubscriptionAsync(activeSubscription);
                     return true;
                 }
@@ -215,6 +217,16 @@ namespace SaasEcom.Core.Infrastructure.Facades
             }
 
             return 0;
+        }
+
+        /// <summary>
+        /// Deletes the subscriptions.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task DeleteSubscriptions(string userId)
+        {
+            await this._subscriptionDataService.DeleteSubscriptionsAsync(userId);
         }
     }
 }
