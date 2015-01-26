@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Core.DataServices.Interfaces;
+using SaasEcom.Core.Infrastructure.Helpers;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
@@ -213,7 +214,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
                 var currentDate = DateTime.UtcNow;
                 TimeSpan? timeSpan = currentSubscription.TrialEnd - currentDate;
 
-                return timeSpan.Value.Days;
+                return timeSpan.Value.Hours > 12 ? timeSpan.Value.Days + 1 : timeSpan.Value.Days;
             }
 
             return 0;
