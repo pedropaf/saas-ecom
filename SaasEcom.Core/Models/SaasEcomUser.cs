@@ -94,6 +94,14 @@ namespace SaasEcom.Core.Models
         public string IPAddressCountry { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="SaasEcomUser"/> is delinquent. Whether or not the latest charge for the customer’s latest invoice has failed
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if delinquent; otherwise, <c>false</c>.
+        /// </value>
+        public bool Delinquent { get; set; }
+
+        /// <summary>
         /// Gets or sets the lifetime value for the customer (total spent in the app)
         /// </summary>
         /// <value>
