@@ -8,7 +8,7 @@ using Stripe;
 namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 {
     /// <summary>
-    /// 
+    /// Subscription Plan Provider
     /// </summary>
     public class SubscriptionPlanProvider : ISubscriptionPlanProvider
     {

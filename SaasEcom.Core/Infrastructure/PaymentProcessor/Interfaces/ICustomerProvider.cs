@@ -29,6 +29,6 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        object DeleteCustomer(SaasEcomUser user);
+        void DeleteCustomer(SaasEcomUser user);
     }
 }

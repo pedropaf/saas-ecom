@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
@@ -34,7 +33,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             var customer = new StripeCustomerCreateOptions
             {
                 AccountBalance = 0,
-                // Card
+                // TODO: Add the option to pass a Card
                 Email = user.Email,
             };
 
@@ -81,9 +80,9 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public object DeleteCustomer(SaasEcomUser user)
+        public void DeleteCustomer(SaasEcomUser user)
         {
-            throw new System.NotImplementedException();
+            _customerService.Delete(user.StripeCustomerId);
         }
     }
 }

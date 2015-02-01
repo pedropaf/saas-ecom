@@ -13,10 +13,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
     /// </summary>
     public class CardProvider : ICardProvider
     {
-        // Data dependencies
         private readonly ICardDataService _cardDataService;
-
-        // Stripe dependencies
         private readonly StripeCardService _cardService;
 
         /// <summary>
@@ -107,12 +104,16 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// Deletes the credit card asynchronous.
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>
-        /// <param name="cardId">The card identifier.</param>
+        /// <param name="custStripeId">The customer stripe identifier.</param>
+        /// <param name="cardId">The Card identifier.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public Task DeleteAsync(string customerId, int cardId)
+        public async Task DeleteAsync(string customerId, string custStripeId, int cardId)
         {
-            throw new NotImplementedException();
+            var card = await this._cardDataService.FindAsync(customerId, cardId, true);
+
+            this._cardService.Delete(custStripeId, card.StripeId);
+            await this._cardDataService.DeleteAsync(customerId, cardId);
         }
 
         private StripeCard AddCardToStripe(CreditCard card, string stripeCustomerId)

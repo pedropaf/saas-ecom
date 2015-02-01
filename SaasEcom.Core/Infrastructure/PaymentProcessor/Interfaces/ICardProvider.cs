@@ -29,9 +29,10 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// Deletes the credit card asynchronous.
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>
+        /// <param name="custStripeId">The customer stripe identifier.</param>
         /// <param name="cardId">The card identifier.</param>
         /// <returns></returns>
-        Task DeleteAsync(string customerId, int cardId);
+        Task DeleteAsync(string customerId, string custStripeId, int cardId);
 
         /// <summary>
         /// Gets all the credit cards asynchronous.

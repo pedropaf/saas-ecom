@@ -41,6 +41,12 @@ namespace SaasEcom.Core.Infrastructure.Helpers
             { "GB", 20 }, // United Kingdom
         };
 
+        /// <summary>
+        /// Gets the countries.
+        /// </summary>
+        /// <value>
+        /// The countries.
+        /// </value>
         public static Dictionary<string, int> Countries
         {
             get { return CountriesTax; }
