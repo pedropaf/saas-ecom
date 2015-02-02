@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.FrontEnd</id>
-    <version>1.0.0-beta3</version>
+    <version>1.0.0</version>
     <title>SaasEcom.FrontEnd</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,12 +10,12 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Front-end view helpers.</description>
-    <releaseNotes>Beta Release, almost ready for production use.</releaseNotes>
+    <releaseNotes>Stable release 1.0.0</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
-  	  <dependency id="SaasEcom.Core" version="1.0.0-beta3" />
-	  <dependency id="AutoMapper" version="3.2.0" />
+  	  <dependency id="SaasEcom.Core" version="1.0.0" />
+  	  <dependency id="AutoMapper" version="3.2.0" />
     </dependencies>
   </metadata>
 </package>

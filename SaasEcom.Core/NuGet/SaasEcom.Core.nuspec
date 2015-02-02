@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>SaasEcom.Core</id>
-    <version>1.0.0-beta3</version>
+    <version>1.0.0</version>
     <title>SaasEcom.Core</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,9 +10,9 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Added support to add Tax to subscriptions on Stripe.</releaseNotes>
+    <releaseNotes>Stable version 1.0.0</releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>SAAS Software-as-a-service SaasEcom Billing</tags>
+    <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
       <dependency id="Stripe.net" version="2.3.5" />
       <dependency id="EntityFramework" version="6.1.2" />
