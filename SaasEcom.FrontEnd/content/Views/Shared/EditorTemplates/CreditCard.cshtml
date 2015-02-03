@@ -1,10 +1,8 @@
-﻿
-@model SaasEcom.Core.Models.CreditCard
-
+﻿@model SaasEcom.Core.Models.CreditCard
 @Html.AntiForgeryToken()
 @Html.ValidationSummary(true)
 
-<input type="hidden" value="@ViewBag.PublishableKey" id="stripe-publishable-key" />
+<input type="hidden" value="@System.Configuration.ConfigurationManager.AppSettings["StripeApiPublishableKey"]" id="stripe-publishable-key" />
 
 <br />
 <fieldset>

@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Core.DataServices.Storage;
@@ -66,7 +67,7 @@ namespace $rootnamespace$.Controllers
         {
             get
             {
-                return _cardService ?? (_cardService = new CardProvider(this.GetStripeSecretKey(),
+                return _cardService ?? (_cardService = new CardProvider(ConfigurationManager.AppSettings["StripeApiSecretKey"],
                     new CardDataService<ApplicationDbContext, ApplicationUser>(HttpContext.GetOwinContext().Get<ApplicationDbContext>())));
             }
         }
@@ -98,7 +99,7 @@ namespace $rootnamespace$.Controllers
             var model = new ChangeSubscriptionViewModel
             {
                 SubscriptionPlans = await SubscriptionPlansFacade.GetAllAsync(),
-                CurrentSubscription = currentSubscription != null ? currentSubscription.SubscriptionPlan.FriendlyId : string.Empty
+                CurrentSubscription = currentSubscription != null ? currentSubscription.SubscriptionPlan.Id : string.Empty
             };
 
             return View(model);
@@ -110,19 +111,18 @@ namespace $rootnamespace$.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO: Update subscription!!
-                // SubscriptionsFacade.UpdateSubscriptionAsync(User.Identity.GetUserId(), model.CurrentSubscription, model.NewPlan);
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                await SubscriptionsFacade.UpdateSubscriptionAsync(user.Id, user.StripeCustomerId, model.NewPlan);
 
-                TempData.Add("flash", new FlashSuccessViewModel("Your plan has been updated."));
+                // TempData.Add("flash", new FlashSuccessViewModel("Your subscription plan has been updated."));
             }
             else
             {
-                TempData.Add("flash", new FlashSuccessViewModel("Sorry, there was an error updating your plan, try again or contact support."));
+                // TempData.Add("flash", new FlashSuccessViewModel("Sorry, there was an error updating your plan, try again or contact support."));
             }
 
             return RedirectToAction("Index");
         }
-
 
         public async Task<ActionResult> CancelSubscription(int id)
         {
@@ -131,28 +131,48 @@ namespace $rootnamespace$.Controllers
 
 		public async Task<ActionResult> CancelSubscription(CancelSubscriptionViewModel model)
         {
-			if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-				var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-				if (await SubscriptionsFacade.EndSubscriptionAsync(model.Id, user, true, model.Reason))
-				{
-					TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
-				}
-				else
-				{
-					TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem cancelling your subscription."));
-				}
-				return RedirectToAction("Index");
-			}
-			
+                var currentSubscription = (await SubscriptionsFacade.UserActiveSubscriptionsAsync(User.Identity.GetUserId())).FirstOrDefault();
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+                DateTime? endDate; // Because we are passing CancelAtTheEndOfPeriod to EndSubscription, we get the date when the subscription will be cancelled
+                if (currentSubscription != null &&
+                    (endDate = await SubscriptionsFacade.EndSubscriptionAsync(currentSubscription.Id, user, true, model.Reason)) != null)
+                {
+                    // TempData.Add("flash", new FlashSuccessViewModel("Your subscription has been cancelled."));
+                }
+                else
+                {
+                    // TempData.Add("flash", new FlashDangerViewModel("Sorry, there was a problem cancelling your subscription."));
+                }
+
+                return RedirectToAction("Index", "Billing");
+            }
+
 			return View(model);
         }
 
+		public async Task<ActionResult> ReActivateSubscription()
+		{
+            var currentSubscription = (await SubscriptionsFacade.UserActiveSubscriptionsAsync(User.Identity.GetUserId())).FirstOrDefault();
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            if (currentSubscription != null &&
+                await SubscriptionsFacade.UpdateSubscriptionAsync(user.Id, user.StripeCustomerId, currentSubscription.SubscriptionPlanId))
+            {
+                // TempData.Add("flash", new FlashSuccessViewModel("Your subscription plan has been re-activated."));
+            }
+            else
+            {
+                // TempData.Add("flash", new FlashDangerViewModel("Ooops! There was a problem re-activating your subscription. Please, try again."));
+            }
+
+            return RedirectToAction("Index");
+		} 
 
         public ActionResult AddCreditCard()
         {
-            ViewBag.PublishableKey = ConfigurationManager.AppSettings["StripeApiPublishableKey"];
-
             return View(new CreditCardViewModel
             {
                 CreditCard = new CreditCard()
@@ -168,12 +188,10 @@ namespace $rootnamespace$.Controllers
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
                 await CardService.AddAsync(user, model.CreditCard);
 
-                TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
+                // TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
 
                 return RedirectToAction("Index");
             }
-
-            ViewBag.PublishableKey = this.GetStripePublishableKey();
 
             return View(model);
         }
@@ -196,7 +214,6 @@ namespace $rootnamespace$.Controllers
                 return HttpNotFound();
             }
             model.CreditCard.ClearCreditCardDetails();
-            ViewBag.PublishableKey = this.GetStripePublishableKey();
 
             return View(model);
         }
@@ -211,10 +228,11 @@ namespace $rootnamespace$.Controllers
             {
                 var user = await UserManager.FindByIdAsync(userId);
                 await CardService.UpdateAsync(user, model.CreditCard);
-                TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
+                
+                // TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been updated successfully."));
+                
                 return RedirectToAction("Index");
             }
-            ViewBag.PublishableKey = this.GetStripePublishableKey();
 
             return View(model);
         }
@@ -234,7 +252,9 @@ namespace $rootnamespace$.Controllers
             {
                 // TODO: Call your service to save the billing address
 
-                TempData.Add("flash", new FlashSuccessViewModel(Resources.Resources.BillingController_BillingAddress_Your_billing_address_has_been_saved_));
+
+                // TempData.Add("flash", new FlashSuccessViewModel("Your billing address has been saved."));
+
                 return RedirectToAction("Index");
             }
 
@@ -245,16 +265,6 @@ namespace $rootnamespace$.Controllers
         {
             var invoice = await InvoiceDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);
             return View(invoice);
-        }
-		
-        private string GetStripeSecretKey()
-        {
-            return ConfigurationManager.AppSettings["StripeApiSecretKey"];
-        }
-
-		private string GetStripePublishableKey()
-        {
-            return ConfigurationManager.AppSettings["StripePublishableKey"];
         }
     }
 

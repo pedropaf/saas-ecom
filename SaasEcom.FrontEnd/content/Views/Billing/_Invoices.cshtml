@@ -24,7 +24,7 @@
                     <td>@invoice.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", invoice.Subtotal)</td>
                     <td>@invoice.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", invoice.Total)</td>
                     <td>
-                        <a href="@Url.Action("Invoice", "SaasEcom", new {id = @invoice.Id})">
+                        <a href="@Url.Action("Invoice", "Billing", new {id = @invoice.Id})">
                             <i class="fa fa-file-text-o"></i> Details
                         </a>
                     </td>

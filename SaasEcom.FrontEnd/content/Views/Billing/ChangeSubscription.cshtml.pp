@@ -18,8 +18,8 @@
                 <ul class="list-unstyled">
                     @foreach (var p in Model.SubscriptionPlans)
                     {
-                        var check = p.FriendlyId == Model.CurrentSubscription ? "checked" : "";
-                        <li>@Html.RadioButtonFor(m => m.NewPlan, p.FriendlyId, new { @Checked = check }) @p.Name <small>(@p.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", p.Price) / @p.Interval)</small></li>
+                        var check = p.Id == Model.CurrentSubscription ? new { @checked = true } : null;
+                        <li>@Html.RadioButtonFor(m => m.NewPlan, p.Id, check) @p.Name <small>(@p.CurrencyDetails.CurrencySymbol@string.Format("{0:F2}", p.Price) / @p.Interval)</small></li>
                     }
                 </ul>
                 <input type="submit" class="btn btn-primary" value="Submit" id="submit" />

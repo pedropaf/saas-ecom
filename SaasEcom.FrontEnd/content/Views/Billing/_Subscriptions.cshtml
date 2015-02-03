@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.StripeId)
         </td>
         <td>
-            <a href="@Url.Action("CancelSubscription", "SaasEcom", new { id = item.Id })">Cancel</a> | @Html.ActionLink("Change", "")
+            <a href="@Url.Action("CancelSubscription", "Billing", new { id = item.Id })">Cancel</a> - @Html.ActionLink("Change", "ChangeSubscription", "Billing")
         </td>
     </tr>
 }
