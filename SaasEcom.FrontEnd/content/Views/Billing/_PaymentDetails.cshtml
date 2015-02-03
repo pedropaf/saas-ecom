@@ -1,112 +1,23 @@
 ﻿@model SaasEcom.Core.Models.CreditCard
 
-    <h3>Payment Details</h3>
-    <hr />
+<h3>Payment Details</h3>
+<hr />
 
-    @if (Model != null)
-    {
-        <dl class="dl-horizontal">
+@if (Model != null)
+{
+    const string strSpacer = "&nbsp;&nbsp;";
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Last4)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Last4)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Type)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressCity)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressCity)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressCountry)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressCountry)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressLine1)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressLine1)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressLine2)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressLine2)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressState)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressState)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AddressZip)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AddressZip)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Cvc)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Cvc)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ExpirationMonth)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ExpirationMonth)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ExpirationYear)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ExpirationYear)
-            </dd>
-        </dl>
-        
-        <a href="@Url.Action("ChangeCreditCard", new { id = Model.Id })">Change payment details</a>
-    }
-    else
-    {
-        <p>You haven't entered your payment details yet. @Html.ActionLink("Add your Payment Details now.", "AddCreditCard")</p>
-    }
+    <p>
+        @if (Model.Type != "Unknown")
+        {
+            <img src="/Content/card-icons/@(Model.Type).png" style="max-width: 45px;" /> @Html.Raw(strSpacer)
+        }
+        **** **** **** @Model.Last4 @Html.Raw(strSpacer)
+        Expires @Model.ExpirationMonth/@Model.ExpirationYear @Html.Raw(strSpacer) @Html.Raw(strSpacer)
+        <a href="@Url.Action("ChangeCreditCard", new { id = Model.Id })">Change Credit Card</a>
+    </p>
+}
+else
+{
+    <p>You haven't entered your payment details yet. @Html.ActionLink("Add your Payment Details now.", "AddCreditCard")</p>
+}
