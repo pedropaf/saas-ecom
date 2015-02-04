@@ -129,6 +129,7 @@ namespace $rootnamespace$.Controllers
 			return View(new CancelSubscriptionViewModel { Id = id });
         }
 
+		[HttpPost]
 		public async Task<ActionResult> CancelSubscription(CancelSubscriptionViewModel model)
         {
             if (ModelState.IsValid)

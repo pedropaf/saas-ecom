@@ -1,55 +1,23 @@
-﻿@model IEnumerable<SaasEcom.Core.Models.Subscription>
-
-<h3>Subscriptions</h3>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SubscriptionPlan.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Start)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.End)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrialStart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrialEnd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StripeId)
-        </th>
-        <th></th>
-    </tr>
-
+﻿@model IEnumerable<saasecom.core.models.subscription>
 @foreach (var item in Model)
 {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubscriptionPlan.Name) - @item.SubscriptionPlan.CurrencyDetails.CurrencySymbol@item.SubscriptionPlan.Price / @item.SubscriptionPlan.Interval
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Start)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.End)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrialStart)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrialEnd)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StripeId)
-        </td>
-        <td>
-            <a href="@Url.Action("CancelSubscription", "Billing", new { id = item.Id })">Cancel</a> - @Html.ActionLink("Change", "ChangeSubscription", "Billing")
-        </td>
-    </tr>
-}
+    <div>
+        <h3>@Html.DisplayFor(modelItem => item.SubscriptionPlan.Name) - @item.SubscriptionPlan.CurrencyDetails.CurrencySymbol@item.SubscriptionPlan.Price / @item.SubscriptionPlan.Interval</h3>
 
-</table>
+        @if (item.IsTrialing() && item.End == null)
+        {
+            <p><strong>Free Trial Until @item.TrialEnd.Value.ToString("MMMM dd, yyyy")</strong></p>
+        }
+        @if (item.End == null)
+        {
+            <p>
+                <a href="@Url.Action("CancelSubscription", "Billing", new { id = item.Id })">Cancel Subscription</a> - @Html.ActionLink("Change Plan", "ChangeSubscription", "Billing")
+            </p>
+        }
+        else
+        {
+            <p>Your Subscription will not be renewed after @item.End.Value.ToString("MMMM dd, yyyy")</p>
+            <p><a href="@Url.Action("ReActivateSubscription")" class="btn btn-primary">Re-Activate Subscription</a></p>
+        }
+    </div>
+}
