@@ -1,23 +1,31 @@
 ﻿@model IEnumerable<saasecom.core.models.subscription>
-@foreach (var item in Model)
+@if (Model != null && Model.Any())
 {
-    <div>
-        <h3>@Html.DisplayFor(modelItem => item.SubscriptionPlan.Name) - @item.SubscriptionPlan.CurrencyDetails.CurrencySymbol@item.SubscriptionPlan.Price / @item.SubscriptionPlan.Interval</h3>
+    foreach (var item in Model)
+    {
+        <div>
+            <h3>@Html.DisplayFor(modelItem => item.SubscriptionPlan.Name) - @item.SubscriptionPlan.CurrencyDetails.CurrencySymbol@item.SubscriptionPlan.Price / @item.SubscriptionPlan.Interval</h3>
 
-        @if (item.IsTrialing() && item.End == null)
-        {
-            <p><strong>Free Trial Until @item.TrialEnd.Value.ToString("MMMM dd, yyyy")</strong></p>
-        }
-        @if (item.End == null)
-        {
-            <p>
-                <a href="@Url.Action("CancelSubscription", "Billing", new { id = item.Id })">Cancel Subscription</a> - @Html.ActionLink("Change Plan", "ChangeSubscription", "Billing")
-            </p>
-        }
-        else
-        {
-            <p>Your Subscription will not be renewed after @item.End.Value.ToString("MMMM dd, yyyy")</p>
-            <p><a href="@Url.Action("ReActivateSubscription")" class="btn btn-primary">Re-Activate Subscription</a></p>
-        }
-    </div>
+            @if (item.IsTrialing() && item.End == null)
+            {
+                <p><strong>Free Trial Until @item.TrialEnd.Value.ToString("MMMM dd, yyyy")</strong></p>
+            }
+            @if (item.End == null)
+            {
+                <p>
+                    <a href="@Url.Action("CancelSubscription", "Billing", new {id = item.Id})">Cancel Subscription</a> - @Html.ActionLink("Change Plan", "ChangeSubscription", "Billing")
+                </p>
+            }
+            else
+            {
+                <p>Your Subscription will not be renewed after @item.End.Value.ToString("MMMM dd, yyyy")</p>
+                <p><a href="@Url.Action("ReActivateSubscription")" class="btn btn-primary">Re-Activate Subscription</a></p>
+            }
+        </div>
+    }
+}
+else
+{
+    <h3>You don't have any subscription</h3>
+    <a href="@Url.Action("DeleteAccount")" id="delete-account">Delete Account</a>
 }

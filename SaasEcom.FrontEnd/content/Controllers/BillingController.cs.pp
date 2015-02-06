@@ -22,6 +22,19 @@ namespace $rootnamespace$.Controllers
     [Authorize]
     public class BillingController : Controller
     {
+	    private ApplicationSignInManager _signInManager;
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
 		private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
@@ -266,6 +279,20 @@ namespace $rootnamespace$.Controllers
         {
             var invoice = await InvoiceDataService.UserInvoiceAsync(User.Identity.GetUserId(), id);
             return View(invoice);
+        }
+
+		public async Task<ActionResult> DeleteAccount()
+        {
+            var user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+            
+            // Delete User
+            await _userManager.DeleteAsync(user);
+            
+            // TODO: Delete user data
+
+            SignInManager.AuthenticationManager.SignOut();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 
