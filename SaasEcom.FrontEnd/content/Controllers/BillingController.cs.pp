@@ -137,7 +137,7 @@ namespace $rootnamespace$.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> CancelSubscription(int id)
+        public ActionResult CancelSubscription(int id)
         {
 			return View(new CancelSubscriptionViewModel { Id = id });
         }
@@ -251,7 +251,7 @@ namespace $rootnamespace$.Controllers
             return View(model);
         }
 
-		public async Task<ViewResult> BillingAddress()
+		public ViewResult BillingAddress()
         {
 			// TODO: Get Billing address from your model
 			var model = new BillingAddress();
@@ -260,7 +260,7 @@ namespace $rootnamespace$.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> BillingAddress(BillingAddress model)
+        public ActionResult BillingAddress(BillingAddress model)
         {
             if (ModelState.IsValid)
             {
