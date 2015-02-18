@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>SaasEcom.Core</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>SaasEcom.Core</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,11 +10,11 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Stable version 1.0.0</releaseNotes>
+    <releaseNotes>Fixed to work with the new Stripe APIs</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
-      <dependency id="Stripe.net" version="2.3.5" />
+      <dependency id="Stripe.net" version="2.7.2" />
       <dependency id="EntityFramework" version="6.1.2" />
       <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.1.0" />
     </dependencies>

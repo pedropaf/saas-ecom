@@ -29,9 +29,9 @@ namespace $rootnamespace$.App_Start
                 {
                     invoice.StripeId = stripeInvoice.Id;
                     invoice.StripeCustomerId = stripeInvoice.CustomerId;
-                    invoice.LineItems = Mapper.Map<List<StripeInvoiceItem>, List<Invoice.LineItem>>(stripeInvoice.StripeInvoiceLines.StripeInvoiceItems);
+                    invoice.LineItems = Mapper.Map<List<StripeInvoiceLineItem>, List<Invoice.LineItem>>(stripeInvoice.StripeInvoiceLineItems.Data);
                 });
-            Mapper.CreateMap<StripeInvoiceItem, Invoice.LineItem>()
+            Mapper.CreateMap<StripeInvoiceLineItem, Invoice.LineItem>()
                 .ForMember(item => item.Id, opt => opt.Ignore())
                 .AfterMap((sLine, line) => line.StripeLineItemId = sLine.Id);
             Mapper.CreateMap<StripePeriod, Invoice.Period>();
