@@ -120,18 +120,8 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         {
             var options = new StripeCardCreateOptions
             {
-                Card = new StripeCreditCardOptions()
+                Card = new StripeCreditCardOptions
                 {
-                    CardAddressCity = card.AddressCity,
-                    CardAddressCountry = card.AddressCountry,
-                    CardAddressLine1 = card.AddressLine1,
-                    CardAddressLine2 = card.AddressLine2,
-                    CardAddressState = card.AddressState,
-                    CardAddressZip = card.AddressZip,
-                    CardCvc = card.Cvc,
-                    CardExpirationMonth = card.ExpirationMonth,
-                    CardExpirationYear = card.ExpirationYear,
-                    CardName = card.Name,
                     TokenId = card.StripeToken
                 }
             };
