@@ -40,7 +40,12 @@ namespace SaasEcom.Core.DataServices.Storage
         /// </returns>
         public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null, decimal taxPercent = 0)
         {
-            var plan = await _dbContext.SubscriptionPlans.FirstAsync(x => x.Id == planId);
+            var plan = await _dbContext.SubscriptionPlans.FirstOrDefaultAsync(x => x.Id == planId);
+
+            if (plan == null)
+            {
+                throw new ArgumentException(string.Format("There's no plan with Id: {0}", planId));
+            }
 
             var s = new Subscription
             {

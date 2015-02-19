@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using AutoMapper;
 using Microsoft.AspNet.Identity.Owin;
 using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Models;
@@ -94,8 +93,8 @@ namespace $rootnamespace$.Controllers
                     // TODO: Notify customer
                     break;
                 case "invoice.payment_succeeded": // Occurs whenever an invoice attempts to be paid, and the payment succeeds.
-                    var stripeInvoice = Stripe.Mapper<StripeInvoice>.MapFromJson(stripeEvent.Data.Object.ToString());
-                    Invoice invoice = Mapper.Map<Invoice>(stripeInvoice);
+                    StripeInvoice stripeInvoice = Stripe.Mapper<StripeInvoice>.MapFromJson(stripeEvent.Data.Object.ToString());
+                    Invoice invoice = SaasEcom.Core.Infrastructure.Mappers.Map(stripeInvoice);
                     if (invoice != null && invoice.Total > 0)
                     {
                         await InvoiceDataService.CreateOrUpdateAsync(invoice);

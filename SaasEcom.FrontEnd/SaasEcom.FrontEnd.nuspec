@@ -15,7 +15,6 @@
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
   	  <dependency id="SaasEcom.Core" version="1.1.0" />
-  	  <dependency id="AutoMapper" version="3.2.0" />
     </dependencies>
   </metadata>
 </package>

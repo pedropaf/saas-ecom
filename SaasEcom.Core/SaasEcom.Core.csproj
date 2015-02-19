@@ -102,6 +102,7 @@
     <Compile Include="Infrastructure\Helpers\CurrencyHelper.cs" />
     <Compile Include="Infrastructure\Helpers\EuropeanVat.cs" />
     <Compile Include="Infrastructure\Helpers\GeoLocation.cs" />
+    <Compile Include="Infrastructure\Mappers.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICardProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICustomerProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ISubscriptionPlanProvider.cs" />

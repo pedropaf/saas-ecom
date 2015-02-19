@@ -171,22 +171,6 @@ namespace SaasEcom.Core.Models
         public DateTime? NextPaymentAttempt { get; set; }
 
         /// <summary>
-        /// Gets or sets the charge.
-        /// </summary>
-        /// <value>
-        /// The charge.
-        /// </value>
-        public int? Charge { get; set; }
-
-        /// <summary>
-        /// Gets or sets the discount.
-        /// </summary>
-        /// <value>
-        /// The discount.
-        /// </value>
-        public int? Discount { get; set; }
-
-        /// <summary>
         /// Gets or sets the application fee.
         /// The fee in cents that will be applied to the invoice and transferred to the application owner’s Stripe account when the invoice is paid.
         /// </summary>
