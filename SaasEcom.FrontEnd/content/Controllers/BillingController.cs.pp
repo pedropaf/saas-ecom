@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Stripe;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -386,6 +387,8 @@ namespace $rootnamespace$.Controllers
 
 	#region Stripe to SaasEcom Mapper
 
+	public static class Mapper
+    { 
         public static Invoice Map(StripeInvoice stripeInvoice)
         {
             var invoice = new Invoice
@@ -465,6 +468,6 @@ namespace $rootnamespace$.Controllers
                 End = stripePeriod.End
             };
         }
-
-        #endregion
+	}
+    #endregion
 }
