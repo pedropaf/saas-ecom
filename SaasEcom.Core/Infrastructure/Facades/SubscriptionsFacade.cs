@@ -72,6 +72,38 @@ namespace SaasEcom.Core.Infrastructure.Facades
         }
 
         /// <summary>
+        /// Subscribes the user to stripe asynchronous.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        public async Task SubscribeUserToStripeAsync(SaasEcomUser user)
+        {
+            var res = await _subscriptionDataService.UserSubscriptionsAsync(user.Id);
+
+            if (res != null)
+            {
+                var subscription = res.First();
+
+                // Create a new customer in Stripe and subscribe him to the plan
+                var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(
+                    user, subscription.SubscriptionPlanId, subscription.TrialEnd);
+
+                // Add subscription Id to the user
+                user.StripeCustomerId = stripeUser.Id;
+
+                // Save subscription Id
+                subscription.StripeId = GetStripeSubscriptionId(stripeUser);
+                await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
+
+                // Update tax percent on stripe
+                if (subscription.TaxPercent > 0)
+                {
+                    await this.UpdateSubscriptionTax(user, subscription.StripeId, subscription.TaxPercent);
+                }
+            }
+        }
+
+        /// <summary>
         /// Updates the subscription tax.
         /// </summary>
         /// <param name="user">The user.</param>

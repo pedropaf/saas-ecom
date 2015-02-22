@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using SaasEcom.Core.Models;
 
 namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
@@ -13,8 +14,9 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="trialEnd">The trial end.</param>
         /// <returns></returns>
-        Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null);
+        Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null, DateTime? trialEnd = null);
 
         /// <summary>
         /// Updates the customer.

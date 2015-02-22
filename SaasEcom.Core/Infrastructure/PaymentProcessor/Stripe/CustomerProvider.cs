@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
@@ -27,8 +28,9 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
+        /// <param name="trialEnd"></param>
         /// <returns></returns>
-        public async Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null)
+        public async Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null, DateTime? trialEnd = null)
         {
             var customer = new StripeCustomerCreateOptions
             {
@@ -40,6 +42,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             if (!string.IsNullOrEmpty(planId))
             {
                 customer.PlanId = planId;
+                customer.TrialEnd = trialEnd;
             }
 
             var stripeUser = await Task.Run(() => _customerService.Create(customer));
