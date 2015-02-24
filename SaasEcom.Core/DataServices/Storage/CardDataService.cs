@@ -91,6 +91,19 @@ namespace SaasEcom.Core.DataServices.Storage
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AddOrUpdateDefaultCardAsync(string userId, CreditCard creditCard)
+        {
+            var card = this._dbContext.CreditCards.FirstOrDefault(c => c.SaasEcomUserId == userId);
+
+            if (card != null)
+            {
+                _dbContext.CreditCards.Remove(card);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            await this.AddAsync(creditCard);
+        }
+
         /// <summary>
         /// Updates the credit card.
         /// </summary>

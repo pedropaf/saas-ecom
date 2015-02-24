@@ -30,6 +30,14 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// <returns></returns>
         Task AddAsync(CreditCard creditcard);
 
+        /// <summary>
+        /// Adds or update default card asynchronous.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="creditCard">The credit card.</param>
+        /// <returns></returns>
+        Task AddOrUpdateDefaultCardAsync(string userId, CreditCard creditCard);
+
         /// <summary>Updates the credit card for a user in the database.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="creditCard">The credit card.</param>

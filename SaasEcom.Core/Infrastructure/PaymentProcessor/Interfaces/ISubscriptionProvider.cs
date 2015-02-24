@@ -17,7 +17,16 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialInDays">The trial in days.</param>
         /// <param name="taxPercent">The tax percent.</param>
-        void SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0, decimal taxPercent = 0);
+        string SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0, decimal taxPercent = 0);
+
+        /// <summary>
+        /// Subscribes the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="trialEnds">The trial ends.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        string SubscribeUser(SaasEcomUser user, string planId, DateTime? trialEnds, decimal taxPercent = 0);
 
         /// <summary>
         /// Gets the User's subscriptions asynchronous.

@@ -15,8 +15,9 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialEnd">The trial end.</param>
+        /// <param name="cardToken">The card token.</param>
         /// <returns></returns>
-        Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null, DateTime? trialEnd = null);
+        Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null, DateTime? trialEnd = null, string cardToken = null);
 
         /// <summary>
         /// Updates the customer.

@@ -17,10 +17,26 @@ namespace SaasEcom.Core.DataServices.Interfaces
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialPeriodInDays">The trial period in days.</param>
         /// <param name="taxPercent">The tax percent.</param>
+        /// <param name="stripeId">The stripe identifier.</param>
         /// <returns>
         /// The subscription
         /// </returns>
-        Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null, decimal taxPercent = 0);
+        Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null,
+            decimal taxPercent = 0, string stripeId = null);
+
+        /// <summary>
+        /// Subscribes the user asynchronous.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="trialPeriodEnds">The trial period ends.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <param name="stripeId">The stripe identifier.</param>
+        /// <returns>
+        /// The subscription
+        /// </returns>
+        Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, DateTime? trialPeriodEnds = null,
+            decimal taxPercent = 0, string stripeId = null);
 
         /// <summary>
         /// Gets the User's subscriptions asynchronous.

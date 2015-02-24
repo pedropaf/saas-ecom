@@ -35,10 +35,12 @@ namespace SaasEcom.Core.DataServices.Storage
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialPeriodInDays">The trial period in days.</param>
         /// <param name="taxPercent">The tax percent.</param>
+        /// <param name="stripeId">The stripe identifier.</param>
         /// <returns>
         /// The subscription
         /// </returns>
-        public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null, decimal taxPercent = 0)
+        /// <exception cref="System.ArgumentException"></exception>
+        public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, int? trialPeriodInDays = null, decimal taxPercent = 0, string stripeId = null)
         {
             var plan = await _dbContext.SubscriptionPlans.FirstOrDefaultAsync(x => x.Id == planId);
 
@@ -56,7 +58,48 @@ namespace SaasEcom.Core.DataServices.Storage
                 UserId = user.Id,
                 SubscriptionPlan = plan,
                 Status = trialPeriodInDays == null ? "active" : "trialing",
-                TaxPercent = taxPercent
+                TaxPercent = taxPercent,
+                StripeId = stripeId
+            };
+
+            _dbContext.Subscriptions.Add(s);
+            await _dbContext.SaveChangesAsync();
+
+            return s;
+        }
+
+        /// <summary>
+        /// Subscribes the user asynchronous.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="trialPeriodEnds">The trial period ends.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <param name="stripeId">The stripe identifier.</param>
+        /// <returns>
+        /// The subscription
+        /// </returns>
+        /// <exception cref="System.ArgumentException"></exception>
+        public async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, DateTime? trialPeriodEnds = null, decimal taxPercent = 0, string stripeId = null)
+        {
+            var plan = await _dbContext.SubscriptionPlans.FirstOrDefaultAsync(x => x.Id == planId);
+
+            if (plan == null)
+            {
+                throw new ArgumentException(string.Format("There's no plan with Id: {0}", planId));
+            }
+
+            var s = new Subscription
+            {
+                Start = DateTime.UtcNow,
+                End = null,
+                TrialEnd = trialPeriodEnds ?? DateTime.UtcNow.AddDays(plan.TrialPeriodInDays),
+                TrialStart = DateTime.UtcNow,
+                UserId = user.Id,
+                SubscriptionPlan = plan,
+                Status = trialPeriodEnds == null ? "active" : "trialing",
+                TaxPercent = taxPercent,
+                StripeId = stripeId
             };
 
             _dbContext.Subscriptions.Add(s);

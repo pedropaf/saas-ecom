@@ -30,15 +30,37 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="planId">The plan identifier.</param>
         /// <param name="trialInDays">The trial in days.</param>
         /// <param name="taxPercent">The tax percent.</param>
-        public void SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0, decimal taxPercent = 0)
+        public string SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0, decimal taxPercent = 0)
         {
-            this._subscriptionService.Create(user.StripeCustomerId, planId,
+            var result = this._subscriptionService.Create(user.StripeCustomerId, planId,
                 new StripeSubscriptionUpdateOptions
                 {
                     PlanId = planId,
                     TaxPercent = taxPercent,
                     TrialEnd = DateTime.UtcNow.AddDays(trialInDays)
                 });
+
+            return result.Id;
+        }
+
+        /// <summary>
+        /// Subscribes the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="trialEnds">The trial ends.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        public string SubscribeUser(SaasEcomUser user, string planId, DateTime? trialEnds, decimal taxPercent = 0)
+        {
+            var result = this._subscriptionService.Create(user.StripeCustomerId, planId,
+                new StripeSubscriptionUpdateOptions
+                {
+                    PlanId = planId,
+                    TaxPercent = taxPercent,
+                    TrialEnd = trialEnds
+                });
+
+            return result.Id;
         }
 
         /// <summary>

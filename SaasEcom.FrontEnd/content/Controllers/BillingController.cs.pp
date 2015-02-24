@@ -60,7 +60,10 @@ namespace $rootnamespace$.Controllers
                     new SubscriptionProvider(ConfigurationManager.AppSettings["StripeApiSecretKey"]),
                     new CardProvider(ConfigurationManager.AppSettings["StripeApiSecretKey"],
                         new CardDataService<ApplicationDbContext, ApplicationUser>(Request.GetOwinContext().Get<ApplicationDbContext>())),
-                    new CustomerProvider(ConfigurationManager.AppSettings["StripeApiSecretKey"])));
+                    new CardDataService<ApplicationDbContext, ApplicationUser>(Request.GetOwinContext().Get<ApplicationDbContext>()),
+                    new CustomerProvider(ConfigurationManager.AppSettings["StripeApiSecretKey"]),
+                    new SubscriptionPlanDataService<ApplicationDbContext, ApplicationUser>(Request.GetOwinContext().Get<ApplicationDbContext>()),
+                    new ChargeProvider(ConfigurationManager.AppSettings["StripeApiSecretKey"])));
             }
         }
 

@@ -20,24 +20,39 @@ namespace SaasEcom.Core.Infrastructure.Facades
     public class SubscriptionsFacade
     {
         private readonly ISubscriptionDataService _subscriptionDataService;
+        private readonly ISubscriptionPlanDataService _subscriptionPlanDataService;
         private readonly ISubscriptionProvider _subscriptionProvider;
-        private readonly ICardProvider _cardProvider;
         private readonly ICustomerProvider _customerProvider;
+        private readonly IChargeProvider _chargeProvider;
+        private readonly ICardProvider _cardProvider;
+        private readonly ICardDataService _cardDataService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionsFacade"/> class.
+        /// Initializes a new instance of the <see cref="SubscriptionsFacade" /> class.
         /// </summary>
         /// <param name="data">The subscription data service.</param>
         /// <param name="subscriptionProvider">The subscription provider.</param>
         /// <param name="cardProvider">The card provider.</param>
+        /// <param name="cardDataService">The card data service.</param>
         /// <param name="customerProvider">The customer provider.</param>
-        public SubscriptionsFacade(ISubscriptionDataService data, 
-            ISubscriptionProvider subscriptionProvider, ICardProvider cardProvider, ICustomerProvider customerProvider)
+        /// <param name="subscriptionPlanDataService">The subscription plan data service.</param>
+        /// <param name="chargeProvider">The charge provider.</param>
+        public SubscriptionsFacade(
+            ISubscriptionDataService data, 
+            ISubscriptionProvider subscriptionProvider, 
+            ICardProvider cardProvider,
+            ICardDataService cardDataService, 
+            ICustomerProvider customerProvider, 
+            ISubscriptionPlanDataService subscriptionPlanDataService, 
+            IChargeProvider chargeProvider)
         {
             _subscriptionDataService = data;
             _subscriptionProvider = subscriptionProvider;
             _cardProvider = cardProvider;
             _customerProvider = customerProvider;
+            _subscriptionPlanDataService = subscriptionPlanDataService;
+            _chargeProvider = chargeProvider;
+            _cardDataService = cardDataService;
         }
 
         /// <summary>
@@ -52,7 +67,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
         public async Task SubscribeNewUserAsync(SaasEcomUser user, string planId, decimal taxPercent = 0)
         {
             // Subscribe the user to the plan
-            var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId, taxPercent: taxPercent);
+            var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId, trialPeriodInDays: null, taxPercent: taxPercent);
 
             // Create a new customer in Stripe and subscribe him to the plan
             var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(user, planId);
@@ -104,6 +119,107 @@ namespace SaasEcom.Core.Infrastructure.Facades
         }
 
         /// <summary>
+        /// Subscribes the user natural month asynchronous.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="card">The card.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        public async Task<string> SubscribeUserNaturalMonthAsync(SaasEcomUser user, 
+            string planId, CreditCard card, string description, decimal taxPercent = 0)
+        {
+            var trialEnds = GetStartNextMonth();
+
+            if (string.IsNullOrEmpty(user.StripeCustomerId))
+            {
+                // Create a new customer in Stripe and save card
+                var stripeUser = (StripeCustomer) await _customerProvider.CreateCustomerAsync
+                    (user, null, trialEnds , card.StripeToken);
+                
+                // Add subscription Id to the user
+                user.StripeCustomerId = stripeUser.Id;
+
+                await _cardDataService.AddAsync(card);
+            }
+            else if (!string.IsNullOrEmpty(card.StripeToken))
+            {
+                // Update the default card for the user
+                _customerProvider.UpdateCustomer(user, card);
+                card.SaasEcomUserId = user.Id;
+                await _cardDataService.AddOrUpdateDefaultCardAsync(user.Id, card);
+            }
+
+            // Create pro-rata charge for the remaining of the month
+            var amountInCents = await CalculateProRata(planId);
+
+            var planCurrency = await GetPlanCurrency(planId);
+
+            // If Charge succeeds -> Create Subscription
+            string error;
+            if (this._chargeProvider.CreateCharge(amountInCents, planCurrency, description, user.StripeCustomerId, out error))
+            {
+                // Create Subscription
+                var subscriptionId = _subscriptionProvider.SubscribeUser(user, planId, trialEnds, taxPercent);
+                var subscription = await _subscriptionDataService.SubscribeUserAsync
+                    (user, planId, trialEnds, taxPercent, subscriptionId);
+
+                // Update tax percent on stripe
+                if (subscription.TaxPercent > 0)
+                {
+                    await this.UpdateSubscriptionTax(user, subscription.StripeId, subscription.TaxPercent);
+                }
+            }
+            else
+            {
+                return error;
+            }
+
+            return null;
+        }
+
+        private async Task<string> GetPlanCurrency(string planId)
+        {
+            var plan = await _subscriptionPlanDataService.FindAsync(planId);
+
+            return plan.Currency;
+        }
+
+        private async Task<int> CalculateProRata(string planId)
+        {
+            var plan = await _subscriptionPlanDataService.FindAsync(planId);
+
+            var now = DateTime.UtcNow;
+            var beginningMonth = new DateTime(now.Year, now.Month, 1);
+            var endMonth = new DateTime (now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
+
+            var totalHoursMonth = (endMonth - beginningMonth).TotalHours;
+            var hoursRemaining = (endMonth - now).TotalHours;
+
+            var amountInCurrency = plan.Price*hoursRemaining/totalHoursMonth;
+
+            switch (plan.Currency.ToLower())
+            {
+                case("usd"):
+                case("gbp"):
+                case("eur"):
+                    return (int)Math.Ceiling(amountInCurrency * 100);
+                default:
+                    return (int)Math.Ceiling(amountInCurrency);
+            }
+        }
+
+        private DateTime? GetStartNextMonth()
+        {
+            var now = DateTime.UtcNow;
+            var year = now.Month == 12 ? now.Year + 1 : now.Year;
+            var month = now.Month == 12 ? 1 : now.Month + 1;
+
+            return new DateTime(year, month, 1);
+        }
+
+        /// <summary>
         /// Updates the subscription tax.
         /// </summary>
         /// <param name="user">The user.</param>
@@ -136,8 +252,9 @@ namespace SaasEcom.Core.Infrastructure.Facades
         public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0, decimal taxPercent = 0)
         {
             // Save subscription details
-            _subscriptionProvider.SubscribeUser(user, planId, trialInDays, taxPercent); // Stripe
-            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays, taxPercent); // DB
+            var subscriptionId = _subscriptionProvider.SubscribeUser
+                (user, planId, trialInDays: trialInDays, taxPercent: taxPercent); // Stripe
+            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays, taxPercent, subscriptionId); // DB
 
             // Save payment details
             if (creditCard.Id == 0)

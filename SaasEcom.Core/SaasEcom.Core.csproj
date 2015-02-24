@@ -104,10 +104,12 @@
     <Compile Include="Infrastructure\Helpers\GeoLocation.cs" />
     <Compile Include="Infrastructure\Mappers.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICardProvider.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Interfaces\IChargeProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ICustomerProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ISubscriptionPlanProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Interfaces\ISubscriptionProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\CardProvider.cs" />
+    <Compile Include="Infrastructure\PaymentProcessor\Stripe\ChargeProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\CustomerProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\SubscriptionPlanProvider.cs" />
     <Compile Include="Infrastructure\PaymentProcessor\Stripe\SubscriptionProvider.cs" />

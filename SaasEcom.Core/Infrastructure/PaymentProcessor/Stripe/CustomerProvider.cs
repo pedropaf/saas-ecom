@@ -28,16 +28,24 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="planId">The plan identifier.</param>
-        /// <param name="trialEnd"></param>
+        /// <param name="trialEnd">The trial end.</param>
+        /// <param name="cardToken">The card token.</param>
         /// <returns></returns>
-        public async Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null, DateTime? trialEnd = null)
+        public async Task<object> CreateCustomerAsync(SaasEcomUser user, string planId = null, DateTime? trialEnd = null, string cardToken = null)
         {
             var customer = new StripeCustomerCreateOptions
             {
                 AccountBalance = 0,
-                // TODO: Add the option to pass a Card
-                Email = user.Email,
+                Email = user.Email
             };
+
+            if (!string.IsNullOrEmpty(cardToken))
+            {
+                customer.Card = new StripeCreditCardOptions
+                {
+                    TokenId = cardToken
+                };
+            }
 
             if (!string.IsNullOrEmpty(planId))
             {
@@ -64,16 +72,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
                 // Card Details
                 Card =  new StripeCreditCardOptions
                 {
-                    CardAddressCity = card.AddressCity,
-                    CardAddressCountry = card.AddressCountry,
-                    CardAddressLine1 = card.AddressLine1,
-                    CardAddressLine2 = card.AddressLine2,
-                    CardAddressState = card.AddressState,
-                    CardAddressZip = card.AddressZip,
-                    CardCvc = card.Cvc,
-                    CardExpirationMonth = card.ExpirationMonth,
-                    CardExpirationYear = card.ExpirationYear,
-                    CardName = card.Name
+                    TokenId = card.StripeToken
                 }
             };
 

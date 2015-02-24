@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SaasEcom.FrontEnd</id>
-    <version>1.1.0</version>
+    <version>1.1.2</version>
     <title>SaasEcom.FrontEnd</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -14,7 +14,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
-  	  <dependency id="SaasEcom.Core" version="1.1.0" />
+  	  <dependency id="SaasEcom.Core" version="1.1.2" />
     </dependencies>
   </metadata>
 </package>
