@@ -30,6 +30,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The stripe token.
         /// </value>
+        [NotMapped]
         public string StripeToken { get; set; }
 
         /// <summary>

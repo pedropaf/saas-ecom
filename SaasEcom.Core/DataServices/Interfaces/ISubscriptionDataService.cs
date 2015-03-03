@@ -11,6 +11,13 @@ namespace SaasEcom.Core.DataServices.Interfaces
     public interface ISubscriptionDataService
     {
         /// <summary>
+        /// Finds the by identifier.
+        /// </summary>
+        /// <param name="stripeSubscriptionId">The stripe subscription identifier.</param>
+        /// <returns></returns>
+        Subscription FindById(string stripeSubscriptionId);
+
+        /// <summary>
         /// Subscribes the user asynchronous.
         /// </summary>
         /// <param name="user">The user.</param>

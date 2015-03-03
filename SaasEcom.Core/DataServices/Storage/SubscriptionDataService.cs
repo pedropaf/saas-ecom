@@ -29,6 +29,17 @@ namespace SaasEcom.Core.DataServices.Storage
         }
 
         /// <summary>
+        /// Finds the by identifier.
+        /// </summary>
+        /// <param name="stripeSubscriptionId">The stripe subscription identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Subscription FindById(string stripeSubscriptionId)
+        {
+            return _dbContext.Subscriptions.FirstOrDefault(s => s.StripeId == stripeSubscriptionId);
+        }
+
+        /// <summary>
         /// Subscribes the user asynchronous.
         /// </summary>
         /// <param name="user">The user.</param>
