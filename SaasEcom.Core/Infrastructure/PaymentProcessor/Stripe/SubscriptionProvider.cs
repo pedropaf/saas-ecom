@@ -123,7 +123,6 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             return result;
         }
 
-
         /// <summary>
         /// Updates the subscription tax.
         /// </summary>
@@ -149,6 +148,26 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Subscribes the user natural month.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="billingAnchorCycle">The billing anchor cycle.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        public object SubscribeUserNaturalMonth(SaasEcomUser user, string planId, DateTime? billingAnchorCycle, decimal taxPercent)
+        {
+            StripeSubscription stripeSubscription = _subscriptionService.Create
+                (user.StripeCustomerId, planId, new StripeSubscriptionCreateOptions
+                {
+                    BillingCycleAnchor = billingAnchorCycle,
+                    TaxPercent = taxPercent
+                });
+
+            return stripeSubscription;
         }
     }
 }
