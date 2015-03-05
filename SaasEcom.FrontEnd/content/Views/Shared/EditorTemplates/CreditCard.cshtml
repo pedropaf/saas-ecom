@@ -86,12 +86,22 @@
             <label class="control-label col-md-2" for="ExpirationMonth">Expiration Date</label>
 
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.ExpirationMonth, new { @class = "form-control", placeholder = "MM", data_stripe = "exp-month" })
+                @Html.DropDownListFor(model => model.ExpirationMonth, new List<SelectListItem>(
+                        Enumerable.Range(1, 12).Select(r => new SelectListItem
+                                     {
+                                         Text = r.ToString("00"),
+                                         Value = r.ToString()
+                                     })), new { @class = "form-control", data_stripe = "exp-month" })
                 @Html.ValidationMessageFor(model => model.ExpirationMonth)
             </div>
 
             <div class="col-md-2">
-                @Html.TextBoxFor(model => model.ExpirationYear, new { @class = "form-control", placeholder = "YYYY", data_stripe = "exp-year" })
+                @Html.DropDownListFor(model => model.ExpirationYear, new List<SelectListItem>(
+                                 Enumerable.Range(DateTime.UtcNow.Year, 10).Select(r => new SelectListItem
+                                     {
+                                         Text = r.ToString(),
+                                         Value = r.ToString()
+                                     })), new { @class = "form-control", data_stripe = "exp-year" })
                 @Html.ValidationMessageFor(model => model.ExpirationYear)
             </div>
 
