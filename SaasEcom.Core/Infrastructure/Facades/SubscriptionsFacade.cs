@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SaasEcom.Core.DataServices.Interfaces;
+using SaasEcom.Core.DataServices.Storage;
 using SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces;
 using SaasEcom.Core.Models;
 using Stripe;
@@ -38,12 +39,12 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// <param name="subscriptionPlanDataService">The subscription plan data service.</param>
         /// <param name="chargeProvider">The charge provider.</param>
         public SubscriptionsFacade(
-            ISubscriptionDataService data, 
-            ISubscriptionProvider subscriptionProvider, 
+            ISubscriptionDataService data,
+            ISubscriptionProvider subscriptionProvider,
             ICardProvider cardProvider,
-            ICardDataService cardDataService, 
-            ICustomerProvider customerProvider, 
-            ISubscriptionPlanDataService subscriptionPlanDataService, 
+            ICardDataService cardDataService,
+            ICustomerProvider customerProvider,
+            ISubscriptionPlanDataService subscriptionPlanDataService,
             IChargeProvider chargeProvider)
         {
             _subscriptionDataService = data;
@@ -56,168 +57,80 @@ namespace SaasEcom.Core.Infrastructure.Facades
         }
 
         /// <summary>
-        /// Creates a new user in Stripe and database.
+        /// Subscribes the user to a Stripe plan. If the user doesn't exist in Stripe, is created
         /// </summary>
         /// <param name="user">Application User</param>
         /// <param name="planId">Plan Id to subscribe the user to</param>
         /// <param name="taxPercent">The tax percent.</param>
+        /// <param name="creditCard">The credit card.</param>
         /// <returns>
-        /// Task
+        /// Subscription
         /// </returns>
-        public async Task SubscribeNewUserAsync(SaasEcomUser user, string planId, decimal taxPercent = 0)
+        public async Task<Subscription> SubscribeUserAsync
+            (SaasEcomUser user, string planId, decimal taxPercent = 0, CreditCard creditCard = null)
         {
-            // Subscribe the user to the plan
-            var subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId, trialPeriodInDays: null, taxPercent: taxPercent);
+            Subscription subscription;
+            
+            // If the user isn't created in Stripe 
+            if (string.IsNullOrEmpty(user.StripeCustomerId))
+            {
+                // Save the subscription in the DB
+                subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId, trialPeriodInDays: null, taxPercent: taxPercent);
 
-            // Create a new customer in Stripe and subscribe him to the plan
-            var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(user, planId);
+                // Create a new customer in Stripe and subscribe him to the plan
+                var stripeUser = (StripeCustomer) await _customerProvider.CreateCustomerAsync(user, planId);
+                user.StripeCustomerId = stripeUser.Id; // Add stripe user Id to the user
 
-            // Add subscription Id to the user
-            user.StripeCustomerId = stripeUser.Id;
+                // Save Stripe Subscription Id in the DB
+                subscription.StripeId = GetStripeSubscriptionIdForNewCustomer(stripeUser);
+                await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
+            }
+            else // Create new subscription in Stripe and DB
+            {
+                subscription = await this.SubscribeUserAsync(user, planId, creditCard, 0, taxPercent: taxPercent);
+            }
 
-            // Save subscription Id
-            subscription.StripeId = GetStripeSubscriptionId(stripeUser);
-            await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
-        
             // Update tax percent on stripe
             if (taxPercent > 0)
             {
                 await this.UpdateSubscriptionTax(user, subscription.StripeId, taxPercent);
             }
+
+            return subscription;
         }
 
         /// <summary>
-        /// Subscribes the user to stripe asynchronous.
+        /// Subscribe an existing user to a plan.
         /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns></returns>
-        public async Task SubscribeUserToStripeAsync(SaasEcomUser user)
-        {
-            var res = await _subscriptionDataService.UserSubscriptionsAsync(user.Id);
-
-            if (res != null)
-            {
-                var subscription = res.First();
-
-                // Create a new customer in Stripe and subscribe him to the plan
-                var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(
-                    user, subscription.SubscriptionPlanId, subscription.TrialEnd);
-
-                // Add subscription Id to the user
-                user.StripeCustomerId = stripeUser.Id;
-
-                // Save subscription Id
-                subscription.StripeId = GetStripeSubscriptionId(stripeUser);
-                await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
-
-                // Update tax percent on stripe
-                if (subscription.TaxPercent > 0)
-                {
-                    await this.UpdateSubscriptionTax(user, subscription.StripeId, subscription.TaxPercent);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Subscribes the user natural month asynchronous.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="planId">The plan identifier.</param>
-        /// <param name="card">The card.</param>
-        /// <param name="description">The description.</param>
+        /// <param name="user">Application User</param>
+        /// <param name="planId">Stripe plan Id</param>
+        /// <param name="creditCard">Credit card to pay this subscription.</param>
+        /// <param name="trialInDays">The trial in days.</param>
         /// <param name="taxPercent">The tax percent.</param>
         /// <returns></returns>
-        public async Task<string> SubscribeUserNaturalMonthAsync(SaasEcomUser user, 
-            string planId, CreditCard card, string description, decimal taxPercent = 0)
+        private async Task<Subscription> SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0, decimal taxPercent = 0)
         {
-            var trialEnds = GetStartNextMonth();
-
-            if (string.IsNullOrEmpty(user.StripeCustomerId))
+            // Save payment details
+            if (creditCard != null)
             {
-                // Create a new customer in Stripe and save card
-                var stripeUser = (StripeCustomer) await _customerProvider.CreateCustomerAsync
-                    (user, null, trialEnds , card.StripeToken);
-                
-                // Add subscription Id to the user
-                user.StripeCustomerId = stripeUser.Id;
-
-                await _cardDataService.AddAsync(card);
-            }
-            else if (!string.IsNullOrEmpty(card.StripeToken))
-            {
-                // Update the default card for the user
-                _customerProvider.UpdateCustomer(user, card);
-                card.SaasEcomUserId = user.Id;
-                await _cardDataService.AddOrUpdateDefaultCardAsync(user.Id, card);
-            }
-
-            // Create pro-rata charge for the remaining of the month
-            var amountInCents = await CalculateProRata(planId);
-
-            var planCurrency = await GetPlanCurrency(planId);
-
-            // If Charge succeeds -> Create Subscription
-            string error;
-            if (this._chargeProvider.CreateCharge(amountInCents, planCurrency, description, user.StripeCustomerId, out error))
-            {
-                // Create Subscription
-                var subscriptionId = _subscriptionProvider.SubscribeUser(user, planId, trialEnds, taxPercent);
-                var subscription = await _subscriptionDataService.SubscribeUserAsync
-                    (user, planId, trialEnds, taxPercent, subscriptionId);
-
-                // Update tax percent on stripe
-                if (subscription.TaxPercent > 0)
+                if (creditCard.Id == 0)
                 {
-                    await this.UpdateSubscriptionTax(user, subscription.StripeId, subscription.TaxPercent);
+                    await _cardProvider.AddAsync(user, creditCard);
+                }
+                else
+                {
+                    await _cardProvider.UpdateAsync(user, creditCard);
                 }
             }
-            else
-            {
-                return error;
-            }
 
-            return null;
+            // Save subscription details
+            var subscriptionId = _subscriptionProvider.SubscribeUser
+                (user, planId, trialInDays: trialInDays, taxPercent: taxPercent); // Stripe
+            var subscription = await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays, taxPercent, subscriptionId); // DB
+
+            return subscription;
         }
 
-        private async Task<string> GetPlanCurrency(string planId)
-        {
-            var plan = await _subscriptionPlanDataService.FindAsync(planId);
-
-            return plan.Currency;
-        }
-
-        private async Task<int> CalculateProRata(string planId)
-        {
-            var plan = await _subscriptionPlanDataService.FindAsync(planId);
-
-            var now = DateTime.UtcNow;
-            var beginningMonth = new DateTime(now.Year, now.Month, 1);
-            var endMonth = new DateTime (now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
-
-            var totalHoursMonth = (endMonth - beginningMonth).TotalHours;
-            var hoursRemaining = (endMonth - now).TotalHours;
-
-            var amountInCurrency = plan.Price*hoursRemaining/totalHoursMonth;
-
-            switch (plan.Currency.ToLower())
-            {
-                case("usd"):
-                case("gbp"):
-                case("eur"):
-                    return (int)Math.Ceiling(amountInCurrency * 100);
-                default:
-                    return (int)Math.Ceiling(amountInCurrency);
-            }
-        }
-
-        private DateTime? GetStartNextMonth()
-        {
-            var now = DateTime.UtcNow;
-            var year = now.Month == 12 ? now.Year + 1 : now.Year;
-            var month = now.Month == 12 ? 1 : now.Month + 1;
-
-            return new DateTime(year, month, 1);
-        }
 
         /// <summary>
         /// Updates the subscription tax.
@@ -234,38 +147,6 @@ namespace SaasEcom.Core.Infrastructure.Facades
             // Stripe
             return _subscriptionProvider.UpdateSubscriptionTax(user.StripeCustomerId, subscriptionId, taxPercent);
         }
-        
-        private string GetStripeSubscriptionId(StripeCustomer stripeUser)
-        {
-            return stripeUser.StripeSubscriptionList.TotalCount > 0 ? stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
-        }
-
-        /// <summary>
-        /// Subscribe an existing user to a plan.
-        /// </summary>
-        /// <param name="user">Application User</param>
-        /// <param name="planId">Stripe plan Id</param>
-        /// <param name="creditCard">Credit card to pay this subscription.</param>
-        /// <param name="trialInDays">The trial in days.</param>
-        /// <param name="taxPercent">The tax percent.</param>
-        /// <returns></returns>
-        public async Task SubscribeUserAsync(SaasEcomUser user, string planId, CreditCard creditCard, int trialInDays = 0, decimal taxPercent = 0)
-        {
-            // Save subscription details
-            var subscriptionId = _subscriptionProvider.SubscribeUser
-                (user, planId, trialInDays: trialInDays, taxPercent: taxPercent); // Stripe
-            await this._subscriptionDataService.SubscribeUserAsync(user, planId, trialInDays, taxPercent, subscriptionId); // DB
-
-            // Save payment details
-            if (creditCard.Id == 0)
-            {
-                await _cardProvider.AddAsync(user, creditCard);
-            }
-            else
-            {
-                await _cardProvider.UpdateAsync(user, creditCard);
-            }
-        }
 
         /// <summary>
         /// Cancel subscription from Stripe
@@ -275,7 +156,8 @@ namespace SaasEcom.Core.Infrastructure.Facades
         /// <param name="cancelAtPeriodEnd">Cancel immediately or when the paid period ends (default immediately)</param>
         /// <param name="reasonToCancel">The reason to cancel.</param>
         /// <returns>The Date when the subscription ends (it can be future if cancelAtPeriodEnd is true)</returns>
-        public async Task<DateTime?> EndSubscriptionAsync(int subscriptionId, SaasEcomUser user, bool cancelAtPeriodEnd = false, string reasonToCancel = null)
+        public async Task<DateTime?> EndSubscriptionAsync(int subscriptionId, 
+            SaasEcomUser user, bool cancelAtPeriodEnd = false, string reasonToCancel = null)
         {
             DateTime? subscriptionEnd = null;
             try
@@ -297,27 +179,81 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return subscriptionEnd;
         }
 
+        // TODO: Maybe remove this method?
         /// <summary>
-        /// Change Subscription Plan (Upgrade / Downgrade)
+        /// Change Subscription Plan (Upgrade / Downgrade) (When the user can have only one active subscription)
         /// </summary>
         /// <param name="userId">Application User Id</param>
         /// <param name="stripeUserId">Stripe User Id</param>
         /// <param name="newPlanId">New Subscription Plan Id</param>
+        /// <param name="proRate">if set to <c>true</c> [pro rate].</param>
         /// <returns></returns>
-        public async Task<bool> UpdateSubscriptionAsync(string userId, string stripeUserId, string newPlanId)
+        public async Task<bool> UpdateSubscriptionAsync(string userId, string stripeUserId, string newPlanId, bool proRate = true)
         {
             var activeSubscription = await _subscriptionDataService.UserActiveSubscriptionAsync(userId);
 
-            if (activeSubscription != null && 
+            if (activeSubscription != null &&
                 (activeSubscription.SubscriptionPlan.Id != newPlanId || activeSubscription.End != null)) // Check end date in case that we are re-activating
             {
                 // Update Stripe
-                if (_subscriptionProvider.UpdateSubscription(stripeUserId, activeSubscription.StripeId, newPlanId))
+                if (_subscriptionProvider.UpdateSubscription(stripeUserId, activeSubscription.StripeId, newPlanId, proRate))
                 {
                     // Update DB
                     activeSubscription.SubscriptionPlanId = newPlanId;
                     activeSubscription.End = null; // In case that we are reactivating
                     await _subscriptionDataService.UpdateSubscriptionAsync(activeSubscription);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // TODO: Remove UserId (not used)
+        /// <summary>
+        /// Updates the subscription asynchronous, if the new plan is more expensive the customer is charged immediately
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="stripeUserId">The stripe user identifier.</param>
+        /// <param name="stripeSubscriptionId">The current subscription stripe identifier.</param>
+        /// <param name="newPlanId">The new plan identifier.</param>
+        /// <param name="proRate">if set to <c>true</c> [pro rate].</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateSubscriptionAsync(string userId, string stripeUserId, string stripeSubscriptionId, string newPlanId, bool proRate = true)
+        {
+            var subscription = _subscriptionDataService.FindById(stripeSubscriptionId);
+
+            if (subscription != null &&
+                (subscription.SubscriptionPlan.Id != newPlanId || subscription.End != null)) // Check end date in case that we are re-activating
+            {
+                bool changingPlan = subscription.SubscriptionPlan.Id != newPlanId;
+
+                var currentPlan = await _subscriptionPlanDataService.FindAsync(subscription.SubscriptionPlanId);
+                var newPlan = await _subscriptionPlanDataService.FindAsync(newPlanId);
+
+                // Do Stripe charge if the new plan is more expensive
+                if (changingPlan && currentPlan.Price < newPlan.Price)
+                {
+                    var upgradeCharge = await CalculateProRata(newPlanId) - await CalculateProRata(subscription.SubscriptionPlanId);
+
+                    var upgradeChargeWithTax = upgradeCharge*(1 + subscription.TaxPercent/100);
+
+                    string error;
+                    _chargeProvider.CreateCharge((int)upgradeChargeWithTax, await GetPlanCurrency(newPlanId), "Fluxifi Upgrade", stripeUserId, out error);
+
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        return false;
+                    }
+                }
+                
+                // Update Stripe
+                if (_subscriptionProvider.UpdateSubscription(stripeUserId, subscription.StripeId, newPlanId, proRate))
+                {
+                    // Update DB
+                    subscription.SubscriptionPlanId = newPlanId;
+                    subscription.End = null; // In case that we are reactivating
+                    await _subscriptionDataService.UpdateSubscriptionAsync(subscription);
                     return true;
                 }
             }
@@ -345,6 +281,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return await _subscriptionDataService.UserActiveSubscriptionsAsync(userId);
         }
 
+        // TODO: Pass the subscription Id
         /// <summary>This method returns the number of days of trial left for a given user. It will return 0 if there aren't any days left or no active subscriptions for the user.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns></returns>
@@ -368,14 +305,52 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return 0;
         }
 
-        /// <summary>
-        /// Deletes the subscriptions.
-        /// </summary>
-        /// <param name="userId">The user identifier.</param>
-        /// <returns></returns>
-        public async Task DeleteSubscriptions(string userId)
+        #region Helpers
+        private async Task<string> GetPlanCurrency(string planId)
         {
-            await this._subscriptionDataService.DeleteSubscriptionsAsync(userId);
+            var plan = await _subscriptionPlanDataService.FindAsync(planId);
+
+            return plan.Currency;
         }
+
+        private async Task<int> CalculateProRata(string planId)
+        {
+            var plan = await _subscriptionPlanDataService.FindAsync(planId);
+
+            var now = DateTime.UtcNow;
+            var beginningMonth = new DateTime(now.Year, now.Month, 1);
+            var endMonth = new DateTime(now.Year, now.Month, DateTime.DaysInMonth(now.Year, now.Month), 23, 59, 59);
+
+            var totalHoursMonth = (endMonth - beginningMonth).TotalHours;
+            var hoursRemaining = (endMonth - now).TotalHours;
+
+            var amountInCurrency = plan.Price * hoursRemaining / totalHoursMonth;
+
+            switch (plan.Currency.ToLower())
+            {
+                case ("usd"):
+                case ("gbp"):
+                case ("eur"):
+                    return (int)Math.Ceiling(amountInCurrency * 100);
+                default:
+                    return (int)Math.Ceiling(amountInCurrency);
+            }
+        }
+
+        private DateTime? GetStartNextMonth()
+        {
+            var now = DateTime.UtcNow;
+            var year = now.Month == 12 ? now.Year + 1 : now.Year;
+            var month = now.Month == 12 ? 1 : now.Month + 1;
+
+            return new DateTime(year, month, 1);
+        }
+
+        private string GetStripeSubscriptionIdForNewCustomer(StripeCustomer stripeUser)
+        {
+            return stripeUser.StripeSubscriptionList.TotalCount > 0 ? 
+                stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
+        }
+        #endregion
     }
 }

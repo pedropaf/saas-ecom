@@ -96,8 +96,9 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="customerId">The customer identifier.</param>
         /// <param name="subStripeId">The sub stripe identifier.</param>
         /// <param name="newPlanId">The new plan identifier.</param>
+        /// <param name="proRate">if set to <c>true</c> [pro rate].</param>
         /// <returns></returns>
-        public bool UpdateSubscription(string customerId, string subStripeId, string newPlanId)
+        public bool UpdateSubscription(string customerId, string subStripeId, string newPlanId, bool proRate)
         {
             var result = true;
             try
@@ -107,7 +108,8 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
                 var myUpdatedSubscription = new StripeSubscriptionUpdateOptions
                 {
                     PlanId = newPlanId,
-                    TrialEnd = currentSubscription.TrialEnd // Keep the same trial window as initially created.
+                    TrialEnd = currentSubscription.TrialEnd, // Keep the same trial window as initially created.
+                    Prorate = proRate
                 };
 
                 _subscriptionService.Update(customerId, subStripeId, myUpdatedSubscription);

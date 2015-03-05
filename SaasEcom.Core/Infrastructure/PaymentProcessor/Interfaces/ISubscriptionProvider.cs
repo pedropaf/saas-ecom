@@ -50,8 +50,9 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// <param name="customerId">The customer identifier.</param>
         /// <param name="subStripeId">The sub stripe identifier.</param>
         /// <param name="newPlanId">The new plan identifier.</param>
+        /// <param name="proRate">if set to <c>true</c> [pro rate].</param>
         /// <returns></returns>
-        bool UpdateSubscription(string customerId, string subStripeId, string newPlanId);
+        bool UpdateSubscription(string customerId, string subStripeId, string newPlanId, bool proRate);
 
         /// <summary>
         /// Updates the subscription tax.
