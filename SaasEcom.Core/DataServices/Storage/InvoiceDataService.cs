@@ -34,7 +34,7 @@ namespace SaasEcom.Core.DataServices.Storage
         /// <returns>List of invoices</returns>
         public async Task<List<Invoice>> UserInvoicesAsync(string userId)
         {
-            return await _dbContext.Invoices.Where(i => i.Customer.Id == userId).Select(s => s).Include(i => i.BillingAddress).ToListAsync();
+            return await _dbContext.Invoices.Where(i => i.Customer.Id == userId).Select(s => s).ToListAsync();
         }
 
         /// <summary>
