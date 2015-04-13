@@ -1,13 +1,11 @@
 SAAS Ecom
 =========
 
-Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe.com), including out-of-the-box pricing pages, payment pages, and  subscription management for your customers. Also makes it easy to manage logic related to new subscriptions, cancellations, payment failures, and streamlines hooking up notifications, etc. [**Available on NuGet**](https://www.nuget.org/packages/SaasEcom.FrontEnd)
+Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe.com), including payment pages and subscription management for your customers. Also makes it easy to manage logic related to new subscriptions, cancellations, payment failures, and streamlines hooking up notifications, etc. [**Available on NuGet**](https://www.nuget.org/packages/SaasEcom.FrontEnd)
 
 You can see [more information about the project in this blog post](http://www.pedroalonso.net/blog/2014/04/28/saas-ecom-open-source-for-net-mvc-5-stripe/)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/qt875ktp3lsv89pg?svg=true)](https://ci.appveyor.com/project/pedropaf/saas-ecom)
-
-![Web](http://www.pedroalonso.net/images/posts/2014/04/01-SAAS-Ecom.png)
 
 See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's connected to Stripe test gateway, so you can add one of their [test credit cards](https://stripe.com/docs/testing).
 
@@ -23,13 +21,16 @@ See an example of [SAAS Ecom Demo](http://saas-ecom.azurewebsites.net/). It's co
 *  **Billing view helpers:** View helpers for your application, to let your customers manage their subscription / password / credit card.
 *  **Only SSL needed:** Your customers' credit card number don't hit your server (stripe.js). You only need SSL to deploy this app.
 
+## Is it easy to integrate SAAS Ecom in my application?
+SAAS Ecom uses the most popular technologies in the .NET world. The main requirements for your application is that you need to use ASP.NET Identity 2.1 for membership, and also Entity Framework 6 Code First. Although, if you’re not using EF Code First currently, you can use a second database for membership and SAAS Ecom, and another one for your application data.
+
 ## NuGet
 
 This project is available in NuGet, the recommended way to install it is:
 
 Create a new MVC 5 project that uses Individual accounts. Then install this NuGet Package:
 
-    PM> Install-Package SaasEcom.FrontEnd -Pre
+    PM> Install-Package SaasEcom.FrontEnd
 
 After installing the package, edit the file "IdentityModels.cs"
 
