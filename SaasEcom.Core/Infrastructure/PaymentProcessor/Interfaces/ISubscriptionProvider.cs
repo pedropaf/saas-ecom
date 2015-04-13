@@ -62,5 +62,15 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Interfaces
         /// <param name="taxPercent">The tax percent.</param>
         /// <returns></returns>
         bool UpdateSubscriptionTax(string customerId, string subStripeId, decimal taxPercent = 0);
+
+        /// <summary>
+        /// Subscribes the user natural month.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="billingAnchorCycle">The billing anchor cycle.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        object SubscribeUserNaturalMonth(SaasEcomUser user, string planId, DateTime? billingAnchorCycle, decimal taxPercent);
     }
 }

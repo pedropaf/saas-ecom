@@ -305,6 +305,39 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return 0;
         }
 
+        /// <summary>
+        /// Subscribes the user, with a billing cycle that goes from the 1st of the month asynchronous.
+        /// Creates the user in Stripe if doesn't exist already.
+        /// Saves de Subscription data in the database if the subscription suceeds.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="card">The card.</param>
+        /// <param name="taxPercent">The tax percent.</param>
+        /// <returns></returns>
+        public async Task SubscribeUserNaturalMonthAsync(SaasEcomUser user, string planId, CreditCard card, decimal taxPercent = 0)
+        {
+            if (string.IsNullOrEmpty(user.StripeCustomerId))
+            {
+                // Create a new customer in Stripe and save card
+                var stripeUser = (StripeCustomer)await _customerProvider.CreateCustomerAsync(user, cardToken: card.StripeToken);
+                user.StripeCustomerId = stripeUser.Id;
+                card.SaasEcomUserId = user.Id;
+                await _cardDataService.AddAsync(card);
+            }
+            else if (card != null && !string.IsNullOrEmpty(card.StripeToken))
+            {
+                // Update the default card for the user
+                var customer = (StripeCustomer)_customerProvider.UpdateCustomer(user, card);
+                card.SaasEcomUserId = user.Id;
+                card.StripeId = customer.StripeDefaultCardId;
+                await _cardDataService.AddOrUpdateDefaultCardAsync(user.Id, card);
+            }
+
+            var stripeSubscription = (StripeSubscription)_subscriptionProvider.SubscribeUserNaturalMonth(user, planId, GetStartNextMonth(), taxPercent);
+            await _subscriptionDataService.SubscribeUserAsync(user, planId, (int?)null, taxPercent, stripeSubscription.Id);
+        }
+
         #region Helpers
         private async Task<string> GetPlanCurrency(string planId)
         {
