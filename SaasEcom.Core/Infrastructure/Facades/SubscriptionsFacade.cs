@@ -338,6 +338,16 @@ namespace SaasEcom.Core.Infrastructure.Facades
             await _subscriptionDataService.SubscribeUserAsync(user, planId, (int?)null, taxPercent, stripeSubscription.Id);
         }
 
+        /// <summary>
+        /// Deletes the subscriptions.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task DeleteSubscriptions(string userId)
+        {
+            await this._subscriptionDataService.DeleteSubscriptionsAsync(userId);
+        }
+
         #region Helpers
         private async Task<string> GetPlanCurrency(string planId)
         {
