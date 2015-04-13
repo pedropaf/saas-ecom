@@ -305,6 +305,16 @@ namespace SaasEcom.Core.Infrastructure.Facades
             return 0;
         }
 
+        /// <summary>
+        /// Deletes the subscriptions.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns></returns>
+        public async Task DeleteSubscriptions(string userId)
+        {
+            await this._subscriptionDataService.DeleteSubscriptionsAsync(userId);
+        }
+
         #region Helpers
         private async Task<string> GetPlanCurrency(string planId)
         {

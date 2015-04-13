@@ -204,6 +204,12 @@ namespace $rootnamespace$.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+				if (string.IsNullOrEmpty(user.StripeCustomerId))
+                {
+                    await this.SubscriptionsFacade.SubscribeUserAsync()
+                }
+
                 await CardService.AddAsync(user, model.CreditCard);
 
                 // TempData.Add("flash", new FlashSuccessViewModel("Your credit card has been saved successfully."));
