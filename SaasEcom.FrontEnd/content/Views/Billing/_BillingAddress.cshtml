@@ -24,8 +24,9 @@ else
 }
 
 @if (Model != null && string.IsNullOrEmpty(Model.Vat) &&
+        !string.IsNullOrEmpty(Model.Country) &&
         EuropeanVat.Countries.ContainsKey(Model.Country) &&
-        Model.BillingAddress.Country != "GB")
+        Model.Country != "GB")
 {
     <br />
     <p>
@@ -34,7 +35,7 @@ else
     </p>
 }
 
-@if (Model != null && Model.BillingAddress.Country == "GB")
+@if (Model != null && Model.Country == "GB")
 {
     <p>
         <strong>@(EuropeanVat.Countries[Model.Country])% VAT</strong> is not included in the monthly price.
