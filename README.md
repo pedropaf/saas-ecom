@@ -44,6 +44,10 @@ After installing the package, edit the file "IdentityModels.cs"
         // default code ...
     }
 
+The SaasEcomUser class defines non-nullable RegistrationDate and LastLoginDate properties. Anyone installing saas-ecom into their project will need to update their Registration action to define the user as below:
+
+    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, RegistrationDate = DateTime.UtcNow, LastLoginTime = DateTime.UtcNow  };    
+
 Now the solution should compile successfully, but you should complete the following additional steps.
 
 ### Additional Steps
@@ -52,6 +56,7 @@ Now the solution should compile successfully, but you should complete the follow
 2. Add your API Keys to Web.config.
 3. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
 4. Enable Entity Framework Migrations, add the first migration and update your database.
+5. 
 
 ## Contribute
 
