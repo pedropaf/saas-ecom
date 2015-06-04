@@ -56,7 +56,34 @@ Now the solution should compile successfully, but you should complete the follow
 2. Add your API Keys to Web.config.
 3. Configure [Stripe Webhooks](https://manage.stripe.com/account/webhooks), the URL will be something like: http://yourdomain.com/StripeWebhooks
 4. Enable Entity Framework Migrations, add the first migration and update your database.
-5. 
+5. Integrate your SAAS with the provided view helpers:
+    - Create a Subscription (free or paid) on user register.
+    - Integrate SAAS View Helpers in the account management section for your customers.
+
+
+## Frequently Asked Questions
+
+### I have a freemium SAAS, can I still use SAAS Ecom?
+Yes, in this case the recommended approach would be to not create the users in Stripe until a user is a paying customer. You should create a Subscription plan in the database, and use "free" as PlanId, that way you can differentiate the users in a free plan from the users in a paid plan.
+
+### I am not using Entity Framework Code First, can I use SAAS Ecom?
+Yes, you can create a second database using Entity Framework Code first for billing. This is not an ideal solution and hopefully this dependency will become optional in a future release.
+
+### I want to give my customers a Free trial, but I need to collect their credit card on sign up, how can I do it?
+This view helper is not provided, but you just need to add the credit card collection details to your register form and submit that to stripe using their js script. Similar to the upgrade form.
+
+### Do you support Paypal or Braintree?
+Not yet, it might come on a future release but nothing planned so far.
+
+### Can I integrate SAAS Ecom with my invoicing application?
+Yes, you can do that integration on the controller handling the WebHooks from Stripe.
+
+### Is SAAS Ecom being used by any Real Project?
+Yes at the moment SAAS Ecom is used by:
+
+- [Photonube](https://www.photonube.com): Fremium SAAS for professional photographers.
+- [Fluxifi](https://www.fluxifi.com): Twitter analytics SAAS
+- If you're using SAAS in any project, let me know to add you here.
 
 ## Contribute
 
