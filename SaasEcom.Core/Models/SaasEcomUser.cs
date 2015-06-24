@@ -35,7 +35,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The registration date.
         /// </value>
-        public virtual DateTime RegistrationDate { get; set; }
+        public virtual DateTime? RegistrationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the last login time.
@@ -43,7 +43,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         /// The last login time.
         /// </value>
-        public virtual DateTime LastLoginTime { get; set; }
+        public virtual DateTime? LastLoginTime { get; set; }
 
         /// <summary>
         /// Gets or sets the stripe customer identifier.
