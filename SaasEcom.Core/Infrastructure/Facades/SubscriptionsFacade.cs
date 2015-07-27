@@ -78,7 +78,8 @@ namespace SaasEcom.Core.Infrastructure.Facades
                 subscription = await _subscriptionDataService.SubscribeUserAsync(user, planId, trialPeriodInDays: null, taxPercent: taxPercent);
 
                 // Create a new customer in Stripe and subscribe him to the plan
-                var stripeUser = (StripeCustomer) await _customerProvider.CreateCustomerAsync(user, planId);
+                var cardToken = creditCard == null ? null : creditCard.StripeToken;
+                var stripeUser = (StripeCustomer) await _customerProvider.CreateCustomerAsync(user, planId, null, cardToken);
                 user.StripeCustomerId = stripeUser.Id; // Add stripe user Id to the user
 
                 // Save Stripe Subscription Id in the DB

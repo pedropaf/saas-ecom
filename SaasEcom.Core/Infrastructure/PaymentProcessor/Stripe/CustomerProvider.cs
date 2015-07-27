@@ -48,7 +48,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
             }
 
             if (!string.IsNullOrEmpty(planId))
-            {
+            { 
                 customer.PlanId = planId;
                 customer.TrialEnd = trialEnd;
             }

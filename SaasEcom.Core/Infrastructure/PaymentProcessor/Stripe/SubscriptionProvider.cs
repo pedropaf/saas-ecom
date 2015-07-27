@@ -108,9 +108,13 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
                 var myUpdatedSubscription = new StripeSubscriptionUpdateOptions
                 {
                     PlanId = newPlanId,
-                    TrialEnd = currentSubscription.TrialEnd, // Keep the same trial window as initially created.
                     Prorate = proRate
                 };
+
+                if (currentSubscription.TrialEnd != null && currentSubscription.TrialEnd > DateTime.UtcNow)
+                {
+                    myUpdatedSubscription.TrialEnd = currentSubscription.TrialEnd; // Keep the same trial window as initially created.
+                }
 
                 _subscriptionService.Update(customerId, subStripeId, myUpdatedSubscription);
             }

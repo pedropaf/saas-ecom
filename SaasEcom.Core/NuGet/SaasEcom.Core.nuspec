@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>SaasEcom.Core</id>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
     <title>SaasEcom.Core</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,7 +10,7 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Minor fixes in Data layer, and User.RegistrationDate and LastLoginDate made optional.</releaseNotes>
+    <releaseNotes>Bugfix to add a card token when creating a new user with subscripiton and No Trial.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
