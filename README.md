@@ -3,9 +3,8 @@ SAAS Ecom
 
 Robust subscription support for ASP.NET MVC 5 apps using [Stripe](https://stripe.com), including payment pages and subscription management for your customers. Also makes it easy to manage logic related to new subscriptions, cancellations, payment failures, and streamlines hooking up notifications, etc. [**Available on NuGet**](https://www.nuget.org/packages/SaasEcom.FrontEnd)
 
-You can see [more information about the project in this website](http://www.saasecom.org).
-Also a detailed tutorial on [Building a Note-Taking Software-as-a-Service Using ASP.NET MVC 5, Stripe, and Azure] (http://code.tutsplus.com/tutorials/building-a-note-taking-software-as-a-service-using-aspnet-mvc-5-stripe-and-azure--cms-22922)
-
+* You can see [more information about the project in this website](http://www.saasecom.org).
+* Also a detailed tutorial on [Building a Note-Taking Software-as-a-Service Using ASP.NET MVC 5, Stripe, and Azure] (http://code.tutsplus.com/tutorials/building-a-note-taking-software-as-a-service-using-aspnet-mvc-5-stripe-and-azure--cms-22922)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/qt875ktp3lsv89pg?svg=true)](https://ci.appveyor.com/project/pedropaf/saas-ecom)
 
