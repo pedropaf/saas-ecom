@@ -41,10 +41,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
 
             if (!string.IsNullOrEmpty(cardToken))
             {
-                customer.Card = new StripeCreditCardOptions
-                {
-                    TokenId = cardToken
-                };
+                customer.SourceToken = cardToken;
             }
 
             if (!string.IsNullOrEmpty(planId))
@@ -70,10 +67,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
                 Email = user.Email,
 
                 // Card Details
-                Card =  new StripeCreditCardOptions
-                {
-                    TokenId = card.StripeToken
-                }
+                SourceToken = card.StripeToken
             };
 
             return _customerService.Update(user.StripeCustomerId, customer);

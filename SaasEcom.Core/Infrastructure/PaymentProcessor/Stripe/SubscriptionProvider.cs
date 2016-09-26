@@ -32,7 +32,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="taxPercent">The tax percent.</param>
         public string SubscribeUser(SaasEcomUser user, string planId, int trialInDays = 0, decimal taxPercent = 0)
         {
-            var result = this._subscriptionService.Create(user.StripeCustomerId, planId,
+            var result = this._subscriptionService.Update(user.StripeCustomerId, planId,
                 new StripeSubscriptionUpdateOptions
                 {
                     PlanId = planId,
@@ -52,7 +52,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         /// <param name="taxPercent">The tax percent.</param>
         public string SubscribeUser(SaasEcomUser user, string planId, DateTime? trialEnds, decimal taxPercent = 0)
         {
-            var result = this._subscriptionService.Create(user.StripeCustomerId, planId,
+            var result = this._subscriptionService.Update(user.StripeCustomerId, planId,
                 new StripeSubscriptionUpdateOptions
                 {
                     PlanId = planId,
@@ -87,7 +87,7 @@ namespace SaasEcom.Core.Infrastructure.PaymentProcessor.Stripe
         {
             var subscription = this._subscriptionService.Cancel(userStripeId, subStripeId, cancelAtPeriodEnd);
 
-            return cancelAtPeriodEnd ? subscription.PeriodEnd.Value : DateTime.UtcNow;
+            return cancelAtPeriodEnd ? subscription.EndedAt.Value : DateTime.UtcNow;
         }
 
         /// <summary>
