@@ -10,10 +10,11 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Update saas-ecom to stripe 9.0.1 and moved to vs2015 and .net 4.5.2</releaseNotes>
+    <releaseNotes>Update saas-ecom to stripe 6.6.0.0 and moved to vs2015 and .net 4.5.2</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
+      <dependency id="Stripe.net" version="6.6.0" />
       <dependency id="EntityFramework" version="6.1.2" />
       <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.1.0" />
     </dependencies>
