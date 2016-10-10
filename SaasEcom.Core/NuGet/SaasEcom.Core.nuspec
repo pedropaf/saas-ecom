@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>SaasEcom.Core</id>
-    <version>1.1.6</version>
+    <version>1.1.7</version>
     <title>SaasEcom.Core</title>
     <authors>Pedro Alonso</authors>
     <owners>Comyoucom Ltd</owners>
@@ -10,11 +10,11 @@
     <projectUrl>http://www.saasecom.org</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Billing software for your SAAS business. Core library.</description>
-    <releaseNotes>Bugfix to add a card token when creating a new user with subscripiton and No Trial.</releaseNotes>
+    <releaseNotes>Update saas-ecom to stripe 6.6.0.0 and moved to vs2015 and .net 4.5.2</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>SAAS Software-as-a-service SaasEcom Billing Stripe</tags>
     <dependencies>
-      <dependency id="Stripe.net" version="2.9.0" />
+      <dependency id="Stripe.net" version="6.6.0" />
       <dependency id="EntityFramework" version="6.1.2" />
       <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.1.0" />
     </dependencies>

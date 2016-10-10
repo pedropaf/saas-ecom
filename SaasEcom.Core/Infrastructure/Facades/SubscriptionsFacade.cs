@@ -331,7 +331,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
                 // Update the default card for the user
                 var customer = (StripeCustomer)_customerProvider.UpdateCustomer(user, card);
                 card.SaasEcomUserId = user.Id;
-                card.StripeId = customer.StripeDefaultCardId;
+                card.StripeId = customer.DefaultSourceId;
                 await _cardDataService.AddOrUpdateDefaultCardAsync(user.Id, card);
             }
 
@@ -393,7 +393,7 @@ namespace SaasEcom.Core.Infrastructure.Facades
         private string GetStripeSubscriptionIdForNewCustomer(StripeCustomer stripeUser)
         {
             return stripeUser.StripeSubscriptionList.TotalCount > 0 ? 
-                stripeUser.StripeSubscriptionList.StripeSubscriptions.First().Id : null;
+                stripeUser.StripeSubscriptionList.Data.First().Id : null;
         }
         #endregion
     }

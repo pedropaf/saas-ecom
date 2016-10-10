@@ -280,7 +280,7 @@ namespace SaasEcom.Core.Models
         /// <value>
         ///   <c>true</c> if forgiven; otherwise, <c>false</c>.
         /// </value>
-        public bool Forgiven { get; set; }
+        public bool? Forgiven { get; set; }
 
         /// <summary>
         /// Invoice Line Item
